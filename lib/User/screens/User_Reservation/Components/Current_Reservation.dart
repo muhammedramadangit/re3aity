@@ -13,7 +13,6 @@ class CurrentReservation extends StatefulWidget {
 
 class _CurrentReservationState extends State<CurrentReservation> {
   bool _isLoading = true;
-  // int index;
   CurrentModel _currentModel = CurrentModel();
   CurrentController _currentController = CurrentController();
 

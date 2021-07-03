@@ -6,6 +6,7 @@ class CustomTextField extends StatelessWidget {
   final Function validate;
   final Function onTab;
   final Function onSubmitted;
+  final Function onSaved;
   final Widget prefixIcon;
   final Widget suffixIcon;
   final double width;
@@ -55,7 +56,7 @@ class CustomTextField extends StatelessWidget {
     this.rightPadding,
     this.leftPadding,
     this.color,
-    this.hintColor,
+    this.hintColor, this.onSaved,
   }) : super(key: key);
 
   @override
@@ -79,6 +80,7 @@ class CustomTextField extends StatelessWidget {
             cursorColor: Theme.of(context).primaryColor,
             keyboardType: inputType ?? TextInputType.multiline,
             validator: validate,
+            onSaved: onSaved,
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(radius ?? 10),
@@ -117,9 +119,9 @@ class CustomTextField extends StatelessWidget {
               labelText: label,
               labelStyle: TextStyle(
                 fontSize: labelSize,
-                color: Color(0xffC8C8C8),
+                color: Theme.of(context).accentColor,
               ),
-              hintStyle: TextStyle(fontSize: 12, color: hintColor ?? ThemeColor.lighterGreyText),
+              hintStyle: TextStyle(fontSize: 12, color: hintColor ?? Theme.of(context).accentColor),
               hintText: hint,
             ),
             onChanged: onChanged),

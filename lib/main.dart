@@ -61,8 +61,8 @@ class MyApp extends StatelessWidget {
           accentColor: ThemeColor.lighterGreyText,
           fontFamily: "Cairo-Regular",
         ),
-        home: CompleteRegisterDataScreen(),
-        // home: SplashScreen(),
+        // home: CompleteRegisterDataScreen(),
+        home: SplashScreen(),
       ),
     );
   }

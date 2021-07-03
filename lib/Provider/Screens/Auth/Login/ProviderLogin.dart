@@ -146,17 +146,19 @@ class _ProviderLoginState extends State<ProviderLogin> {
                                     },
                                   ),
 
+                                  SizedBox(height: 15),
+
                                   //================== هل نسيت كلمة المرور ؟ ====================
-                                  FlatButton(
-                                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ProviderForgetPassword())),
-                                    child: Text(
-                                      'هل نسيت كلمة المرور؟',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Theme.of(context).primaryColor,
-                                      ),
-                                    ),
-                                  ),
+                                  // FlatButton(
+                                  //   onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ProviderForgetPassword())),
+                                  //   child: Text(
+                                  //     'هل نسيت كلمة المرور؟',
+                                  //     style: TextStyle(
+                                  //       fontSize: 14,
+                                  //       color: Theme.of(context).primaryColor,
+                                  //     ),
+                                  //   ),
+                                  // ),
 
                                   //================= تسجييل =====================
                                   BlocConsumer<ProviderLoginCubit, ProviderLoginState>(

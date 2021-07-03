@@ -19,7 +19,7 @@ class CustomTextFieldTap extends StatelessWidget {
       child: Container(
         height: height ?? 45,
         margin: EdgeInsets.symmetric(horizontal: horizontalPadding ?? 15, vertical: verticalPadding ?? 3),
-        padding: EdgeInsets.only(right: 12.0, top: 10.0, bottom: 10.0, left: 8),
+        padding: EdgeInsets.only(right: 12.0, top: 10.0, bottom: 10.0, left: 12),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.grey[100],

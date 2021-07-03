@@ -18,9 +18,9 @@ class ProviderSignUpCubit extends Cubit<ProviderSignUpState>{
       print("phone : $phone | password : $password | confirm Password : $confirmpass");
       final url = "https://mycare.pro/api/advertiserRegister";
       FormData formData = FormData.fromMap({
-        "phone" : "+966144088912",
-        "password" : "123123",
-        "confirmpass" : "123123"
+        "phone" : "+966$phone",
+        "password" : password,
+        "confirmpass" : confirmpass,
       });
 
       final Response response = await dio.post(url, data: formData);
@@ -28,7 +28,7 @@ class ProviderSignUpCubit extends Cubit<ProviderSignUpState>{
       if(response.statusCode == 200 && response.data["msg"] == "success"){
         SharedPreferences _pref = await SharedPreferences.getInstance();
         _pref.setString("api_token", response.data["api_token"]);
-        _pref.setString("pro_id", response.data["data"]["id"]);
+        _pref.setInt("id", response.data["data"]["id"]);
         print(response.data["data"]["id"]);
         print(response.data);
         emit(ProviderSignUpSuccessState());
