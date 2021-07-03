@@ -10,6 +10,7 @@ class LoginCubit extends Cubit<LoginState> {
   static LoginCubit get(context) => BlocProvider.of(context);
   Dio dio = Dio();
    String phone;
+   String token;
    String password;
 
   Future<void> login() async {
@@ -21,8 +22,9 @@ class LoginCubit extends Cubit<LoginState> {
 
       final url = "https://mycare.pro/api/userlogin";
       FormData formData = FormData.fromMap({
-        "phone" : "+966${phone}",
+        "phone" : "966${phone}",
         "password" : password,
+        "google_token":token,
       });
 
       final Response response = await dio.post(url, data: formData);

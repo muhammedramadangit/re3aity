@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:lastre3ayty/Provider/Screens/MyReservation/ProviderReservationItem.dart';
+import 'package:lastre3ayty/Provider/Screens/MyReservation/controller/controller.dart';
+import 'package:lastre3ayty/Provider/Screens/MyReservation/model/model.dart';
 import 'package:lastre3ayty/Provider/Screens/Notification/Provider_Notification.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
 import 'package:lastre3ayty/common/CustomAppBar.dart';
@@ -12,6 +14,23 @@ class ProviderReservation extends StatefulWidget {
 
 class _ProviderReservationState extends State<ProviderReservation> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  bool _isLoading = true;
+  ReversationsModel _reversationsModel = ReversationsModel();
+  ReservationController _reservationController =ReservationController() ;
+  void _getReservation ()async {
+    _reversationsModel = await _reservationController.getReservation();
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+
+  @override
+  void initState() {
+    _getReservation();
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +38,12 @@ class _ProviderReservationState extends State<ProviderReservation> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         key: _scaffoldKey,
-        body: Container(
+        body:_isLoading ?Center(child: CircularProgressIndicator()):Container(
           height: MediaQuery.of(context).size.height,
           margin: EdgeInsets.only(right: 15, left: 15, top: 10),
-          child: ListView.builder(
-            itemCount: 10,
+          child: _reversationsModel.data==null?
+              Center(child: Text("لا يوجد حجوزات"),):ListView.builder(
+            itemCount: _reversationsModel.data.length,
             itemBuilder: (_, index) {
               return AnimatedWidgets(
                 duration: 1.5,
@@ -89,13 +109,13 @@ class _ProviderReservationState extends State<ProviderReservation> {
                     ),
                   ],
                   child: ProviderReservationItem(
-                    imgSrc: "assets/images/doctor.jpg",
-                    name: "محمد رمضان",
-                    gender: "ذكر",
-                    phoneNumber: 1234567890,
-                    date: "1/1/2021",
-                    time: "08:00 مساءا",
-                    location: "العيادة",
+                    imgSrc:_reversationsModel.data[index].image,
+                    name: _reversationsModel.data[index].userName,
+                    gender: _reversationsModel.data[index].sex,
+                    phoneNumber: _reversationsModel.data[index].phone,
+                    date: _reversationsModel.data[index].date,
+                    time: _reversationsModel.data[index].time,
+                    location: _reversationsModel.data[index].place,
                   ),
                 ),
               );

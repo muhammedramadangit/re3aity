@@ -19,7 +19,7 @@ class ProviderLoginCubit extends Cubit<ProviderLoginState>{
       final url = "https://mycare.pro/api/advertiserlogin";
 
       FormData formData = FormData.fromMap({
-        "phone" : "+966${phone}",
+        "phone" : "966${phone}",
         "password" : password.toString(),
       });
 

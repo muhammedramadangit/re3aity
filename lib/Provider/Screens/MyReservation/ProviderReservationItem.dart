@@ -5,8 +5,7 @@ import 'package:lastre3ayty/common/CustomRichText.dart';
 import 'package:lastre3ayty/theme/color.dart';
 
 class ProviderReservationItem extends StatelessWidget {
-  final String name, imgSrc, gender, date, time, location;
-  final int phoneNumber;
+  final String name, imgSrc, gender, date, time, location,phoneNumber;
 
   ProviderReservationItem({
     this.name,
@@ -34,7 +33,8 @@ class ProviderReservationItem extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
-                    image: AssetImage(imgSrc),
+                    //ToDO: add image link
+                    image: NetworkImage(imgSrc),
                     fit: BoxFit.cover,
                   )),
             ),

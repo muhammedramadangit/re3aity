@@ -24,6 +24,7 @@ if (flutterVersionName == null) {
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -63,4 +64,7 @@ dependencies {
     testImplementation "org.robolectric:robolectric:4.3.1"
     testImplementation 'org.mockito:mockito-core:3.2.4'
     testImplementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation platform('com.google.firebase:firebase-bom:27.0.0')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 }

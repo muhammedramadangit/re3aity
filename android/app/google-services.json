@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "233144944728",
+    "project_id": "lastre3aity",
+    "storage_bucket": "lastre3aity.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:233144944728:android:dd6ec366f1a1c7ebca222d",
+        "android_client_info": {
+          "package_name": "com.example.lastre3ayty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "233144944728-34rkgk4cu3kqqe8td9lt4r1a5p716ajs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0I7W54Luzny3xOXBM0Oyo6wRu_vfTuhA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "233144944728-34rkgk4cu3kqqe8td9lt4r1a5p716ajs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
