@@ -57,14 +57,13 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
             size: 25,
             color: Theme.of(context).primaryColor,
           ),
-        ):Padding(
+        ): Padding(
           padding: EdgeInsets.only(top: 25, right: 20, left: 20),
           child: AnimatedWidgets(
             duration: 1.5,
             virticaloffset: 150,
             horizontalOffset: 0,
-            child: Text(
-              "${_policyModel.data.policy}",
+            child: Text("${_policyModel.data.policy}",
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Theme.of(context).primaryColor,

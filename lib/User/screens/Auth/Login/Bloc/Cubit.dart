@@ -24,7 +24,7 @@ class LoginCubit extends Cubit<LoginState> {
       FormData formData = FormData.fromMap({
         "phone" : "966${phone}",
         "password" : password,
-        "google_token":token,
+        "google_token": token,
       });
 
       final Response response = await dio.post(url, data: formData);

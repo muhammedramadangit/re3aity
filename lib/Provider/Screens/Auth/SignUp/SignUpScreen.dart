@@ -67,8 +67,7 @@ class _ProviderSignUpState extends State<ProviderSignUp> {
                         virticaloffset: 100,
                         child: Container(
                           width: MediaQuery.of(context).size.width,
-                          margin:
-                              EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                          margin: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                           child: Card(
                             shape: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15),

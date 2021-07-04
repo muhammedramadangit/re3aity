@@ -4,7 +4,6 @@ import 'package:lastre3ayty/Provider/Screens/Auth/ConfirmForgetPassword/Bloc/Pro
 import 'package:lastre3ayty/Provider/Screens/Auth/Forget_Password/Bloc/Cubit.dart';
 import 'package:lastre3ayty/Provider/Screens/Auth/NewPassword/bloc/ProviderNewPassCubit.dart';
 import 'package:lastre3ayty/Splash/splash_screen.dart';
-import 'package:lastre3ayty/re3aytiii/SignUp/Signup.dart';
 import 'package:lastre3ayty/theme/color.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -61,7 +60,6 @@ class MyApp extends StatelessWidget {
           accentColor: ThemeColor.lighterGreyText,
           fontFamily: "Cairo-Regular",
         ),
-        // home: CompleteRegisterDataScreen(),
         home: SplashScreen(),
       ),
     );

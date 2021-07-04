@@ -23,7 +23,7 @@ class DrawerWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               InkWell(
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => MainDrawer(showSearchIcon: false, appBarTitle: "الصفحة الشخصية", index: 4))),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => MainDrawer(showSearchIcon: false, appBarTitle: "الصفحة الشخصية", index: 1))),
                 child: Container(
                   height: MediaQuery.of(context).size.height / 7,
                   width: MediaQuery.of(context).size.width,

@@ -1,13 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lastre3ayty/Provider/Controller/SelectCateController.dart';
-import 'package:lastre3ayty/Provider/Models/SelectCateModel.dart';
 import 'package:lastre3ayty/User/CustomDrawer/Main_Drawer.dart';
-import 'package:lastre3ayty/User/screens/Doctors/Doctors.dart';
-import 'package:lastre3ayty/User/screens/Electricity/Electricity.dart';
-import 'package:lastre3ayty/User/screens/Home_Services/Home_Services.dart';
-import 'package:lastre3ayty/User/screens/Plumbing/Plumbing.dart';
+import 'package:lastre3ayty/User/screens/Sections/Controller/SectionController.dart';
+import 'package:lastre3ayty/User/screens/Sections/model/SectionModel.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
+import 'package:lastre3ayty/common/CenterLoading.dart';
 import 'package:lastre3ayty/common/CustomSection.dart';
 
 class Sections extends StatefulWidget {
@@ -20,16 +17,23 @@ class Sections extends StatefulWidget {
 }
 
 class _SectionsState extends State<Sections> {
-  SelectCateModel _selectCateModel =SelectCateModel();
-  SelectCateController _selectCateController = SelectCateController();
-  bool loading = true;
+  bool _isLoading = true;
+  SectionModel _sectionModel = SectionModel();
+  SectionController _sectionController = SectionController();
 
-  void getCate() async {
-    _selectCateModel = await _selectCateController.getSelectCate();
+  void getCat() async {
+    _sectionModel = await _sectionController.getSection();
     setState(() {
-      loading=false;
+      _isLoading = false;
     });
   }
+
+  @override
+  void initState() {
+    getCat();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -44,14 +48,15 @@ class _SectionsState extends State<Sections> {
               fit: BoxFit.cover,
             ),
           ),
-          child:   SingleChildScrollView(
+          child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 //============ Logo Position ===========
                 Padding(
-                  padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 8, bottom: 10),
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height / 8, bottom: 10),
                   child: AnimatedWidgets(
                     duration: 1,
                     horizontalOffset: 0,
@@ -69,64 +74,44 @@ class _SectionsState extends State<Sections> {
                 ),
 
                 //============ Choose Section =============
-               loading?Text("m"): Container(
+                Container(
                   height: MediaQuery.of(context).size.height / 1.8,
-                  width: MediaQuery.of(context).size.width/1.2,
-                  child: GridView.count(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10,
-                    children: [
-                      AnimatedWidgets(
-                        duration: 1.5,
-                        horizontalOffset: 50,
-                        virticaloffset: 0,
-                        child: CustomSection(
-                          title: "طبيب",
-                          imgSrc: "assets/icons/asasahospital.png",
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (_) => MainDrawer(appBarTitle: "أطباء", index: 0)));
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  child: _isLoading
+                      ? CenterLoading()
+                      : GridView.builder(
+                          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                          itemCount: _sectionModel.data.length,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                          ),
+                          itemBuilder: (context, index) {
+                            return AnimatedWidgets(
+                              duration: 1.5,
+                              horizontalOffset: 0,
+                              virticaloffset: 150,
+                              child: CustomSection(
+                                title: _sectionModel.data[index].categories.name,
+                                imgSrc: "assets/icons/asasahospital.png",
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) => MainDrawer(
+                                                appBarTitle: _sectionModel
+                                                    .data[index]
+                                                    .categories
+                                                    .name,
+                                                index: 0,
+                                                sectionModel: _sectionModel,
+                                              )));
+                                },
+                              ),
+                            );
                           },
                         ),
-                      ),
-                      AnimatedWidgets(
-                        duration: 1.5,
-                        horizontalOffset: -50,
-                        virticaloffset: 0,
-                        child: CustomSection(
-                          title: "خدمات منزلية",
-                          imgSrc: "assets/icons/spa.png",
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (_) => MainDrawer(appBarTitle: "خدمات منزلية", index: 1)));
-                          },
-                        ),
-                      ),
-                      AnimatedWidgets(
-                        duration: 1.5,
-                        horizontalOffset: 50,
-                        virticaloffset: 0,
-                        child: CustomSection(
-                          title: "سباكة",
-                          imgSrc: "assets/icons/doc.png",
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (_) => MainDrawer(appBarTitle: "سباك", index: 2)));
-                          },
-                        ),
-                      ),
-                      AnimatedWidgets(
-                        duration: 1.5,
-                        horizontalOffset: -50,
-                        virticaloffset: 0,
-                        child: CustomSection(
-                          title: "كهرباء",
-                          imgSrc: "assets/icons/xzxdoc.png",
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (_) => MainDrawer(appBarTitle: "كهرباء", index: 3)));
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
               ],
             ),
@@ -137,3 +122,40 @@ class _SectionsState extends State<Sections> {
   }
 }
 
+//
+// AnimatedWidgets(
+// duration: 1.5,
+// horizontalOffset: -50,
+// virticaloffset: 0,
+// child: CustomSection(
+// title: "خدمات منزلية",
+// imgSrc: "assets/icons/spa.png",
+// onTap: () {
+// Navigator.push(context, MaterialPageRoute(builder: (_) => MainDrawer(appBarTitle: "خدمات منزلية", index: 1)));
+// },
+// ),
+// ),
+// AnimatedWidgets(
+// duration: 1.5,
+// horizontalOffset: 50,
+// virticaloffset: 0,
+// child: CustomSection(
+// title: "سباكة",
+// imgSrc: "assets/icons/doc.png",
+// onTap: () {
+// Navigator.push(context, MaterialPageRoute(builder: (_) => MainDrawer(appBarTitle: "سباك", index: 2)));
+// },
+// ),
+// ),
+// AnimatedWidgets(
+// duration: 1.5,
+// horizontalOffset: -50,
+// virticaloffset: 0,
+// child: CustomSection(
+// title: "كهرباء",
+// imgSrc: "assets/icons/xzxdoc.png",
+// onTap: () {
+// Navigator.push(context, MaterialPageRoute(builder: (_) => MainDrawer(appBarTitle: "كهرباء", index: 3)));
+// },
+// ),
+// ),

@@ -9,8 +9,7 @@ class SignUpCubit extends Cubit<SignUpState> {
 
   static SignUpCubit get(context) => BlocProvider.of(context);
   Dio dio = Dio();
-  String name, phone, sex, password, confirmpass;
-  String code;
+  String name, phone, sex, password, confirmpass, code, token;
 
   Future<void> SignUp() async {
     emit(SignUpLoadingState());
@@ -20,20 +19,21 @@ class SignUpCubit extends Cubit<SignUpState> {
       final url = "https://mycare.pro/api/addRegister";
       FormData formData = FormData.fromMap({
         "name" : name,
-        "phone" : "+966${phone}",
-        "sex" : "sex",
+        "phone" : "966${phone}",
+        "sex" : "ذكر",
         "lat" : "122.2",
         "lng" : "122.2",
         "address" : "address",
         "password" : password.toString(),
         "confirmpass" : confirmpass.toString(),
+        "google_token" : token,
       });
 
       final Response response = await dio.post(url, data: formData);
       if(response.statusCode == 200 && response.data["msg"] == "success"){
         SharedPreferences _prefs = await SharedPreferences.getInstance();
         _prefs.setString("api_token", response.data["api_token"]);
-        _prefs.setString("user_id", response.data["data"]["id"]);
+        _prefs.setInt("user_id", response.data["data"]["id"]);
         code = response.data["sms_code"];
         print(response.data);
         emit(SignUpSuccessState());

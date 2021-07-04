@@ -19,7 +19,7 @@ class ProviderForgetCubit extends Cubit<ProviderForgetStat>{
 
       final url = "https://mycare.pro/api/send-forget-password";
       FormData formData = FormData.fromMap({
-        "phone" : "+966$phone"
+        "phone" : "966$phone"
       });
 
       final Response response = await dio.post(url, data: formData);

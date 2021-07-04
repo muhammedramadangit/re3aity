@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lastre3ayty/Provider/Screens/MyReservation/ProviderReservationItem.dart';
 import 'package:lastre3ayty/Provider/Screens/MyReservation/controller/controller.dart';
 import 'package:lastre3ayty/Provider/Screens/MyReservation/model/model.dart';
@@ -38,11 +39,22 @@ class _ProviderReservationState extends State<ProviderReservation> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         key: _scaffoldKey,
-        body:_isLoading ?Center(child: CircularProgressIndicator()):Container(
+        body:_isLoading ? Center(
+          child: SpinKitChasingDots(
+            size: 25,
+            color: Theme.of(context).primaryColor,
+          ),
+        ) : _reversationsModel.data==null ? Center(
+          child: Text("لا يوجد حجوزات",
+              style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontSize: 12,
+              ),
+          ),
+        ) : Container(
           height: MediaQuery.of(context).size.height,
           margin: EdgeInsets.only(right: 15, left: 15, top: 10),
-          child: _reversationsModel.data==null?
-              Center(child: Text("لا يوجد حجوزات"),):ListView.builder(
+          child: ListView.builder(
             itemCount: _reversationsModel.data.length,
             itemBuilder: (_, index) {
               return AnimatedWidgets(

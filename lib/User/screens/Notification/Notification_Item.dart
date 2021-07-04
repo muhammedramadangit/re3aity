@@ -15,7 +15,7 @@ class NotificationItem extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            height: MediaQuery.of(context).size.height,
+            height: MediaQuery.of(context).size.width / 5,
             width: MediaQuery.of(context).size.width / 5,
             decoration: BoxDecoration(
               image: DecorationImage(

@@ -1,10 +1,10 @@
-class SelectCateModel {
+class SectionModel {
   String msg;
   List<Data> data;
 
-  SelectCateModel({this.msg, this.data});
+  SectionModel({this.msg, this.data});
 
-  SelectCateModel.fromJson(Map<String, dynamic> json) {
+  SectionModel.fromJson(Map<String, dynamic> json) {
     msg = json['msg'];
     if (json['data'] != null) {
       data = new List<Data>();
@@ -223,4 +223,3 @@ class User {
     return data;
   }
 }
-

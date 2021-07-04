@@ -9,7 +9,7 @@ class ProviderLoginCubit extends Cubit<ProviderLoginState>{
 
   static ProviderLoginCubit get(context) => BlocProvider.of(context);
   Dio dio = Dio();
-  String phone, password;
+  String phone, password, token;
 
   Future<void> postProviderLogin() async {
     emit(ProviderLoginLoadingState());
@@ -21,6 +21,7 @@ class ProviderLoginCubit extends Cubit<ProviderLoginState>{
       FormData formData = FormData.fromMap({
         "phone" : "966${phone}",
         "password" : password.toString(),
+        "google_token" : token,
       });
 
       final Response response = await dio.post(url, data: formData);

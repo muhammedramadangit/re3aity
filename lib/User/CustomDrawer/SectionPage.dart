@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lastre3ayty/User/screens/Doctors/Doctors.dart';
-import 'package:lastre3ayty/User/screens/Electricity/Electricity.dart';
-import 'package:lastre3ayty/User/screens/Home_Services/Home_Services.dart';
 import 'package:lastre3ayty/User/screens/Notification/Notification_Screen.dart';
-import 'package:lastre3ayty/User/screens/Plumbing/Plumbing.dart';
 import 'package:lastre3ayty/User/screens/Profile/profile.dart';
+import 'package:lastre3ayty/User/screens/Sections/model/SectionModel.dart';
 import 'package:lastre3ayty/common/CustomAppBar.dart';
 
 
@@ -13,8 +11,9 @@ class SectionPage extends StatefulWidget {
   final int index;
   final String appBarTitle;
   final bool showSearchIcon;
+  final SectionModel sectionModel;
 
-  const SectionPage({Key key, @required this.openDrawer, this.index, this.appBarTitle, this.showSearchIcon = true}) : super(key: key);
+  const SectionPage({Key key, @required this.openDrawer, this.index, this.appBarTitle, this.showSearchIcon = true, this.sectionModel}) : super(key: key);
 
   @override
   _SectionPageState createState() => _SectionPageState();
@@ -39,10 +38,7 @@ class _SectionPageState extends State<SectionPage> {
   @override
   void initState() {
     pages = [
-      Doctors(),
-      HomeServices(),
-      Plumbing(),
-      Electricity(),
+      Doctors(sectionModel: widget.sectionModel),
       Profile(),
     ];
     whichPage();

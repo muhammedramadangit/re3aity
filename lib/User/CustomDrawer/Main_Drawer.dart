@@ -6,6 +6,7 @@ import 'package:lastre3ayty/User/CustomDrawer/SectionPage.dart';
 import 'package:lastre3ayty/User/screens/Auth/Login/login_screen.dart';
 import 'package:lastre3ayty/User/screens/Privacy_Policy/PrivacyPolicy.dart';
 import 'package:lastre3ayty/User/screens/Sections/Sections.dart';
+import 'package:lastre3ayty/User/screens/Sections/model/SectionModel.dart';
 import 'package:lastre3ayty/User/screens/Terms_and_Conditions/Terms_and_Conditions.dart';
 import 'package:lastre3ayty/User/screens/User_Reservation/User_Reservation.dart';
 
@@ -13,8 +14,9 @@ class MainDrawer extends StatefulWidget {
   final int index;
   final String appBarTitle;
   final bool showSearchIcon;
+  final SectionModel sectionModel;
 
-  const MainDrawer({this.index, this.appBarTitle, this.showSearchIcon = true});
+  const MainDrawer({this.index, this.appBarTitle, this.showSearchIcon = true, this.sectionModel});
 
   @override
   _MainDrawerState createState() => _MainDrawerState();
@@ -147,7 +149,13 @@ class _MainDrawerState extends State<MainDrawer> {
     } else if (item == DrawerItems.privacyPolicy) {
       return PrivacyPolicy(openDrawer: openDrawer);
     } else {
-      return SectionPage(openDrawer: openDrawer, appBarTitle: widget.appBarTitle, index: widget.index, showSearchIcon: widget.showSearchIcon,);
+      return SectionPage(
+        openDrawer: openDrawer,
+        appBarTitle: widget.appBarTitle,
+        index: widget.index,
+        showSearchIcon: widget.showSearchIcon,
+        sectionModel: widget.sectionModel,
+      );
     }
 
     // switch (item) {

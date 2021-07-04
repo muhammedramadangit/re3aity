@@ -24,9 +24,9 @@ class _ProviderNotificationState extends State<ProviderNotification> {
 
         body: Container(
           height: MediaQuery.of(context).size.height,
-          margin: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+          margin: EdgeInsets.only(left: 15, right: 15, top: 10),
           child: ListView.builder(
-            itemCount: 3,
+            itemCount: 2,
             itemBuilder: (_, index) {
               return AnimatedWidgets(
                 duration: 1.5,
@@ -36,7 +36,7 @@ class _ProviderNotificationState extends State<ProviderNotification> {
                   actionPane: SlidableBehindActionPane(),
                   actionExtentRatio: 0.25,
                   child: ProviderNotificationItem(
-                    title: "إيصال شهر يناير",
+                    title: "تلقيت حجز جديد",
                     description: "هذا النص هو مثال لنص يمكن ان يستبدل",
                     time: "02:30 pm",
                   ),

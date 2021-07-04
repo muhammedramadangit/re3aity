@@ -20,8 +20,8 @@ class AddReservationCubit extends Cubit<AddReservationState>{
       SharedPreferences _pref = await SharedPreferences.getInstance();
 
       FormData formData = FormData.fromMap({
-        "user_id" : "${_pref.getString("user_id")}",
-        "owner_id" : "${_pref.getString("pro_id")}",
+        "user_id" : "${_pref.getInt("user_id")}",
+        "owner_id" : "${_pref.getInt("pro_id")}",
         "cat_id" : "3",
         "date" : "2021-07-20",
         "time" : "6:43 PM",

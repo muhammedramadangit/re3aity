@@ -253,22 +253,22 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
 
                       //=========== تخطي =============
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => Sections()));
-                        },
-                        child: Text(
-                          'تخطي',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontFamily: 'Cairo-Bold',
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                      ),
+                      // InkWell(
+                      //   onTap: () {
+                      //     Navigator.push(
+                      //         context,
+                      //         MaterialPageRoute(
+                      //             builder: (_) => Sections()));
+                      //   },
+                      //   child: Text(
+                      //     'تخطي',
+                      //     style: TextStyle(
+                      //       fontSize: 14,
+                      //       fontFamily: 'Cairo-Bold',
+                      //       color: Theme.of(context).primaryColor,
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

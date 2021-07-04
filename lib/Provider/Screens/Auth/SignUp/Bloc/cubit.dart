@@ -9,7 +9,7 @@ class ProviderSignUpCubit extends Cubit<ProviderSignUpState>{
 
   static ProviderSignUpCubit get(context) => BlocProvider.of(context);
   Dio dio = Dio();
-  String phone, password, confirmpass;
+  String phone, password, confirmpass, token;
 
   Future<void> ProviderSignUp() async {
     emit(ProviderSignUpLoadingState());
@@ -18,9 +18,10 @@ class ProviderSignUpCubit extends Cubit<ProviderSignUpState>{
       print("phone : $phone | password : $password | confirm Password : $confirmpass");
       final url = "https://mycare.pro/api/advertiserRegister";
       FormData formData = FormData.fromMap({
-        "phone" : "+966$phone",
+        "phone" : "966$phone",
         "password" : password,
         "confirmpass" : confirmpass,
+        "google_token" : token,
       });
 
       final Response response = await dio.post(url, data: formData);

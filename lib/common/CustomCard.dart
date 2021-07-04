@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class CustomCard extends StatelessWidget {
-  final double height, radius, verticalPadding, horizontalPadding, topPadding, bottomPadding;
+  final double height, width, radius, verticalPadding, horizontalPadding, topPadding, bottomPadding;
   final Color color;
   final Widget child;
   final Function onTap;
 
-  CustomCard({this.height, this.radius, this.verticalPadding, this.color, this.child, this.onTap, this.horizontalPadding, this.topPadding, this.bottomPadding});
+  CustomCard({this.height, this.radius, this.verticalPadding, this.color, this.child, this.onTap, this.horizontalPadding, this.topPadding, this.bottomPadding, this.width});
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +14,7 @@ class CustomCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         height: height,
+        width: width ?? MediaQuery.of(context).size.width,
         margin: EdgeInsets.only(top: topPadding ?? 2, bottom: bottomPadding ?? 2),
         child: Card(
           shape: OutlineInputBorder(

@@ -11,7 +11,7 @@ class CompleteRegisterCubit extends Cubit<CompleteRegisterState>{
 
   static CompleteRegisterCubit get(context) => BlocProvider.of(context);
   Dio dio = Dio();
-  String user_id, sex, lat, lng, address, name, desc;
+  String user_id, sex, lat, lng, address, name, desc, token;
   List catIds;
   List homePrices = [];
   List clinicPrices = [];
@@ -44,6 +44,7 @@ class CompleteRegisterCubit extends Cubit<CompleteRegisterState>{
         "name" : name,
         "desc" : desc,
         'categories': jsonEncode({"categories": categories}),
+        "google_token" : token,
       };
       FormData formData = FormData.fromMap(body);
 // print(body);

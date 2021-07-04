@@ -24,9 +24,9 @@ class _NotificationPagesState extends State<NotificationPage> {
 
         body: Container(
           height: MediaQuery.of(context).size.height,
-          margin: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+          margin: EdgeInsets.only(top: 10, left: 15, right: 15),
           child: ListView.builder(
-            itemCount: 10,
+            itemCount: 2,
             itemBuilder: (_, index) {
               return AnimatedWidgets(
                 duration: 1.5,
@@ -36,7 +36,7 @@ class _NotificationPagesState extends State<NotificationPage> {
                   actionPane: SlidableBehindActionPane(),
                   actionExtentRatio: 0.25,
                   child: NotificationItem(
-                    title: "إيصال شهر يناير",
+                    title: "تم تأكيد الحجز",
                     description: "هذا النص هو مثال لنص يمكن ان يستبدل",
                     time: "02:30 pm",
                   ),

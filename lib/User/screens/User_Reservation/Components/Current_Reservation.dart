@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lastre3ayty/User/Controller/CurrentReservation.dart';
 import 'package:lastre3ayty/User/models/CurrentReservation.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
+import 'package:lastre3ayty/common/CenterMessage.dart';
 import 'package:lastre3ayty/common/CustomCard.dart';
 import 'package:lastre3ayty/common/CustomRichText.dart';
 
@@ -37,14 +38,8 @@ class _CurrentReservationState extends State<CurrentReservation> {
               size: 25,
               color: Theme.of(context).primaryColor,
             ),
-          ) : _currentModel.data == null
-            ? Center(
-                child: Text(
-                  "لا توجد حجوزات",
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor, fontSize: 14),
-                ),
-              )
+          ) : _currentModel.data.length == 0
+            ? CenterMessage(msg: "لا يوجد حجوزات")
             : ListView.builder(
                 itemCount: _currentModel.data.length,
                 padding: EdgeInsets.symmetric(horizontal: 15),
@@ -54,7 +49,6 @@ class _CurrentReservationState extends State<CurrentReservation> {
                     horizontalOffset: 0,
                     virticaloffset: 150,
                     child: CustomCard(
-                      height: MediaQuery.of(_).size.height / 3.5,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,

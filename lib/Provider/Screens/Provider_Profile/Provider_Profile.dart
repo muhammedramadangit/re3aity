@@ -20,7 +20,7 @@ class _ProviderProfileState extends State<ProviderProfile> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+          padding: EdgeInsets.only(right: 15, left: 15, top: 10),
           child: Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
@@ -150,8 +150,8 @@ class _ProviderProfileState extends State<ProviderProfile> {
                         height: 45,
                         width: MediaQuery.of(context).size.width,
                         text: "حفظ",
-                        bottomPadding: 0,
-                        topPadding: 0,
+                        bottomPadding: 10,
+                        topPadding: 10,
                         rightPadding: 0,
                         leftPadding: 0,
                         onTap: () {
