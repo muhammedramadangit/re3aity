@@ -1,5 +1,4 @@
 import 'package:lastre3ayty/Provider/Screens/MyReservation/model/model.dart';
-import 'package:lastre3ayty/User/models/CurrentReservation.dart';
 import 'package:lastre3ayty/common/NetworkUtil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -1,12 +1,12 @@
-import 'package:lastre3ayty/User/models/CurrentReservation.dart';
+import 'package:lastre3ayty/User/screens/User_Reservation/Model/EndedReservation.dart';
 import 'package:lastre3ayty/common/NetworkUtil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class CurrentController {
+class EndedController {
   NetworkUtil _util = NetworkUtil();
-  CurrentModel _currentModel = CurrentModel();
+  EndedModel _endedModel = EndedModel();
 
-  Future<CurrentModel> getCurrent() async {
+  Future<EndedModel> getEnded() async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
     Map<String, dynamic> header = {
       "Accept": "application/json",
@@ -14,13 +14,13 @@ class CurrentController {
       "Authorization": "Bearer ${_pref.get("api_token")}",
     };
 
-    final data = await _util.get("initreservation", headers: header);
+    final data = await _util.get("finishedreservation", headers: header);
     if (data == null) {
-      _currentModel = null;
-      return _currentModel;
+      _endedModel = null;
+      return _endedModel;
     } else {
-      _currentModel = CurrentModel.fromJson(data.data);
-      return _currentModel;
+      _endedModel = EndedModel.fromJson(data.data);
+      return _endedModel;
     }
   }
 }

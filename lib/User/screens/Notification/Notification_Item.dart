@@ -18,44 +18,39 @@ class NotificationItem extends StatelessWidget {
             height: MediaQuery.of(context).size.width / 5,
             width: MediaQuery.of(context).size.width / 5,
             decoration: BoxDecoration(
-              image: DecorationImage(
+                image: DecorationImage(
                 image: AssetImage("assets/icons/notification.png"),
-                fit: BoxFit.contain,
+                fit: BoxFit.cover,
               ),
             ),
           ),
           Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(right: 10),
+            child: Container(
+              margin: EdgeInsets.only(right: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        title,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      Text(
-                        time,
-                        textDirection: TextDirection.ltr,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: ThemeColor.lighterGreyText,
-                        ),
-                      ),
-                    ],
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ),
                   Text(
                     description,
                     style: TextStyle(
-                      fontSize: 10,
-                      color: ThemeColor.lighterGreyText,
+                      fontSize: 14,
+                      color: Theme.of(context).accentColor,
+                    ),
+                  ),
+                  Text(
+                    time,
+                    textDirection: TextDirection.ltr,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Theme.of(context).accentColor,
                     ),
                   ),
                 ],

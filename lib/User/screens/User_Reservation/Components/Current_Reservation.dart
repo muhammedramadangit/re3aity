@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lastre3ayty/User/Controller/CurrentReservation.dart';
-import 'package:lastre3ayty/User/models/CurrentReservation.dart';
+import 'package:lastre3ayty/User/screens/User_Reservation/Controller/CurrentReservation.dart';
+import 'package:lastre3ayty/User/screens/User_Reservation/Model/CurrentReservation.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
 import 'package:lastre3ayty/common/CenterLoading.dart';
 import 'package:lastre3ayty/common/CenterMessage.dart';

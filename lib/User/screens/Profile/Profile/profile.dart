@@ -49,19 +49,19 @@ class _ProfileState extends State<Profile> {
                     height: MediaQuery.of(context).size.height / 6.5,
                     child: Row(
                       children: [
-                        // ClipRRect(
-                        //   borderRadius: BorderRadius.circular(10),
-                        //   child: Container(
-                        //     height: MediaQuery.of(context).size.height,
-                        //     width: MediaQuery.of(context).size.width / 4,
-                        //     decoration: BoxDecoration(
-                        //         image: DecorationImage(
-                        //       image: NetworkImage(
-                        //           "https://mycare.pro/public/dash/assets/img/${_profileModel.data.image}"),
-                        //       fit: BoxFit.cover,
-                        //     )),
-                        //   ),
-                        // ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Container(
+                            height: MediaQuery.of(context).size.height,
+                            width: MediaQuery.of(context).size.width / 4,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                              image: NetworkImage(
+                                  "https://mycare.pro/public/dash/assets/img/${_profileModel.data.image}"),
+                              fit: BoxFit.cover,
+                            )),
+                          ),
+                        ),
                         Padding(
                           padding: EdgeInsets.only(right: 10),
                           child: Column(
@@ -69,14 +69,14 @@ class _ProfileState extends State<Profile> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                               " _profileModel.data.name.toString()",
+                                _profileModel.data.name.toString(),
                                 style: TextStyle(
                                     color: Theme.of(context).accentColor,
                                     fontSize: 14,
                                     fontFamily: "Cairo-Bold"),
                               ),
                               Text(
-                                "_profileModel.data.phone.toString()",
+                                _profileModel.data.phone.toString(),
                                 style: TextStyle(
                                     color: Theme.of(context).accentColor,
                                     fontSize: 14),
@@ -123,7 +123,7 @@ class _ProfileState extends State<Profile> {
                                   color: ThemeColor.greyText, fontSize: 14),
                             ),
                             Text(
-                              "_profileModel.data.address.toString()",
+                              _profileModel.data.address.toString(),
                               style: TextStyle(
                                   color: Theme.of(context).accentColor,
                                   fontSize: 14),

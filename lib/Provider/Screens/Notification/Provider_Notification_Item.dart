@@ -30,28 +30,23 @@ class ProviderNotificationItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        title,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      Text(
-                        time,
-                        textDirection: TextDirection.ltr,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Theme.of(context).accentColor,
-                        ),
-                      ),
-                    ],
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ),
                   Text(
                     description,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Theme.of(context).accentColor,
+                    ),
+                  ),
+                  Text(
+                    time,
+                    textDirection: TextDirection.ltr,
                     style: TextStyle(
                       fontSize: 10,
                       color: Theme.of(context).accentColor,
