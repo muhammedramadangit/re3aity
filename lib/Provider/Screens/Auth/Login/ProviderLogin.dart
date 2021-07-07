@@ -2,16 +2,16 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lastre3ayty/Provider/Provider_Drawer/Provider_Main_Drawer.dart';
-import 'package:lastre3ayty/Provider/Screens/Auth/Forget_Password/Forget_Password_Screen.dart';
 import 'package:lastre3ayty/Provider/Screens/Auth/Login/Bloc/ProviderLoginCubit.dart';
 import 'package:lastre3ayty/Provider/Screens/Auth/Login/Bloc/ProviderLoginState.dart';
 import 'package:lastre3ayty/Provider/Screens/Auth/SignUp/SignUpScreen.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
+import 'package:lastre3ayty/common/CenterLoading.dart';
 import 'package:lastre3ayty/common/CustomButton.dart';
 import 'package:lastre3ayty/common/CustomRegisterIcon.dart';
 import 'package:lastre3ayty/common/CustomTextField.dart';
+import 'package:lastre3ayty/common/CustonSnackBar.dart';
 import 'package:lastre3ayty/theme/color.dart';
 
 class ProviderLogin extends StatefulWidget {
@@ -155,49 +155,29 @@ class _ProviderLoginState extends State<ProviderLogin> {
 
                                   SizedBox(height: 15),
 
-                                  //================== هل نسيت كلمة المرور ؟ ====================
-                                  // FlatButton(
-                                  //   onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ProviderForgetPassword())),
-                                  //   child: Text(
-                                  //     'هل نسيت كلمة المرور؟',
-                                  //     style: TextStyle(
-                                  //       fontSize: 14,
-                                  //       color: Theme.of(context).primaryColor,
-                                  //     ),
-                                  //   ),
-                                  // ),
-
                                   //================= تسجييل =====================
                                   BlocConsumer<ProviderLoginCubit, ProviderLoginState>(
                                     listener: (_, state){
                                       if(state is ProviderLoginErrorState){
-                                        Scaffold.of(_).showSnackBar(SnackBar(
-                                          backgroundColor: Theme.of(_).primaryColor,
-                                          content: Text(state.error,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(color: Colors.white, fontSize: 12),),
-                                        ));
+                                        customSnackBar(_, state.error);
                                       }else if(state is ProviderLoginSuccessState){
                                         Navigator.push(context, MaterialPageRoute(builder: (_) => ProviderMainDrawer(appBarTitle: "حجوزاتي", index: 0)));
                                         print("============ تم تسجيل الدخول بنجاح ===============");
                                       }
                                     },
                                     builder: (context, state){
-                                      return state is ProviderLoginLoadingState ? Center(
-                                        child: SpinKitChasingDots(
-                                          size: 25,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                      ) : CustomButton(
-                                        text: "تسجيل",
-                                        width: MediaQuery.of(context).size.width / 2,
-                                        height: 40,
-                                        onTap: (){
-                                          if(_formKey.currentState.validate()){
-                                            cubit.postProviderLogin();
-                                          }
-                                        },
-                                      );
+                                      return state is ProviderLoginLoadingState
+                                          ? CenterLoading()
+                                          : CustomButton(
+                                              text: "تسجيل",
+                                              width: MediaQuery.of(context).size.width / 2,
+                                              height: 40,
+                                              onTap: () {
+                                                if (_formKey.currentState.validate()) {
+                                                  cubit.postProviderLogin();
+                                                }
+                                              },
+                                            );
                                     },
                                   ),
 

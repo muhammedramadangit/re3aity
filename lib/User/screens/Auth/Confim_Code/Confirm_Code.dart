@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lastre3ayty/User/screens/Auth/Confim_Code/bloc/ConfirmCodeCubit.dart';
 import 'package:lastre3ayty/User/screens/Auth/Confim_Code/bloc/confirmCodeState.dart';
 import 'package:lastre3ayty/User/screens/Sections/Sections.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
+import 'package:lastre3ayty/common/CenterLoading.dart';
 import 'package:lastre3ayty/common/CustomButton.dart';
+import 'package:lastre3ayty/common/CustonSnackBar.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 
 class ConfirmCode extends StatefulWidget {
@@ -130,12 +131,7 @@ class _ConfirmCodeState extends State<ConfirmCode> {
                                   BlocConsumer<ConfirmCodeCubit, ConfirmCodeState>(
                                     listener: (_, state){
                                       if(state is ConfirmCodeErrorState){
-                                        Scaffold.of(_).showSnackBar(SnackBar(
-                                          backgroundColor: Theme.of(_).primaryColor,
-                                          content: Text(state.error,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(color: Colors.white, fontSize: 12),),
-                                        ));
+                                        customSnackBar(_, state.error);
                                       }else if (state is ConfirmCodeSuccessState){
                                         Navigator.push(context, MaterialPageRoute(builder: (_) => Sections()));
                                         print("============================= تم التاكيد =========================");
@@ -143,21 +139,18 @@ class _ConfirmCodeState extends State<ConfirmCode> {
                                     },
 
                                     builder: (context, state){
-                                      return state is ConfirmCodeLoadingState ? Center(
-                                        child: SpinKitChasingDots(
-                                          size: 25,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                      ) : CustomButton(
-                                        text: "التحقق",
-                                        width: MediaQuery.of(context).size.width / 2,
-                                        height: 40,
-                                        onTap: (){
-                                          if(formKey.currentState.validate()){
-                                            cubit.VerifyCode();
-                                          }
-                                        },
-                                      );
+                                      return state is ConfirmCodeLoadingState
+                                          ? CenterLoading()
+                                          : CustomButton(
+                                              text: "التحقق",
+                                              width: MediaQuery.of(context).size.width / 2,
+                                              height: 40,
+                                              onTap: () {
+                                                if (formKey.currentState.validate()) {
+                                                  cubit.VerifyCode();
+                                                }
+                                              },
+                                            );
                                     },
                                   ),
 

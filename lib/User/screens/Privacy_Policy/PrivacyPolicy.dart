@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lastre3ayty/User/Controller/TermsAndPolicy.dart';
 import 'package:lastre3ayty/User/models/TermsAndPolicy.dart';
 import 'package:lastre3ayty/User/screens/Notification/Notification_Screen.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
+import 'package:lastre3ayty/common/CenterLoading.dart';
 import 'package:lastre3ayty/common/CustomAppBar.dart';
 import 'package:dio/dio.dart';
 
@@ -51,28 +51,25 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
           onPressedDrawer: widget.openDrawer,
         ),
 
-        body: isLoading?
-        Center(
-          child: SpinKitChasingDots(
-            size: 25,
-            color: Theme.of(context).primaryColor,
-          ),
-        ): Padding(
-          padding: EdgeInsets.only(top: 25, right: 20, left: 20),
-          child: AnimatedWidgets(
-            duration: 1.5,
-            virticaloffset: 150,
-            horizontalOffset: 0,
-            child: Text("${_policyModel.data.policy}",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-                height: 1.8,
-                fontSize: 15,
+        body: isLoading
+            ? CenterLoading()
+            : Padding(
+                padding: EdgeInsets.only(top: 25, right: 20, left: 20),
+                child: AnimatedWidgets(
+                  duration: 1.5,
+                  virticaloffset: 150,
+                  horizontalOffset: 0,
+                  child: Text(
+                    "${_policyModel.data.policy}",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      height: 1.8,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
       ),
     );
   }

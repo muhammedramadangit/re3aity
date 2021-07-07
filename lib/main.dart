@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lastre3ayty/Provider/Screens/Auth/ConfirmForgetPassword/Bloc/ProviderConfirmForgetCubit.dart';
-import 'package:lastre3ayty/Provider/Screens/Auth/Forget_Password/Bloc/Cubit.dart';
-import 'package:lastre3ayty/Provider/Screens/Auth/NewPassword/bloc/ProviderNewPassCubit.dart';
 import 'package:lastre3ayty/Splash/splash_screen.dart';
+import 'package:lastre3ayty/User/screens/Profile/Edit_Profile/bloc/Edit_Cubit.dart';
 import 'package:lastre3ayty/theme/color.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,17 +35,14 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => ForgetPassCubit()),
         BlocProvider(create: (_) => NewPassCubit()),
         BlocProvider(create: (_) => ConfirmForgetCubit()),
+        BlocProvider(create: (_) => AddReservationCubit()),
+        BlocProvider(create: (_) => EditProfileCubit()),
 
         //=========== provider Bloc ================
         BlocProvider(create: (_) => ProviderLoginCubit()),
         BlocProvider(create: (_) => ProviderSignUpCubit()),
         BlocProvider(create: (_) => ProviderVerifyCubit()),
         BlocProvider(create: (_) => CompleteRegisterCubit()),
-        BlocProvider(create: (_) => ProviderForgetCubit()),
-        BlocProvider(create: (_) => ProviderConfirmForgetCubit()),
-        BlocProvider(create: (_) => ProviderNewPassCubit()),
-
-        BlocProvider(create: (_) => AddReservationCubit()),
 
         BlocProvider(create: (_) => ProviderProfileCubit()),
       ],

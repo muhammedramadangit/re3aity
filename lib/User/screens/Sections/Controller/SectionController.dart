@@ -17,7 +17,9 @@ class SectionController {
       _sectionModel = null;
       return _sectionModel;
     } else {
+      int index;
       _sectionModel = SectionModel.fromJson(data.data);
+      // _pref.setInt("cat_id", _sectionModel.data[index].categories.id);
       return _sectionModel;
     }
   }

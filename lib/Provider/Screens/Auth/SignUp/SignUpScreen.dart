@@ -1,14 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lastre3ayty/Provider/Screens/Auth/Confim_Code/Confirm_Code.dart';
 import 'package:lastre3ayty/Provider/Screens/Auth/SignUp/Bloc/State.dart';
 import 'package:lastre3ayty/Provider/Screens/Auth/SignUp/Bloc/cubit.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
+import 'package:lastre3ayty/common/CenterLoading.dart';
 import 'package:lastre3ayty/common/CustomButton.dart';
 import 'package:lastre3ayty/common/CustomRegisterIcon.dart';
 import 'package:lastre3ayty/common/CustomTextField.dart';
+import 'package:lastre3ayty/common/CustonSnackBar.dart';
 import 'package:lastre3ayty/theme/color.dart';
 
 class ProviderSignUp extends StatefulWidget {
@@ -169,33 +170,25 @@ class _ProviderSignUpState extends State<ProviderSignUp> {
                                   BlocConsumer<ProviderSignUpCubit, ProviderSignUpState>(
                                     listener: (_, state){
                                       if(state is ProviderSignUpErrorState){
-                                        Scaffold.of(_).showSnackBar(SnackBar(
-                                          backgroundColor: Theme.of(_).primaryColor,
-                                          content: Text(state.error,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(color: Colors.white, fontSize: 12),),
-                                        ));
+                                        customSnackBar(_, state.error);
                                       }else if (state is ProviderSignUpSuccessState){
                                         Navigator.push(context, MaterialPageRoute(builder: (_) => ProviderConfirmCode()));
                                         print("============================= تم التسجيل كمقدم خدمة بنجاح =========================");
                                       }
                                     },
                                     builder: (context, state){
-                                      return state is ProviderSignUpLoadingState ? Center(
-                                        child: SpinKitChasingDots(
-                                          size: 25,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                      ) : CustomButton(
-                                        text: "تسجيل",
-                                        width: MediaQuery.of(context).size.width / 2,
-                                        height: 40,
-                                        onTap: () {
-                                          if(formKey.currentState.validate()){
-                                            cubit.ProviderSignUp();
-                                          }
-                                        },
-                                      );
+                                      return state is ProviderSignUpLoadingState
+                                          ? CenterLoading()
+                                          : CustomButton(
+                                              text: "تسجيل",
+                                              width: MediaQuery.of(context).size.width / 2,
+                                              height: 40,
+                                              onTap: () {
+                                                if (formKey.currentState.validate()) {
+                                                  cubit.ProviderSignUp();
+                                                }
+                                              },
+                                            );
                                     },
                                   ),
 

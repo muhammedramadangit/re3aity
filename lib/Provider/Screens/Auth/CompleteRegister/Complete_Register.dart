@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_map_location_picker/google_map_location_picker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lastre3ayty/Provider/Controller/SelectCateController.dart';
@@ -11,11 +10,12 @@ import 'package:lastre3ayty/Provider/Screens/Auth/CompleteRegister/Components/Ge
 import 'package:lastre3ayty/Provider/Screens/Auth/CompleteRegister/bloc/CompleteRegisterCubit.dart';
 import 'package:lastre3ayty/Provider/Screens/Auth/CompleteRegister/bloc/CompleteRegisterState.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
+import 'package:lastre3ayty/common/CenterLoading.dart';
 import 'package:lastre3ayty/common/CustomButton.dart';
 import 'package:lastre3ayty/common/CustomRegisterIcon.dart';
 import 'package:lastre3ayty/common/CustomTextField.dart';
 import 'package:lastre3ayty/common/CustomTextFieldTap.dart';
-import 'package:lastre3ayty/theme/color.dart';
+import 'package:lastre3ayty/common/CustonSnackBar.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
 
 class ProviderCompleteRegister extends StatefulWidget {
@@ -176,12 +176,7 @@ class _ProviderCompleteRegisterState extends State<ProviderCompleteRegister> {
                                       ),
 
                                       //============= الخدمة المقدمة =============
-                                      loading ? Center(
-                                        child: SpinKitChasingDots(
-                                          size: 25,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                      ) : _drawSelectServicesForm(context),
+                                      loading ? CenterLoading() : _drawSelectServicesForm(context),
 
                                       //============== عرض السعر ================
                                       cubit.catIds==null ? Container()
@@ -231,42 +226,20 @@ class _ProviderCompleteRegisterState extends State<ProviderCompleteRegister> {
                                       BlocConsumer<CompleteRegisterCubit, CompleteRegisterState>(
                                         listener: (_, state) {
                                           if (state is CompleteRegisterErrorState) {
-                                            Scaffold.of(_).showSnackBar(SnackBar(
-                                              backgroundColor: Theme.of(_).primaryColor,
-                                              content: Text(
-                                                state.error,
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(color: Colors.white, fontSize: 12),
-                                              ),
-                                            ));
+                                            customSnackBar(_, state.error);
                                           } else if (state is CompleteRegisterSuccessState) {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (_) =>
-                                                        ProviderMainDrawer(appBarTitle: "حجوزاتي", index: 0)));
+                                            Navigator.push(context, MaterialPageRoute(builder: (_) =>ProviderMainDrawer(appBarTitle: "حجوزاتي", index: 0)));
                                             print("================ تم اكمال تسجيل البيانات بنجاح ==========");
-                                            print("==== name : ${cubit.name} | Categories : ${cubit.categories} | gender : ${cubit.sex} | address : ${cubit.address} |=");
                                           }
                                         },
                                         builder: (context, state) {
                                           return state is CompleteRegisterLoadingState
-                                              ? Center(
-                                                  child: SpinKitChasingDots(
-                                                    size: 25,
-                                                    color: Theme.of(context)
-                                                        .primaryColor,
-                                                  ),
-                                                )
+                                              ? CenterLoading()
                                               : CustomButton(
                                                   text: "حفظ",
                                                   width: MediaQuery.of(context).size.width /2,
                                                   height: 40,
                                                   onTap: () {
-                                                    // cubit.catIds.clear();
-                                                    // cubit.homePrices.clear();
-                                                    // cubit.clinicPrices.clear();
-
                                                       for (int i = 0; i < cubit.catIds.length; i++) {
                                                       print(cubit.homePrices[i]);
                                                       cubit.categories.add({

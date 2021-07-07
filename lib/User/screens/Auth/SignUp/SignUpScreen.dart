@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lastre3ayty/User/screens/Auth/Confim_Code/Confirm_Code.dart';
 import 'package:lastre3ayty/User/screens/Auth/SignUp/Bloc/Cubit.dart';
 import 'package:lastre3ayty/User/screens/Auth/SignUp/Bloc/state.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
+import 'package:lastre3ayty/common/CenterLoading.dart';
 import 'package:lastre3ayty/common/CustomButton.dart';
-import 'package:lastre3ayty/common/CustomDialog.dart';
 import 'package:lastre3ayty/common/CustomRegisterIcon.dart';
 import 'package:lastre3ayty/common/CustomTextField.dart';
+import 'package:lastre3ayty/common/CustonSnackBar.dart';
 import 'package:lastre3ayty/theme/color.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -194,39 +194,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   BlocConsumer<SignUpCubit, SignUpState>(
                                     listener: (_, state){
                                       if(state is SignUpErrorState){
-                                        Scaffold.of(_).showSnackBar(SnackBar(
-                                          backgroundColor: Theme.of(_).primaryColor,
-                                          content: Text(state.error,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(color: Colors.white, fontSize: 12),),
-                                        ));
+                                        customSnackBar(_, state.error);
                                       }else if(state is SignUpSuccessState){
                                         Navigator.push(context, MaterialPageRoute(builder: (_) => ConfirmCode()));
                                         print("============================= تم التسجيل بنجاح =========================");
 
                                       }
                                     },
-                                    builder: (context, state){
-                                      return state is SignUpLoadingState ? Center(
-                                        child: SpinKitChasingDots(
-                                          size: 25,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                      ) : CustomButton(
-                                        text: "تسجيل",
-                                        width: MediaQuery.of(context).size.width / 2,
-                                        height: 40,
-                                        onTap: () {
-                                          if(_formKey.currentState.validate()){
-                                            cubit.SignUp();
-                                          }
-                                          // cubit.SignUp();
-                                          print("تسجييييييييييييل");
-                                        },
-                                      );
+                                    builder: (context, state) {
+                                      return state is SignUpLoadingState
+                                          ? CenterLoading()
+                                          : CustomButton(
+                                              text: "تسجيل",
+                                              width: MediaQuery.of(context).size.width / 2,
+                                              height: 40,
+                                              onTap: () {
+                                                if (_formKey.currentState.validate()) {
+                                                  cubit.SignUp();
+                                                }
+                                              },
+                                            );
                                     },
                                   ),
-
                                 ],
                               ),
                             ),

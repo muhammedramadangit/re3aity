@@ -20,6 +20,12 @@ class _SectionsState extends State<Sections> {
   bool _isLoading = true;
   SectionModel _sectionModel = SectionModel();
   SectionController _sectionController = SectionController();
+  List<String> _catImages = [
+    'assets/icons/page.png',
+    'assets/icons/xzxdoc.png',
+    'assets/icons/spa.png',
+    'assets/icons/asasahospital.png',
+  ];
 
   void getCat() async {
     _sectionModel = await _sectionController.getSection();
@@ -94,19 +100,20 @@ class _SectionsState extends State<Sections> {
                               virticaloffset: 150,
                               child: CustomSection(
                                 title: _sectionModel.data[index].categories.name,
-                                imgSrc: "assets/icons/asasahospital.png",
+                                imgSrc: _catImages[index],
+                                fit: BoxFit.fill,
+                                imgSize: 70,
                                 onTap: () {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (_) => MainDrawer(
-                                                appBarTitle: _sectionModel
-                                                    .data[index]
-                                                    .categories
-                                                    .name,
+                                                appBarTitle: _sectionModel.data[index].categories.name,
                                                 index: 0,
                                                 sectionModel: _sectionModel,
-                                              )));
+                                              ),
+                                      ),
+                                  );
                                 },
                               ),
                             );
@@ -121,41 +128,3 @@ class _SectionsState extends State<Sections> {
     );
   }
 }
-
-//
-// AnimatedWidgets(
-// duration: 1.5,
-// horizontalOffset: -50,
-// virticaloffset: 0,
-// child: CustomSection(
-// title: "خدمات منزلية",
-// imgSrc: "assets/icons/spa.png",
-// onTap: () {
-// Navigator.push(context, MaterialPageRoute(builder: (_) => MainDrawer(appBarTitle: "خدمات منزلية", index: 1)));
-// },
-// ),
-// ),
-// AnimatedWidgets(
-// duration: 1.5,
-// horizontalOffset: 50,
-// virticaloffset: 0,
-// child: CustomSection(
-// title: "سباكة",
-// imgSrc: "assets/icons/doc.png",
-// onTap: () {
-// Navigator.push(context, MaterialPageRoute(builder: (_) => MainDrawer(appBarTitle: "سباك", index: 2)));
-// },
-// ),
-// ),
-// AnimatedWidgets(
-// duration: 1.5,
-// horizontalOffset: -50,
-// virticaloffset: 0,
-// child: CustomSection(
-// title: "كهرباء",
-// imgSrc: "assets/icons/xzxdoc.png",
-// onTap: () {
-// Navigator.push(context, MaterialPageRoute(builder: (_) => MainDrawer(appBarTitle: "كهرباء", index: 3)));
-// },
-// ),
-// ),

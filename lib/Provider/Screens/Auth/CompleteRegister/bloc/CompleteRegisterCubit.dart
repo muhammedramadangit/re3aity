@@ -23,14 +23,15 @@ class CompleteRegisterCubit extends Cubit<CompleteRegisterState>{
 
     try{
 
-      print("sex : $sex | "
-          "lat : $lat | "
-          "lng : $lng |"
-          " address : $address"
-          " | name : $name | "
-          "desc : $desc |"
-          " categories : $categories "
-          "| user ID : $user_id");
+      print("sex : $sex ");
+      print("lat : $lat ");
+      print("lng : $lng ");
+      print("address : $address ");
+      print("name : $name ");
+      print("desc : $desc ");
+      print("categories : $categories ");
+      print("user ID : $user_id ");
+
       final url = "https://mycare.pro/api/completeadvertiserdata";
       SharedPreferences _pref = await SharedPreferences.getInstance();
       print( _pref.getInt("id"));

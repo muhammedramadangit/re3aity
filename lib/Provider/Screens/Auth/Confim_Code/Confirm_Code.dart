@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lastre3ayty/Provider/Screens/Auth/CompleteRegister/Complete_Register.dart';
 import 'package:lastre3ayty/Provider/Screens/Auth/Confim_Code/Bloc/VerifyCubit.dart';
 import 'package:lastre3ayty/Provider/Screens/Auth/Confim_Code/Bloc/VerifyState.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
+import 'package:lastre3ayty/common/CenterLoading.dart';
 import 'package:lastre3ayty/common/CustomButton.dart';
+import 'package:lastre3ayty/common/CustonSnackBar.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 
 class ProviderConfirmCode extends StatefulWidget {
@@ -129,32 +130,24 @@ class _ProviderConfirmCodeState extends State<ProviderConfirmCode> {
                                   BlocConsumer<ProviderVerifyCubit, ProviderVerifyState>(
                                     listener: (_, state){
                                       if(state is ProviderVerifyErrorState){
-                                        Scaffold.of(_).showSnackBar(SnackBar(
-                                          backgroundColor: Theme.of(_).primaryColor,
-                                          content: Text(state.error,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(color: Colors.white, fontSize: 12),),
-                                        ));
+                                        customSnackBar(_, state.error);
                                       }else if(state is ProviderVerifySuccessState){
                                         Navigator.push(context, MaterialPageRoute(builder: (_) => ProviderCompleteRegister()));
                                         print("================= تم تفعيل الحساب بنجاح ====================");
                                       }
                                     },
                                     builder: (context, state){
-                                      return state is ProviderVerifyLoadingState ? Center(
-                                        child: SpinKitChasingDots(
-                                          size: 25,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                      ) : CustomButton(
-                                        text: "التحقق",
-                                        width: MediaQuery.of(context).size.width / 2,
-                                        height: 40,
-                                        onTap: () {
-                                          if(formKey.currentState.validate()){
-                                            cubit.postProviderVerifyCode();
-                                          }
-                                        }
+                                      return state is ProviderVerifyLoadingState
+                                          ? CenterLoading()
+                                          : CustomButton(
+                                              text: "التحقق",
+                                              width: MediaQuery.of(context).size.width / 2,
+                                              height: 40,
+                                              onTap: () {
+                                                if (formKey.currentState.validate()) {
+                                                  cubit.postProviderVerifyCode();
+                                                }
+                                              },
                                       );
                                     },
                                   ),

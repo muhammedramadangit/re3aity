@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lastre3ayty/User/screens/Auth/Confirm_Forget_Password/Bloc/Confirm_Forget_Cubit.dart';
 import 'package:lastre3ayty/User/screens/Auth/Confirm_Forget_Password/Bloc/Confirm_Forget_State.dart';
 import 'package:lastre3ayty/User/screens/Auth/NewPassword/New_Password.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
+import 'package:lastre3ayty/common/CenterLoading.dart';
 import 'package:lastre3ayty/common/CustomButton.dart';
+import 'package:lastre3ayty/common/CustonSnackBar.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 
 class ConfirmForgetPassword extends StatefulWidget {
@@ -130,33 +131,25 @@ class _ConfirmForgetPasswordState extends State<ConfirmForgetPassword> {
                                   BlocConsumer<ConfirmForgetCubit, ConfirmForgetState>(
                                     listener: (_, state){
                                       if(state is ConfirmForgetErrorState){
-                                        Scaffold.of(_).showSnackBar(SnackBar(
-                                          backgroundColor: Theme.of(_).primaryColor,
-                                          content: Text(state.error,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(color: Colors.white, fontSize: 12),),
-                                        ));
+                                        customSnackBar(_, state.error);
                                       }else if (state is ConfirmForgetSuccessState){
                                         Navigator.push(context, MaterialPageRoute(builder: (_) => NewPassword()));
                                         print("<<==*=*=*=*=*=*=*=*=*=*= تم التحقق من الرقم =*=*=*=*=*=*=*=*=*=*=>>");
                                       }
                                     },
                                     builder: (context, state){
-                                      return state is ConfirmForgetLoadingState ? Center(
-                                        child: SpinKitChasingDots(
-                                          size: 25,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                      ) : CustomButton(
-                                        text: "التحقق",
-                                        width: MediaQuery.of(context).size.width / 2,
-                                        height: 40,
-                                        onTap: (){
-                                          if(formKey.currentState.validate()){
-                                            cubit.postConfirmForget();
-                                          }
-                                        },
-                                      );
+                                      return state is ConfirmForgetLoadingState
+                                          ? CenterLoading()
+                                          : CustomButton(
+                                              text: "التحقق",
+                                              width: MediaQuery.of(context).size.width / 2,
+                                              height: 40,
+                                              onTap: () {
+                                                if (formKey.currentState.validate()) {
+                                                  cubit.postConfirmForget();
+                                                }
+                                              },
+                                            );
                                     },
                                   ),
 

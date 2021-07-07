@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lastre3ayty/Provider/Screens/Notification/Provider_Notification.dart';
 import 'package:lastre3ayty/User/Controller/TermsAndPolicy.dart';
 import 'package:lastre3ayty/User/models/TermsAndPolicy.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
+import 'package:lastre3ayty/common/CenterLoading.dart';
 import 'package:lastre3ayty/common/CustomAppBar.dart';
 
 class ProviderTermsAndConditions extends StatefulWidget {
@@ -53,12 +53,7 @@ class _ProviderTermsAndConditionsState extends State<ProviderTermsAndConditions>
         ),
 
         body: isLoading
-            ? Center(
-                child: SpinKitChasingDots(
-                  size: 25,
-                  color: Theme.of(context).primaryColor,
-                ),
-              )
+            ? CenterLoading()
             : Padding(
                 padding: EdgeInsets.only(top: 25, right: 20, left: 20),
                 child: AnimatedWidgets(

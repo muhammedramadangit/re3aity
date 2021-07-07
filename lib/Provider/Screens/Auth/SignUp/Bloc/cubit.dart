@@ -29,7 +29,7 @@ class ProviderSignUpCubit extends Cubit<ProviderSignUpState>{
       if(response.statusCode == 200 && response.data["msg"] == "success"){
         SharedPreferences _pref = await SharedPreferences.getInstance();
         _pref.setString("api_token", response.data["api_token"]);
-        _pref.setInt("id", response.data["data"]["id"]);
+        _pref.setInt("pro_id", response.data["data"]["id"]);
         print(response.data["data"]["id"]);
         print(response.data);
         emit(ProviderSignUpSuccessState());

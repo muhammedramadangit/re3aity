@@ -1,19 +1,26 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
-import 'package:lastre3ayty/common/CustomButton.dart';
-import 'package:lastre3ayty/theme/color.dart';
 
 class CustomDialog extends StatefulWidget {
-  final String code;
+  final String msg;
+  final Function navRoute;
 
-  const CustomDialog({Key key, this.code}) : super(key: key);
+  const CustomDialog({Key key, this.msg, this.navRoute}) : super(key: key);
 
   @override
   _CustomDialogState createState() => _CustomDialogState();
 }
 
 class _CustomDialogState extends State<CustomDialog> {
+  @override
+  void initState() {
+    Timer(Duration(seconds: 3), widget.navRoute);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AnimatedWidgets(
@@ -50,41 +57,13 @@ class _CustomDialogState extends State<CustomDialog> {
               ),
               SizedBox(height: 5),
               Text(
-                "كود التحقق الخاص بك",
+                widget.msg,
                 style: TextStyle(
                   color: Theme.of(context).accentColor,
-                  fontSize: 16,
+                  fontSize: 14,
                     fontFamily: "Cairo-Bold",
                 ),
               ),
-              Text(
-                widget.code,
-                style: TextStyle(
-                    color: ThemeColor.darkerGreyText,
-                  fontSize: 22,
-                  // fontFamily: "Cairo-Bold"
-                ),
-              ),
-
-              // Container(
-              //   height: 40,
-              //   width: MediaQuery.of(context).size.width / 2.5,
-              //   decoration: BoxDecoration(
-              //     // color: Theme.of(context).primaryColor,
-              //     borderRadius: BorderRadius.circular(10),
-              //     gradient: LinearGradient(
-              //       colors: [
-              //         Theme.of(context).primaryColor,
-              //         Theme.of(context).primaryColor.withOpacity(0.5),
-              //         Theme.of(context).primaryColor,
-              //       ],
-              //       begin: Alignment.centerRight,
-              //       end: Alignment.centerLeft,
-              //     ),
-              //   ),
-              //   // child: Icon(CupertinoIcons.checkmark_alt,
-              //   //     size: 60, color: Colors.white),
-              // )
             ],
           ),
         ),

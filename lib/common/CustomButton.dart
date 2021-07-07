@@ -69,9 +69,7 @@ class _CustomButtonState extends State<CustomButton> {
                       ? ThemeColor.lighterGreyText.withOpacity(0.5)
                       : widget.color == Colors.white
                           ? Colors.white
-                          : Theme.of(context)
-                              .primaryColor
-                              .withOpacity(widget.opacity ?? 1),
+                          : Theme.of(context).primaryColor.withOpacity(widget.opacity ?? 1),
                   widget.color == ThemeColor.lighterGreyText
                       ? ThemeColor.lighterGreyText.withOpacity(0.2)
                       : widget.color == Colors.white
@@ -81,9 +79,7 @@ class _CustomButtonState extends State<CustomButton> {
                       ? ThemeColor.lighterGreyText.withOpacity(0.5)
                       : widget.color == Colors.white
                           ? Colors.white
-                          : Theme.of(context)
-                              .primaryColor
-                              .withOpacity(widget.opacity ?? 1),
+                          : Theme.of(context).primaryColor.withOpacity(widget.opacity ?? 1),
                 ],
                 begin: Alignment.centerRight,
                 end: Alignment.centerLeft,

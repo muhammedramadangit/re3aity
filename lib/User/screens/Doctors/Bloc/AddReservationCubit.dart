@@ -9,23 +9,30 @@ class AddReservationCubit extends Cubit<AddReservationState>{
 
   static AddReservationCubit get(context) => BlocProvider.of(context);
   Dio dio = Dio();
-  String user_id, owner_id, cat_id, date, time, place;
+  String date, time, place;
+  int user_id, owner_id, cat_id;
 
   Future<void> postAddReservation() async {
     emit(AddReservationLoadingState());
 
     try{
-      print("user ID : $user_id | owner ID : $owner_id | cat ID : $cat_id | date : $date | time : $time | place : $place");
+      print("user ID : ${user_id.toString()}");
+      print("owner ID : ${owner_id.toString()}");
+      print("cat ID : ${cat_id.toString()}");
+      print("date : $date");
+      print("time : $time");
+      print("place : $place");
       final url = "https://mycare.pro/api/addreservation";
       SharedPreferences _pref = await SharedPreferences.getInstance();
 
       FormData formData = FormData.fromMap({
         "user_id" : "${_pref.getInt("user_id")}",
         "owner_id" : "${_pref.getInt("pro_id")}",
-        "cat_id" : "3",
-        "date" : "2021-07-20",
-        "time" : "6:43 PM",
-        "place" : "العيادة",
+        // "cat_id" : "${_pref.getInt("cat_id")}",
+        "cat_id" : 1,
+        "date" : date,
+        "time" : time,
+        "place" : place,
       });
 
       Map<String, dynamic> headers = {

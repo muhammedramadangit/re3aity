@@ -49,44 +49,46 @@ class DoctorsItem extends StatelessWidget {
           ),
 
           //================ doctor details ===================
-          Padding(
-            padding: EdgeInsets.only(right: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  name,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Theme.of(context).accentColor,
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.only(right: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    name,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Theme.of(context).accentColor,
+                    ),
                   ),
-                ),
-                Text(
-                  description,
-                  style: TextStyle(
-                    fontSize: 10,
-                    color: Theme.of(context).accentColor,
+                  Text(
+                    description,
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: Theme.of(context).accentColor,
+                    ),
                   ),
-                ),
-                RatingBar.builder(
-                  initialRating: rate.toDouble(),
-                  itemSize: 20,
-                  minRating: 0,
-                  direction: Axis.horizontal,
-                  allowHalfRating: true,
-                  ignoreGestures: true,
-                  unratedColor: Colors.grey[300],
-                  itemCount: 5,
-                  itemPadding: EdgeInsets.symmetric(horizontal: 1),
-                  itemBuilder: (context, _) {
-                    return Image.asset("assets/icons/starac.png");
-                  },
-                  onRatingUpdate: (rating) {
-                    print(rating);
-                  },
-                ),
-              ],
+                  RatingBar.builder(
+                    initialRating: rate.toDouble(),
+                    itemSize: 20,
+                    minRating: 0,
+                    direction: Axis.horizontal,
+                    allowHalfRating: true,
+                    ignoreGestures: true,
+                    unratedColor: Colors.grey[300],
+                    itemCount: 5,
+                    itemPadding: EdgeInsets.symmetric(horizontal: 1),
+                    itemBuilder: (context, _) {
+                      return Image.asset("assets/icons/starac.png");
+                    },
+                    onRatingUpdate: (rating) {
+                      print(rating);
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ],

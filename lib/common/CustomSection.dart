@@ -9,8 +9,9 @@ class CustomSection extends StatelessWidget {
   final Widget widget;
   final Color color;
   final double fontSize;
+  final BoxFit fit;
 
-  const CustomSection({this.title, this.imgSrc, this.onTap, this.height, this.width, this.horizontalPadding, this.verticalPadding, this.widget, this.color, this.imgSize, this.fontSize});
+  const CustomSection({this.title, this.imgSrc, this.onTap, this.height, this.width, this.horizontalPadding, this.verticalPadding, this.widget, this.color, this.imgSize, this.fontSize, this.fit});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class CustomSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(imgSrc,
-                height: imgSize ?? 80, width: imgSize ?? 80, fit: BoxFit.cover, color: color == Colors.white ? Theme.of(context).accentColor : Colors.white),
+                height: imgSize ?? 80, width: imgSize ?? 80, fit: fit ?? BoxFit.cover, color: color == Colors.white ? Theme.of(context).accentColor : Colors.white),
             SizedBox(height: 2),
             Text(
               title,

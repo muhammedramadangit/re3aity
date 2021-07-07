@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lastre3ayty/User/Controller/CurrentReservation.dart';
 import 'package:lastre3ayty/User/models/CurrentReservation.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
+import 'package:lastre3ayty/common/CenterLoading.dart';
 import 'package:lastre3ayty/common/CenterMessage.dart';
 import 'package:lastre3ayty/common/CustomCard.dart';
 import 'package:lastre3ayty/common/CustomRichText.dart';
@@ -33,12 +33,8 @@ class _CurrentReservationState extends State<CurrentReservation> {
   @override
   Widget build(BuildContext context) {
     return _isLoading
-        ? Center(
-            child: SpinKitChasingDots(
-              size: 25,
-              color: Theme.of(context).primaryColor,
-            ),
-          ) : _currentModel.data.length == 0
+        ? CenterLoading()
+        : _currentModel.data.length == 0
             ? CenterMessage(msg: "لا يوجد حجوزات")
             : ListView.builder(
                 itemCount: _currentModel.data.length,

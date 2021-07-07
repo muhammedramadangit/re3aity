@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lastre3ayty/User/screens/Doctors/Doctors.dart';
 import 'package:lastre3ayty/User/screens/Notification/Notification_Screen.dart';
-import 'package:lastre3ayty/User/screens/Profile/profile.dart';
+import 'package:lastre3ayty/User/screens/Profile/Profile/profile.dart';
 import 'package:lastre3ayty/User/screens/Sections/model/SectionModel.dart';
 import 'package:lastre3ayty/common/CustomAppBar.dart';
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:lastre3ayty/User/CustomDrawer/Drawer_Item.dart';
 import 'package:lastre3ayty/User/CustomDrawer/Drawer_Items.dart';
 import 'package:lastre3ayty/User/CustomDrawer/Main_Drawer.dart';
-import 'package:lastre3ayty/User/screens/Profile/profile.dart';
 import 'package:lastre3ayty/common/CustomSection.dart';
 
 class DrawerWidget extends StatelessWidget {

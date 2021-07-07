@@ -1,14 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lastre3ayty/User/screens/Auth/Confirm_Forget_Password/Confirm_Forget_Password.dart';
 import 'package:lastre3ayty/User/screens/Auth/Forget_Password/Bloc/Forget_Pass_Cubit.dart';
 import 'package:lastre3ayty/User/screens/Auth/Forget_Password/Bloc/Forget_Pass_State.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
+import 'package:lastre3ayty/common/CenterLoading.dart';
 import 'package:lastre3ayty/common/CustomButton.dart';
 import 'package:lastre3ayty/common/CustomRegisterIcon.dart';
 import 'package:lastre3ayty/common/CustomTextField.dart';
+import 'package:lastre3ayty/common/CustonSnackBar.dart';
 
 class ForgetPassword extends StatefulWidget {
   @override
@@ -132,32 +133,25 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                                   BlocConsumer<ForgetPassCubit, ForgetPassState>(
                                     listener: (_, state){
                                       if(state is ForgetPassErrorState){
-                                        Scaffold.of(_).showSnackBar(SnackBar(
-                                          backgroundColor: Theme.of(_).primaryColor,
-                                          content: Text(state.error,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(color: Colors.white, fontSize: 12),),
-                                        ));
+                                        customSnackBar(_, state.error);
                                       }else if(state is ForgetPassSuccessState){
                                         Navigator.push(context, MaterialPageRoute(builder: (_) => ConfirmForgetPassword()));
                                         print("<=<=<=<=<<==<<==<<==<<== Done ==>==>==>==>==>==>==>==>");
                                       }
                                     },
                                     builder: (context, state){
-                                      return state is ForgetPassLoadingState ? Center(
-                                        child: SpinKitChasingDots(
-                                          size: 25,
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                      ) : CustomButton(
-                                        text: "ارسال",
-                                        width: MediaQuery.of(context).size.width / 2,
-                                        height: 40,
-                                        onTap: () {
-                                          if(formKey.currentState.validate()){
-                                            cubit.postForgetPass();
-                                          }
-                                        }
+                                      return state is ForgetPassLoadingState
+                                          ? CenterLoading()
+                                          : CustomButton(
+                                              text: "ارسال",
+                                              width: MediaQuery.of(context).size.width / 2,
+                                              height: 40,
+                                              onTap: () {
+                                                if (formKey.currentState.validate()) {
+                                                  cubit.postForgetPass();
+                                                }
+                                              },
+
                                       );
                                     },
                                   ),
