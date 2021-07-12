@@ -32,6 +32,9 @@ dependencies:
   image_picker: ^0.8.0+3
   get_storage: ^2.0.2
   pin_code_text_field: ^1.8.0
+  toast: ^0.1.5
+  flutter_local_notifications: ^3.0.2
+  flutter_ringtone_player: ^2.0.0
 
   multiselect_formfield: any
 

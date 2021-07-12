@@ -6,6 +6,7 @@ import 'package:lastre3ayty/Provider/Provider_Drawer/Provider_Main_Page.dart';
 import 'package:lastre3ayty/Provider/Screens/Auth/Login/ProviderLogin.dart';
 import 'package:lastre3ayty/Provider/Screens/Privacy_Policy/PrivacyPolicy.dart';
 import 'package:lastre3ayty/Provider/Screens/Terms_and_Conditions/Terms_and_Conditions.dart';
+import 'package:lastre3ayty/User_or_Provider/UserOrProvider.dart';
 
 class ProviderMainDrawer extends StatefulWidget {
   final int index;
@@ -75,7 +76,7 @@ class _ProviderMainDrawerState extends State<ProviderMainDrawer> {
               if (item == ProviderDrawerItems.logout) {
                 Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (_) => ProviderLogin()),
+                    MaterialPageRoute(builder: (_) => UserOrProvider()),
                     (route) => false);
               } else {
                 setState(() => this.item = item);

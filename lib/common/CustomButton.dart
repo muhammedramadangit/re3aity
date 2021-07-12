@@ -74,7 +74,7 @@ class _CustomButtonState extends State<CustomButton> {
                       ? ThemeColor.lighterGreyText.withOpacity(0.2)
                       : widget.color == Colors.white
                           ? Colors.white
-                          : Theme.of(context).primaryColor.withOpacity(0.5),
+                          : Color(0xFFD873CB),
                   widget.color == ThemeColor.lighterGreyText
                       ? ThemeColor.lighterGreyText.withOpacity(0.5)
                       : widget.color == Colors.white

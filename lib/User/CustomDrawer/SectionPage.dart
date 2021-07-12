@@ -1,19 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:lastre3ayty/User/models/Category_model/All_category.dart';
+import 'package:lastre3ayty/User/models/Category_model/Category_data.dart';
 import 'package:lastre3ayty/User/screens/Doctors/Doctors.dart';
 import 'package:lastre3ayty/User/screens/Notification/Notification_Screen.dart';
+import 'package:lastre3ayty/User/screens/Profile/Profile/Bloc/ProfileCubit.dart';
 import 'package:lastre3ayty/User/screens/Profile/Profile/profile.dart';
-import 'package:lastre3ayty/User/screens/Sections/model/SectionModel.dart';
 import 'package:lastre3ayty/common/CustomAppBar.dart';
 
 
 class SectionPage extends StatefulWidget {
   final VoidCallback openDrawer;
-  final int index;
-  final String appBarTitle;
+  final int index, id;
+  final String appBarTitle, serviceName;
   final bool showSearchIcon;
-  final SectionModel sectionModel;
+  final AllCategories categoryData;
+  final ProfileCubit profileCubit;
 
-  const SectionPage({Key key, @required this.openDrawer, this.index, this.appBarTitle, this.showSearchIcon = true, this.sectionModel}) : super(key: key);
+  const SectionPage(
+      {Key key,
+      @required this.openDrawer,
+      this.index,
+      this.appBarTitle,
+      this.showSearchIcon = true,
+      this.categoryData,
+      this.serviceName, this.id, this.profileCubit})
+      : super(key: key);
 
   @override
   _SectionPageState createState() => _SectionPageState();
@@ -38,8 +49,8 @@ class _SectionPageState extends State<SectionPage> {
   @override
   void initState() {
     pages = [
-      Doctors(sectionModel: widget.sectionModel),
-      Profile(),
+      Doctors(allCategories: widget.categoryData, serviceName: widget.serviceName, id: widget.id,),
+      Profile(profileCubit: widget.profileCubit),
     ];
     whichPage();
     super.initState();

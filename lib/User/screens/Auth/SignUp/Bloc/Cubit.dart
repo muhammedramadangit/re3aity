@@ -30,6 +30,7 @@ class SignUpCubit extends Cubit<SignUpState> {
       });
 
       final Response response = await dio.post(url, data: formData);
+
       if(response.statusCode == 200 && response.data["msg"] == "success"){
         SharedPreferences _prefs = await SharedPreferences.getInstance();
         _prefs.setString("api_token", response.data["api_token"]);

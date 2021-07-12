@@ -360,7 +360,7 @@ class _ProviderCompleteRegisterState extends State<ProviderCompleteRegister> {
                       inputType: TextInputType.number,
                       validate: (val){
                         if(val.isEmpty){
-                          return "من فضلك ادخل سعر المنزل";
+                          return "من فضلك ادخل سعر الخدمة فى المنزل";
                         }
                       },
                       onChanged: (String val){
@@ -376,7 +376,7 @@ class _ProviderCompleteRegisterState extends State<ProviderCompleteRegister> {
                       rightPadding: 5,
                       verticalPadding: 0,
                       width: MediaQuery.of(context).size.width * .32,
-                      label: "العيادة",
+                      label: "مكان الخدمة",
                       suffixIcon: Padding(
                         padding: EdgeInsets.only(left: 8.0),
                         child: Text("ريال", style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 12),),
@@ -384,7 +384,7 @@ class _ProviderCompleteRegisterState extends State<ProviderCompleteRegister> {
                       inputType: TextInputType.number,
                       validate: (val){
                         if(val.isEmpty){
-                          return "من فضلك ادخل سعر العيادة";
+                          return "من فضلك ادخل سعر الخدمة فى مكان مقدم الخدمة";
                         }
                       },
                       onChanged: (val){

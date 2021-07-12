@@ -3,20 +3,28 @@ import 'package:lastre3ayty/User/CustomDrawer/Drawer_Item.dart';
 import 'package:lastre3ayty/User/CustomDrawer/Drawer_Items.dart';
 import 'package:lastre3ayty/User/CustomDrawer/Drawer_widget.dart';
 import 'package:lastre3ayty/User/CustomDrawer/SectionPage.dart';
-import 'package:lastre3ayty/User/screens/Auth/Login/login_screen.dart';
+import 'package:lastre3ayty/User/models/Category_model/All_category.dart';
 import 'package:lastre3ayty/User/screens/Privacy_Policy/PrivacyPolicy.dart';
+import 'package:lastre3ayty/User/screens/Profile/Profile/Bloc/ProfileCubit.dart';
 import 'package:lastre3ayty/User/screens/Sections/Sections.dart';
-import 'package:lastre3ayty/User/screens/Sections/model/SectionModel.dart';
 import 'package:lastre3ayty/User/screens/Terms_and_Conditions/Terms_and_Conditions.dart';
 import 'package:lastre3ayty/User/screens/User_Reservation/User_Reservation.dart';
+import 'package:lastre3ayty/User_or_Provider/UserOrProvider.dart';
 
 class MainDrawer extends StatefulWidget {
-  final int index;
-  final String appBarTitle;
+  final int index, id;
+  final String appBarTitle, sectionServiceName;
   final bool showSearchIcon;
-  final SectionModel sectionModel;
+  final AllCategories categoryData;
+  final ProfileCubit profileCubit;
 
-  const MainDrawer({this.index, this.appBarTitle, this.showSearchIcon = true, this.sectionModel});
+  const MainDrawer(
+      {this.index,
+      this.appBarTitle,
+      this.showSearchIcon = true,
+      this.categoryData,
+      this.sectionServiceName,
+      this.id, this.profileCubit});
 
   @override
   _MainDrawerState createState() => _MainDrawerState();
@@ -81,7 +89,7 @@ class _MainDrawerState extends State<MainDrawer> {
               if (item == DrawerItems.logout) {
                 Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (_) => LoginScreen()),
+                    MaterialPageRoute(builder: (_) => UserOrProvider()),
                     (route) => false);
               } else {
                 setState(() => this.item = item);
@@ -154,7 +162,10 @@ class _MainDrawerState extends State<MainDrawer> {
         appBarTitle: widget.appBarTitle,
         index: widget.index,
         showSearchIcon: widget.showSearchIcon,
-        sectionModel: widget.sectionModel,
+        categoryData: widget.categoryData,
+        serviceName: widget.sectionServiceName,
+        id: widget.id,
+        profileCubit: widget.profileCubit,
       );
     }
 

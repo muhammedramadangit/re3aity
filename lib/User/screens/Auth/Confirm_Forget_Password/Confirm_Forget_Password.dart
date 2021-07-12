@@ -115,17 +115,17 @@ class _ConfirmForgetPasswordState extends State<ConfirmForgetPassword> {
                                   ),
 
                                   //============== اعادة ارسال الكود =================
-                                  FlatButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "اعادة ارسال",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontFamily: 'Cairo-Bold',
-                                        color: Theme.of(context).accentColor,
-                                      ),
-                                    ),
-                                  ),
+                                  // FlatButton(
+                                  //   onPressed: () {},
+                                  //   child: Text(
+                                  //     "اعادة ارسال",
+                                  //     style: TextStyle(
+                                  //       fontSize: 16,
+                                  //       fontFamily: 'Cairo-Bold',
+                                  //       color: Theme.of(context).accentColor,
+                                  //     ),
+                                  //   ),
+                                  // ),
 
                                   //==================== التحقق ======================
                                   BlocConsumer<ConfirmForgetCubit, ConfirmForgetState>(

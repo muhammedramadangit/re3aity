@@ -1,35 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:lastre3ayty/User/models/Category_model/Sub_category.dart';
 import 'package:lastre3ayty/User/screens/Doctors/Doctor_Details/Doctor_Details.dart';
-import 'package:lastre3ayty/User/screens/Sections/model/SectionModel.dart';
 import 'package:lastre3ayty/common/CustomCard.dart';
 
 class DoctorsItem extends StatelessWidget {
-  final String name, imgSrc, description, service, address;
-  final int rate, clinicPrice, homePrice;
-  final SectionModel sectionModel;
+  final String name, imgSrc, description, serviceName;
+  final int rate, catID;
+  final Subcategory subcategories;
 
-  const DoctorsItem(
-      {this.name,
-      this.imgSrc,
-      this.description,
-      this.rate,
-      this.sectionModel,
-      this.service,
-      this.address,
-      this.clinicPrice,
-      this.homePrice});
+  DoctorsItem({
+    this.name,
+    this.imgSrc,
+    this.description,
+    this.rate,
+    this.subcategories,
+    this.catID,
+    this.serviceName,
+  });
 
   @override
   Widget build(BuildContext context) {
     return CustomCard(
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => DoctorDetails(
-                    sectionModel: sectionModel,
-                    appbarTitle: name,
-        desc: description,
-        address: address,
-        image: imgSrc,
-        rate: rate,
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (_) => DoctorDetails(
+                    person: subcategories,
+                    catID: catID,
+                    serviceName: serviceName,
                   ))),
       child: Row(
         children: [

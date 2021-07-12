@@ -115,17 +115,17 @@ class _ConfirmCodeState extends State<ConfirmCode> {
                                   ),
 
                                   //============== اعادة ارسال الكود =================
-                                  FlatButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "اعادة ارسال",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontFamily: 'Cairo-Bold',
-                                        color: Theme.of(context).accentColor,
-                                      ),
-                                    ),
-                                  ),
+                                  // FlatButton(
+                                  //   onPressed: () {},
+                                  //   child: Text(
+                                  //     "اعادة ارسال",
+                                  //     style: TextStyle(
+                                  //       fontSize: 16,
+                                  //       fontFamily: 'Cairo-Bold',
+                                  //       color: Theme.of(context).accentColor,
+                                  //     ),
+                                  //   ),
+                                  // ),
 
                                   //==================== تحقق ======================
                                   BlocConsumer<ConfirmCodeCubit, ConfirmCodeState>(

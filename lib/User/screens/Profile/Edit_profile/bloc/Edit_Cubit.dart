@@ -34,8 +34,8 @@ class EditProfileCubit extends Cubit<EditProfileState>{
         "address" : address,
         "lat" : lat,
         "lng" : lng,
-        "phone" : phone,
-        "imagebase" : image,
+        "phone" : "966${phone}",
+        "imagebase" : await MultipartFile.fromFile(image.path),
       });
 
       final Response response = await dio.post(url, data: formData);

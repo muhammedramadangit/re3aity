@@ -114,17 +114,17 @@ class _ProviderConfirmCodeState extends State<ProviderConfirmCode> {
                                   ),
 
                                   //=============== اعادة ارسال ==================
-                                  FlatButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "اعادة ارسال",
-                                      style: TextStyle(
-                                        fontSize: 17,
-                                        fontFamily: 'Cairo-Bold',
-                                        color: Theme.of(context).accentColor,
-                                      ),
-                                    ),
-                                  ),
+                                  // FlatButton(
+                                  //   onPressed: () {},
+                                  //   child: Text(
+                                  //     "اعادة ارسال",
+                                  //     style: TextStyle(
+                                  //       fontSize: 17,
+                                  //       fontFamily: 'Cairo-Bold',
+                                  //       color: Theme.of(context).accentColor,
+                                  //     ),
+                                  //   ),
+                                  // ),
 
                                   //================= التحقق ===================
                                   BlocConsumer<ProviderVerifyCubit, ProviderVerifyState>(

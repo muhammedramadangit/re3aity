@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:lastre3ayty/User/models/Category_model/Sub_category.dart';
 import 'package:lastre3ayty/User/screens/Doctors/Bloc/AddReservationCubit.dart';
 import 'package:lastre3ayty/User/screens/Doctors/Bloc/AddReservationState.dart';
 import 'package:lastre3ayty/User/screens/Notification/Notification_Screen.dart';
-import 'package:lastre3ayty/User/screens/Sections/model/SectionModel.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
 import 'package:lastre3ayty/common/CenterLoading.dart';
 import 'package:lastre3ayty/common/CustomAppBar.dart';
@@ -14,19 +14,18 @@ import 'package:lastre3ayty/common/CustomDialog.dart';
 import 'package:lastre3ayty/theme/color.dart';
 
 class DoctorDetails extends StatefulWidget {
-  final SectionModel sectionModel;
-  final String appbarTitle, desc, address, image;
-  final int rate, clinicPrice, homePrice;
+  final Subcategory person;
+  final String serviceName;
+  final int catID;
 
-  const DoctorDetails(
-      {this.sectionModel,
-      this.appbarTitle,
-      this.image,
-      this.desc,
-      this.address,
-      this.rate,
-      this.clinicPrice,
-      this.homePrice});
+  const DoctorDetails({this.person, this.serviceName, this.catID,});
+
+      // this.image,
+      // this.desc,
+      // this.address,
+      // this.clinicPrice,
+      // this.homePrice
+
 
   @override
   _DoctorDetailsState createState() => _DoctorDetailsState();
@@ -38,6 +37,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
   DateTime _pickedDate;
   TimeOfDay _time;
   List place = ["العيادة", "المنزل"];
+  int userID;
 
   @override
   void initState() {
@@ -81,7 +81,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
       child: Scaffold(
         appBar: customAppBar(
           context: context,
-          appBarTilte: widget.appbarTitle,
+          appBarTilte: widget.person.user.name,
           showNotificationIcon: true,
           onTapNotification: () =>
               Navigator.push(context,
@@ -110,7 +110,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                             child: Container(
                               decoration: BoxDecoration(
                                   image: DecorationImage(
-                                    image: NetworkImage("https://mycare.pro/public/dash/assets/img/${widget.image}"),
+                                    image: NetworkImage("https://mycare.pro/public/dash/assets/img/${widget.person.user.image}"),
                                     fit: BoxFit.cover,
                                   )),
                             ),
@@ -126,7 +126,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  widget.address,
+                                  widget.person.user.address,
                                   style: TextStyle(
                                     fontSize: 12,
                                     fontFamily: "Cairo-Bold",
@@ -135,7 +135,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                                 ),
 
                                 RatingBar.builder(
-                                  initialRating: widget.rate.toDouble(),
+                                  initialRating: widget.person.user.rate.toDouble(),
                                   itemSize: 20,
                                   minRating: 0,
                                   direction: Axis.horizontal,
@@ -183,7 +183,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                         ),
                         SizedBox(height: 5),
                         Text(
-                          widget.desc,
+                          widget.person.user.desc,
                           style: TextStyle(
                             fontSize: 10,
                             color: ThemeColor.darkerGreyText,
@@ -205,7 +205,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "الخدمات",
+                          "الخدمات : ${widget.serviceName}",
                           style: TextStyle(
                             fontSize: 12,
                             fontFamily: "Cairo-Bold",
@@ -226,7 +226,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                                   ),
                                 ),
                                 Text(
-                                  "${widget.homePrice.toString()} ريال",
+                                  "${widget.person.homeprice.toString()} ريال",
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: Theme.of(context).accentColor,
@@ -244,7 +244,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                                   ),
                                 ),
                                 Text(
-                                  "${widget.clinicPrice.toString()} ريال",
+                                  "${widget.person.clincprice.toString()} ريال",
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: Theme.of(context).accentColor,

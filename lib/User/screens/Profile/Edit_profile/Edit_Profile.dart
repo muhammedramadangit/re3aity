@@ -7,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lastre3ayty/User/screens/Profile/Edit_Profile/bloc/Edit_Cubit.dart';
 import 'package:lastre3ayty/User/screens/Profile/Edit_Profile/bloc/Edit_State.dart';
+import 'package:lastre3ayty/User/screens/Profile/Profile/Bloc/ProfileCubit.dart';
 import 'package:lastre3ayty/User/screens/Profile/Profile/model/ProfileModel.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
 import 'package:lastre3ayty/common/CenterLoading.dart';
@@ -20,9 +21,9 @@ import 'package:lastre3ayty/common/CustomTextFieldTap.dart';
 import 'package:lastre3ayty/common/CustonSnackBar.dart';
 
 class EditProfile extends StatefulWidget {
-  final ProfileModel profileModel;
+  final ProfileCubit profilecubit;
 
-  EditProfile({this.profileModel});
+  EditProfile({this.profilecubit});
 
   @override
   _EditProfileState createState() => _EditProfileState();
@@ -33,7 +34,6 @@ class _EditProfileState extends State<EditProfile> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   double lat = 31.1975844, lng = 29.9598339;
   String locationLabel = "العنوان الجديد";
-  File _imgSrc;
   final picker = ImagePicker();
 
 
@@ -43,8 +43,7 @@ class _EditProfileState extends State<EditProfile> {
 
     setState(() {
       if (image != null){
-        _imgSrc = File(image.path);
-        cubit.image = _imgSrc;
+        cubit.image = File(image.path);
       } else {
         print("No image selected!!!!");
       }
@@ -57,8 +56,7 @@ class _EditProfileState extends State<EditProfile> {
 
     setState(() {
       if (image != null){
-        _imgSrc = File(image.path);
-        cubit.image = _imgSrc;
+        cubit.image = File(image.path);
       } else {
         print("No image selected!!!!");
       }
@@ -99,7 +97,7 @@ class _EditProfileState extends State<EditProfile> {
         key: _scaffoldKey,
         appBar: customAppBar(
           context: context,
-          appBarTilte: "الاعدادات",
+          appBarTilte: "تعديل الصفحة الشخصية",
         ),
 
         body: Form(
@@ -114,43 +112,43 @@ class _EditProfileState extends State<EditProfile> {
                 children: [
 
                   //================ تعديل الصورة الشخصية ==================
-                  // AnimatedWidgets(
-                  //   duration: 1.5,
-                  //   virticaloffset: -50,
-                  //   horizontalOffset: 0,
-                  //   child: Padding(
-                  //     padding: EdgeInsets.symmetric(vertical: 40),
-                  //     child: Stack(
-                  //       children: [
-                  //         ClipRRect(
-                  //           borderRadius: BorderRadius.circular(60),
-                  //           child: Container(
-                  //             height: 120,
-                  //             width: 120,
-                  //             color: Colors.grey[50],
-                  //             child: _imgSrc == null
-                  //                 ? Container(
-                  //                     decoration: BoxDecoration(
-                  //                         image: DecorationImage(
-                  //                             image: NetworkImage("https://mycare.pro/public/dash/assets/img/${widget.profileModel.data.image}"),
-                  //                             fit: BoxFit.cover
-                  //                         ),
-                  //                     ),
-                  //                   ) : Image.file(cubit.image, fit: BoxFit.cover),
-                  //           ),
-                  //         ),
-                  //         Positioned(
-                  //           bottom: 0,
-                  //           right: 0,
-                  //           child: IconButton(
-                  //             onPressed: imageBottomSheet,
-                  //             icon: Icon(CupertinoIcons.photo_camera_solid, color: Theme.of(context).primaryColor, size: 28),
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
+                  AnimatedWidgets(
+                    duration: 1.5,
+                    virticaloffset: -50,
+                    horizontalOffset: 0,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 40),
+                      child: Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(60),
+                            child: Container(
+                              height: 120,
+                              width: 120,
+                              color: Colors.grey[50],
+                              child: cubit.image == null
+                                  ? Container(
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              image: NetworkImage("https://mycare.pro/public/dash/assets/img/${widget.profilecubit.profileModel.data.image}"),
+                                              fit: BoxFit.cover
+                                          ),
+                                      ),
+                                    ) : Image.file(cubit.image, fit: BoxFit.cover),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: IconButton(
+                              onPressed: imageBottomSheet,
+                              icon: Icon(CupertinoIcons.photo_camera_solid, color: Theme.of(context).primaryColor, size: 28),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
 
                   //================ اسم المستخدم الجديد ==================
                   AnimatedWidgets(
