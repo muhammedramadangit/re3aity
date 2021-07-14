@@ -3,6 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
+import 'package:lastre3ayty/Provider/Screens/MyReservation/Bloc/FinishedCubit/FinishedCubit.dart';
+import 'package:lastre3ayty/Provider/Screens/MyReservation/Bloc/RemoveCubit/RemoveCubit.dart';
+import 'package:lastre3ayty/Provider/Screens/Provider_Profile/Edit_Profile/Bloc/Edit_Cubit.dart';
+import 'package:lastre3ayty/Provider/Screens/Provider_Profile/Profile/Bloc/Profile_Cubit.dart';
 import 'package:lastre3ayty/Splash/splash_screen.dart';
 import 'package:lastre3ayty/User/screens/Profile/Edit_Profile/bloc/Edit_Cubit.dart';
 import 'package:lastre3ayty/User/screens/Profile/Profile/Bloc/ProfileCubit.dart';
@@ -13,15 +17,14 @@ import 'package:lastre3ayty/Provider/Screens/Auth/CompleteRegister/bloc/Complete
 import 'package:lastre3ayty/Provider/Screens/Auth/Confim_Code/Bloc/VerifyCubit.dart';
 import 'package:lastre3ayty/Provider/Screens/Auth/Login/Bloc/ProviderLoginCubit.dart';
 import 'package:lastre3ayty/Provider/Screens/Auth/SignUp/Bloc/cubit.dart';
-import 'package:lastre3ayty/Provider/Screens/Provider_Profile/Bloc/ProviderProfileCubit.dart';
 import 'package:lastre3ayty/User/screens/Auth/Confim_Code/bloc/ConfirmCodeCubit.dart';
 import 'package:lastre3ayty/User/screens/Auth/Confirm_Forget_Password/Bloc/Confirm_Forget_Cubit.dart';
 import 'package:lastre3ayty/User/screens/Auth/Forget_Password/Bloc/Forget_Pass_Cubit.dart';
 import 'package:lastre3ayty/User/screens/Auth/NewPassword/Bloc/NewPass_Cubit.dart';
 import 'package:lastre3ayty/User/screens/Auth/SignUp/Bloc/Cubit.dart';
 import 'package:lastre3ayty/User/screens/Doctors/Bloc/AddReservationCubit.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'User/screens/Auth/Login/Bloc/Cubit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   // WidgetsFlutterBinding.ensureInitialized();
@@ -154,8 +157,11 @@ class _MyCareState extends State<MyCare> {
         BlocProvider(create: (_) => ProviderSignUpCubit()),
         BlocProvider(create: (_) => ProviderVerifyCubit()),
         BlocProvider(create: (_) => CompleteRegisterCubit()),
-
         BlocProvider(create: (_) => ProviderProfileCubit()),
+        BlocProvider(create: (_) => EditProviderCubit()),
+        BlocProvider(create: (_) => RemoveCubit()),
+        BlocProvider(create: (_) => FinishedCubit()),
+
       ],
 
       child: MaterialApp(

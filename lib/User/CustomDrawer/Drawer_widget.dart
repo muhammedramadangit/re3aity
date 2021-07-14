@@ -117,14 +117,14 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    cubit.profileModel.data.name,
+                    editedCubit.name == null ? "${cubit.profileModel.data.name}" : "${editedCubit.name}",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,
                         fontFamily: "Cairo-Bold"),
                   ),
                   Text(
-                    cubit.profileModel.data.phone,
+                    editedCubit.phone == null ? "${cubit.profileModel.data.phone}" : "+966${editedCubit.phone}",
                     textDirection: TextDirection.ltr,
                     style: TextStyle(color: Colors.white, fontSize: 14),
                   ),

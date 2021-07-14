@@ -37,6 +37,7 @@ class _CurrentReservationState extends State<CurrentReservation> {
         : _currentModel.data.length == 0
             ? CenterMessage(msg: "لا يوجد حجوزات")
             : ListView.builder(
+                physics: BouncingScrollPhysics(),
                 itemCount: _currentModel.data.length,
                 padding: EdgeInsets.symmetric(horizontal: 15),
                 itemBuilder: (_, index) {

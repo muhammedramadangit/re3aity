@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lastre3ayty/User/models/Category_model/All_category.dart';
 import 'package:lastre3ayty/User/models/Category_model/user.dart';
 import 'package:lastre3ayty/User/screens/Doctors/Doctors_Item.dart';
+import 'package:lastre3ayty/User/screens/Sections/Controller/SectionController.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
 import 'package:lastre3ayty/common/CenterLoading.dart';
 import 'package:lastre3ayty/common/CenterMessage.dart';
@@ -17,13 +18,22 @@ class Doctors extends StatefulWidget {
 }
 
 class _DoctorsState extends State<Doctors> {
-  bool _isLoading = false;
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  SectionController sectionController = SectionController();
+  AllCategories allCategories = AllCategories();
   String _searchName;
   List<User> users = [];
 
+  void getDoctor() async {
+    allCategories = await sectionController.getSection();
+    setState(() {
+      sectionController.isLoading = false;
+    });
+  }
+
   @override
   void initState() {
+    getDoctor();
     super.initState();
     for(int i = 0; i < widget.allCategories.data[widget.id].subcategories.length; i++){
       users.add(widget.allCategories.data[widget.id].subcategories[i].user);
@@ -35,7 +45,8 @@ class _DoctorsState extends State<Doctors> {
   Widget build(BuildContext context) {
     print("Cat ID ========>> ${widget.id}");
     print("subcategories length ................. ${widget.allCategories.data[widget.id].subcategories.length}");
-    print("name>>>>>>>>>>>>>>> ${widget.allCategories.data[widget.id].categories.name}");
+    print("name>>>>>>>>>>>>>>> ${widget.serviceName}");
+    print("data>>>>>>>>>>>>>>> ${widget.allCategories.data[3].subcategories}");
     var filteredList = users.where((User item) {
       if(_searchName == null){
         return true;
@@ -47,7 +58,7 @@ class _DoctorsState extends State<Doctors> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         key: _scaffoldKey,
-        body: _isLoading
+        body: sectionController.isLoading
             ? CenterLoading()
             : (users.length == 0 || users.isEmpty)
                 ? CenterMessage(msg: "القائمة فارغة")
@@ -55,6 +66,7 @@ class _DoctorsState extends State<Doctors> {
                     height: MediaQuery.of(context).size.height,
                     margin: EdgeInsets.only(right: 15, left: 15, top: 10),
                     child: ListView.builder(
+                      physics: BouncingScrollPhysics(),
                       itemCount: widget.allCategories.data[widget.id].subcategories.length,
                       itemBuilder: (_, index) {
                         var item = filteredList[index];
@@ -68,7 +80,7 @@ class _DoctorsState extends State<Doctors> {
                             imgSrc: item.image,
                             rate: item.rate,
                             description:item.desc,
-                            catID: widget.allCategories.data[widget.id].categories.id,
+                            catID: widget.id,
                             serviceName: widget.serviceName,
                           ),
                         );

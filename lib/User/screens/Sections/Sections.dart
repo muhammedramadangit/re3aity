@@ -23,12 +23,18 @@ class _SectionsState extends State<Sections> {
   bool _isLoading = true;
   AllCategories _allCategories = AllCategories();
   SectionController _sectionController = SectionController();
-  List<CategoryData> categories;
+  // List<CategoryData> categories;
   List<String> _catImages = [
-    'assets/icons/page.png', //home service
-    'assets/icons/xzxdoc.png', //cleaning
-    'assets/icons/spa.png', //elec
-    'assets/icons/asasahospital.png', //plumbing
+    'assets/icons/page.png', //خدمات منزلية
+    'assets/icons/xzxdoc.png', //تنظيف
+    'assets/icons/spa.png', //كهرباء
+    'assets/icons/asasahospital.png', //سباكة
+  ];
+  List<String> _catName = [
+    "خدمات منزلية",
+    "تنظيف",
+    "كهرباء",
+    "سباكة",
   ];
   final cubit = ProfileCubit();
 
@@ -88,47 +94,51 @@ class _SectionsState extends State<Sections> {
               Expanded(
                 child: _isLoading
                     ? CenterLoading()
-                    : GridView.builder(
-                            padding: EdgeInsets.symmetric(vertical: 35, horizontal: 35),
-                            itemCount: _allCategories.data.length,
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 10,
-                            ),
-                            itemBuilder: (context, index) {
-                              return AnimatedWidgets(
-                                duration: 1.5,
-                                horizontalOffset: 0,
-                                virticaloffset: 150,
-                                child: CustomSection(
-                                  title: _allCategories.data[index].categories.name,
-                                  imgSrc: _catImages[index],
-                                  fit: BoxFit.fill,
-                                  imgSize: 70,
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) => MainDrawer(
-                                          appBarTitle: _allCategories.data[index].categories.name,
-                                          index: 0,
-                                          id: _allCategories.data[index].categories.id,
-                                          categoryData: _allCategories,
-                                          sectionServiceName: _allCategories.data[index].categories.name,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              );
-                            },
-                          ),
+                    : chooseCategory(context),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget chooseCategory(BuildContext context){
+    return GridView.builder(
+      padding: EdgeInsets.symmetric(vertical: 35, horizontal: 35),
+      itemCount: _allCategories.data.length,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+      ),
+      itemBuilder: (context, index) {
+        return AnimatedWidgets(
+          duration: 1.5,
+          horizontalOffset: 0,
+          virticaloffset: 150,
+          child: CustomSection(
+            title: _allCategories.data[index].categories.name,
+            imgSrc: _catImages[index],
+            fit: BoxFit.fill,
+            imgSize: 70,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => MainDrawer(
+                    appBarTitle: _allCategories.data[index].categories.name,
+                    index: 0,
+                    id: _allCategories.data[index].categories.id,
+                    categoryData: _allCategories,
+                    sectionServiceName: _allCategories.data[index].categories.name,
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }

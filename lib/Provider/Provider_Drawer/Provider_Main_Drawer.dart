@@ -5,14 +5,16 @@ import 'package:lastre3ayty/Provider/Provider_Drawer/Provider_Drawer_widget.dart
 import 'package:lastre3ayty/Provider/Provider_Drawer/Provider_Main_Page.dart';
 import 'package:lastre3ayty/Provider/Screens/Auth/Login/ProviderLogin.dart';
 import 'package:lastre3ayty/Provider/Screens/Privacy_Policy/PrivacyPolicy.dart';
+import 'package:lastre3ayty/Provider/Screens/Provider_Profile/Profile/Bloc/Profile_Cubit.dart';
 import 'package:lastre3ayty/Provider/Screens/Terms_and_Conditions/Terms_and_Conditions.dart';
 import 'package:lastre3ayty/User_or_Provider/UserOrProvider.dart';
 
 class ProviderMainDrawer extends StatefulWidget {
   final int index;
   final String appBarTitle;
+  final ProviderProfileCubit providerProfileCubit;
 
-  ProviderMainDrawer({this.index, this.appBarTitle});
+  ProviderMainDrawer({this.index, this.appBarTitle, this.providerProfileCubit});
 
   @override
   _ProviderMainDrawerState createState() => _ProviderMainDrawerState();
@@ -142,7 +144,12 @@ class _ProviderMainDrawerState extends State<ProviderMainDrawer> {
     } else if (item == ProviderDrawerItems.privacyPolicy) {
       return ProviderPrivacyPolicy(openDrawer: openDrawer);
     } else {
-      return MainProviderPage(openDrawer: openDrawer, index: widget.index, appBarTitle: widget.appBarTitle);
+      return MainProviderPage(
+        openDrawer: openDrawer,
+        index: widget.index,
+        appBarTitle: widget.appBarTitle,
+        providerProfileCubit: widget.providerProfileCubit,
+      );
     }
   }
 }

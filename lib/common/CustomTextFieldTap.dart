@@ -5,12 +5,19 @@ class CustomTextFieldTap extends StatelessWidget {
   final String lable;
   final Widget prefixIcon;
   final Function onTap;
-  final Function validate;
+  // final Function validate;
   final Widget icon;
   final double horizontalPadding, verticalPadding, height;
 
-
-  const CustomTextFieldTap({this.lable, this.prefixIcon, this.onTap, this.icon, this.horizontalPadding, this.verticalPadding, this.height, this.validate});
+  const CustomTextFieldTap(
+      {this.lable,
+      this.prefixIcon,
+      this.onTap,
+      this.icon,
+      this.horizontalPadding,
+      this.verticalPadding,
+      this.height,
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +43,6 @@ class CustomTextFieldTap extends StatelessWidget {
                     child: prefixIcon,
                   ),
                   Expanded(
-                    // flex: 1,
                     child: Container(
                       child: Text(
                         lable,

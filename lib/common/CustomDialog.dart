@@ -29,7 +29,7 @@ class _CustomDialogState extends State<CustomDialog> {
       virticaloffset: 150.0,
       child: CupertinoAlertDialog(
         content: Container(
-          height: MediaQuery.of(context).size.height / 3,
+          margin: EdgeInsets.symmetric(vertical: 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -43,9 +43,7 @@ class _CustomDialogState extends State<CustomDialog> {
                   gradient: LinearGradient(
                   colors: [
                     Theme.of(context).primaryColor,
-                    Theme.of(context).primaryColor.withOpacity(0.7),
-                    Theme.of(context).primaryColor.withOpacity(0.5),
-                    Theme.of(context).primaryColor.withOpacity(0.7),
+                    Color(0xFFD873CB),
                     Theme.of(context).primaryColor,
                   ],
                   begin: Alignment.centerRight,
@@ -55,13 +53,15 @@ class _CustomDialogState extends State<CustomDialog> {
                 child: Icon(CupertinoIcons.checkmark_alt,
                     size: 60, color: Colors.white),
               ),
-              SizedBox(height: 5),
+              SizedBox(height: 25),
               Text(
                 widget.msg,
                 style: TextStyle(
                   color: Theme.of(context).accentColor,
-                  fontSize: 14,
-                    fontFamily: "Cairo-Bold",
+                  letterSpacing: 1,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                    fontFamily: "Cairo-Regular",
                 ),
               ),
             ],

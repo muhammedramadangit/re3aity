@@ -3,7 +3,7 @@ import 'package:lastre3ayty/common/CustomCard.dart';
 import 'package:lastre3ayty/common/CustomRichText.dart';
 
 class ProviderReservationItem extends StatelessWidget {
-  final String name, imgSrc, gender, date, time, location,phoneNumber;
+  final String name, imgSrc, gender, date, time, location,phone;
 
   ProviderReservationItem({
     this.name,
@@ -12,14 +12,13 @@ class ProviderReservationItem extends StatelessWidget {
     this.date,
     this.time,
     this.location,
-    this.phoneNumber,
+    this.phone,
   });
 
   @override
   Widget build(BuildContext context) {
     return CustomCard(
-      // height: MediaQuery.of(context).size.height / 6.2,
-      horizontalPadding: 8,
+      horizontalPadding: 10,
       onTap: () {},
       child: Row(
         children: [
@@ -38,23 +37,24 @@ class ProviderReservationItem extends StatelessWidget {
           ),
           Expanded(
             child: Container(
+              height: MediaQuery.of(context).size.width / 5,
               padding: EdgeInsets.only(right: 8),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       CustomRichText(title: "الأسم", subTitle: name, fontSize: 9),
                       CustomRichText(title: "الجنس", subTitle: gender, fontSize: 9),
-                      CustomRichText(title: "رقم الجوال", subTitle: "966123123123", fontSize: 9),
+                      CustomRichText(title: "رقم الجوال", subTitle: phone, fontSize: 9),
                     ],
                   ),
 
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       CustomRichText(title: "التاريخ", subTitle: date, fontSize: 9),
                       CustomRichText(title: "الوقت", subTitle: time, fontSize: 9),

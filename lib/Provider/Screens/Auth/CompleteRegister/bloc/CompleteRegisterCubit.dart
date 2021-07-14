@@ -34,10 +34,10 @@ class CompleteRegisterCubit extends Cubit<CompleteRegisterState>{
 
       final url = "https://mycare.pro/api/completeadvertiserdata";
       SharedPreferences _pref = await SharedPreferences.getInstance();
-      print( _pref.getInt("id"));
+      print( _pref.getInt("pro_id"));
       print(categories);
       final body = {
-        "user_id" : _pref.getInt("id"),
+        "user_id" : _pref.getInt("pro_id"),
         "sex" : sex,
         "lat" : lat,
         "lng" : lng,
@@ -48,8 +48,6 @@ class CompleteRegisterCubit extends Cubit<CompleteRegisterState>{
         "google_token" : token,
       };
       FormData formData = FormData.fromMap(body);
-// print(body);
-      // return;
       final Response response = await dio.post(url, data: formData);
 
       if(response.statusCode == 200 && response.data["msg"] == "success"){

@@ -47,6 +47,7 @@ class _NotificationPagesState extends State<NotificationPage> {
                 height: MediaQuery.of(context).size.height,
                 margin: EdgeInsets.only(top: 10, left: 15, right: 15),
                 child: ListView.builder(
+                  physics: BouncingScrollPhysics(),
                   itemCount: _notificationModel.data.length,
                   itemBuilder: (_, index) {
                     return AnimatedWidgets(

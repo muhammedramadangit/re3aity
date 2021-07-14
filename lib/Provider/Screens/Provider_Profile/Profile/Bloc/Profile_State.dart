@@ -1,4 +1,4 @@
-abstract class ProviderProfileState{}
+abstract class ProviderProfileState {}
 
 class ProviderProfileInitState extends ProviderProfileState{}
 

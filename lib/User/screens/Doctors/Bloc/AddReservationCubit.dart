@@ -16,20 +16,20 @@ class AddReservationCubit extends Cubit<AddReservationState>{
     emit(AddReservationLoadingState());
 
     try{
-      print("user ID : ${user_id.toString()}");
-      print("owner ID : ${owner_id.toString()}");
-      print("cat ID : ${cat_id.toString()}");
+      final url = "https://mycare.pro/api/addreservation";
+      SharedPreferences _pref = await SharedPreferences.getInstance();
+
+      print("user ID : ${_pref.getInt("user_id")}");
+      print("owner ID : ${_pref.getInt("pro_id")}");
+      print("cat ID : ${_pref.getInt("cat_id")}");
       print("date : $date");
       print("time : $time");
       print("place : $place");
-      final url = "https://mycare.pro/api/addreservation";
-      SharedPreferences _pref = await SharedPreferences.getInstance();
 
       FormData formData = FormData.fromMap({
         "user_id" : "${_pref.getInt("user_id")}",
         "owner_id" : "${_pref.getInt("pro_id")}",
-        // "cat_id" : "${_pref.getInt("cat_id")}",
-        "cat_id" : 1,
+        "cat_id" : "${_pref.getInt("cat_id")}",
         "date" : date,
         "time" : time,
         "place" : place,
@@ -44,6 +44,7 @@ class AddReservationCubit extends Cubit<AddReservationState>{
       final Response response = await dio.post(url, data: formData, options: Options(headers: headers));
 
       if(response.statusCode == 200 && response.data["msg"] == "success"){
+        _pref.setInt("res_id", response.data['data']["id"]);
         print(response.data);
         emit(AddReservationSuccessState());
       }else if(response.statusCode == 200 && response.data["msg"] != "success"){

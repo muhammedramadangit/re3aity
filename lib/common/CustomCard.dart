@@ -24,7 +24,7 @@ class CustomCard extends StatelessWidget {
           elevation: 2,
           color: color ?? Colors.white,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+            padding: EdgeInsets.symmetric(horizontal: horizontalPadding ?? 10, vertical: verticalPadding ?? 8),
             child: child,
           ),
         ),

@@ -4,9 +4,9 @@ import 'package:lastre3ayty/User/screens/Profile/Edit_Profile/Edit_Profile.dart'
 import 'package:lastre3ayty/User/screens/Profile/Edit_Profile/bloc/Edit_Cubit.dart';
 import 'package:lastre3ayty/User/screens/Profile/Profile/Bloc/ProfileCubit.dart';
 import 'package:lastre3ayty/User/screens/Profile/Profile/Bloc/ProfileState.dart';
+import 'package:lastre3ayty/User/screens/Profile/Profile/model/ProfileModel.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
 import 'package:lastre3ayty/common/CenterLoading.dart';
-import 'package:lastre3ayty/common/CustomButton.dart';
 import 'package:lastre3ayty/common/CustomCard.dart';
 import 'package:lastre3ayty/theme/color.dart';
 
@@ -19,21 +19,19 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  // final cubit = ProfileCubit();
-  //
+
   // @override
   // void initState() {
-  //   cubit.getProfile();
+  //   ProfileCubit().isLoading = false;
   //   super.initState();
   // }
 
   @override
   Widget build(BuildContext context) {
+    final profileCubit = ProfileCubit.get(context);
     return BlocConsumer<ProfileCubit, ProfileState>(
         builder: (context, state) {
-          return state is ProfileLoadingState
-              ? CenterLoading()
-              : Directionality(
+          return Directionality(
                   textDirection: TextDirection.rtl,
                   child: Scaffold(
                     body: Padding(
@@ -44,38 +42,8 @@ class _ProfileState extends State<Profile> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            //============== profile information card ====================
                             profileInformation(context),
-
-                            //=============== Location Card =================
-                            AnimatedWidgets(
-                              duration: 1.5,
-                              virticaloffset: 0,
-                              horizontalOffset: 50,
-                              child: CustomCard(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "الموقع",
-                                      style: TextStyle(
-                                          color: ThemeColor.greyText,
-                                          fontSize: 14,
-                                      ),
-                                    ),
-                                    SizedBox(height: 5),
-                                    Text(
-                                      widget.profileCubit.profileModel.data.address,
-                                      style: TextStyle(
-                                          color: Theme.of(context).accentColor,
-                                          fontSize: 14,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                            locationCard(context),
                           ],
                         ),
                       ),
@@ -86,6 +54,7 @@ class _ProfileState extends State<Profile> {
         listener: (_, state) {});
   }
 
+  //================================= profile information card =======================================
   Widget profileInformation(BuildContext context) {
     final editedCubit = EditProfileCubit.get(context);
     return AnimatedWidgets(
@@ -120,14 +89,18 @@ class _ProfileState extends State<Profile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.profileCubit.profileModel.data.name,
+                    editedCubit.name == null
+                        ? "${widget.profileCubit.profileModel.data.name}"
+                        : "${editedCubit.name}",
                     style: TextStyle(
                         color: Theme.of(context).accentColor,
                         fontSize: 14,
                         fontFamily: "Cairo-Bold"),
                   ),
                   Text(
-                    widget.profileCubit.profileModel.data.phone,
+                    editedCubit.phone == null
+                        ? "${widget.profileCubit.profileModel.data.phone}"
+                        : "+966${editedCubit.phone}",
                     textDirection: TextDirection.ltr,
                     style: TextStyle(
                         color: Theme.of(context).accentColor,
@@ -156,16 +129,39 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
-}
 
-// Expanded(
-//   child: Container(
-//     child: Column(
-//       mainAxisAlignment: MainAxisAlignment.center,
-//       crossAxisAlignment: CrossAxisAlignment.end,
-//       children: [
-//         Icon(Icons.arrow_forward_ios, color: Theme.of(context).accentColor)
-//       ],
-//     ),
-//   ),
-// ),
+  //======================================= Location Card =============================================
+  Widget locationCard(BuildContext context){
+    final editedCubit = EditProfileCubit.get(context);
+    return AnimatedWidgets(
+      duration: 1.5,
+      virticaloffset: 0,
+      horizontalOffset: 50,
+      child: CustomCard(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "الموقع",
+              style: TextStyle(
+                color: ThemeColor.greyText,
+                fontSize: 14,
+              ),
+            ),
+            SizedBox(height: 5),
+            Text(
+              editedCubit.address == null
+                  ? "${widget.profileCubit.profileModel.data.address}"
+                  : "${editedCubit.address}",
+              style: TextStyle(
+                color: Theme.of(context).accentColor,
+                fontSize: 14,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
