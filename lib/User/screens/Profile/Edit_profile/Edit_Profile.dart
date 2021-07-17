@@ -9,6 +9,7 @@ import 'package:lastre3ayty/User/screens/Profile/Edit_Profile/bloc/Edit_Cubit.da
 import 'package:lastre3ayty/User/screens/Profile/Edit_Profile/bloc/Edit_State.dart';
 import 'package:lastre3ayty/User/screens/Profile/Profile/Bloc/ProfileCubit.dart';
 import 'package:lastre3ayty/User/screens/Profile/Profile/Bloc/ProfileState.dart';
+import 'package:lastre3ayty/User/screens/Sections/Sections.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
 import 'package:lastre3ayty/common/CenterLoading.dart';
 import 'package:lastre3ayty/common/CustomAppBar.dart';
@@ -112,7 +113,7 @@ class _EditProfileState extends State<EditProfile> {
             return Form(
               key: _formKey,
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 15),
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 child: SingleChildScrollView(
@@ -281,7 +282,7 @@ class _EditProfileState extends State<EditProfile> {
                               customSnackBar(_, state.error);
                             }else if(state is EditProfileSuccessState){
                               print("SUCCESS");
-                              Navigator.of(_).pop(cubit);
+                              Navigator.pushAndRemoveUntil(_, MaterialPageRoute(builder: (_) => Sections()), (route) => false);
                               showDialog(context: _, builder: (_){
                                 return CustomDialog(msg: "تم تعديل البيانات بنجاح", navRoute: () => Navigator.pop(_));
                               });
