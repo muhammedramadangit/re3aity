@@ -8,6 +8,7 @@ import 'package:lastre3ayty/Provider/Screens/Privacy_Policy/PrivacyPolicy.dart';
 import 'package:lastre3ayty/Provider/Screens/Provider_Profile/Profile/Bloc/Profile_Cubit.dart';
 import 'package:lastre3ayty/Provider/Screens/Terms_and_Conditions/Terms_and_Conditions.dart';
 import 'package:lastre3ayty/User_or_Provider/UserOrProvider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProviderMainDrawer extends StatefulWidget {
   final int index;
@@ -74,8 +75,10 @@ class _ProviderMainDrawerState extends State<ProviderMainDrawer> {
         child: Container(
           //width: -xOffset,
           child: ProviderDrawerWidget(
-            onSelectedItem: (item) {
+            onSelectedItem: (item) async {
+              SharedPreferences _pref = await SharedPreferences.getInstance();
               if (item == ProviderDrawerItems.logout) {
+                // _pref.clear();
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (_) => UserOrProvider()),

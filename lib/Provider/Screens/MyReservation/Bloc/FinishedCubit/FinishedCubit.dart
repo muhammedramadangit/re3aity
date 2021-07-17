@@ -22,7 +22,7 @@ class FinishedCubit extends Cubit<FinishedState>{
       SharedPreferences _pref = await SharedPreferences.getInstance();
 
       FormData formData = FormData.fromMap({
-        "reservation_id" : "${_pref.getInt("res_id")}",
+        "reservation_id" : "${_pref.getInt("reservation_id")}",
       });
 
       Map<String, dynamic> header = {

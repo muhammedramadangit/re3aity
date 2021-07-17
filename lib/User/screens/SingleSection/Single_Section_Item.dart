@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:lastre3ayty/User/models/Category_model/Sub_category.dart';
-import 'package:lastre3ayty/User/screens/Doctors/Doctor_Details/Doctor_Details.dart';
+import 'package:lastre3ayty/User/screens/SingleSection/Add_Reservation/Add_Reservation.dart';
 import 'package:lastre3ayty/common/CustomCard.dart';
 
-class DoctorsItem extends StatelessWidget {
+class SingleSectionItem extends StatelessWidget {
   final String name, imgSrc, description, serviceName;
   final int rate, catID;
   final Subcategory subcategories;
 
-  DoctorsItem({
+  SingleSectionItem({
     this.name,
     this.imgSrc,
     this.description,
@@ -22,14 +22,16 @@ class DoctorsItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomCard(
-      onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (_) => DoctorDetails(
-                    person: subcategories,
-                    catID: catID,
-                    serviceName: serviceName,
-                  ))),
+      onTap: () async {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => AddReservation(
+                  person: subcategories,
+                  catID: catID,
+                  serviceName: serviceName,
+                )));
+      },
       child: Row(
         children: [
           ClipRRect(

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:lastre3ayty/User/models/Category_model/Sub_category.dart';
-import 'package:lastre3ayty/User/screens/Doctors/Bloc/AddReservationCubit.dart';
-import 'package:lastre3ayty/User/screens/Doctors/Bloc/AddReservationState.dart';
+import 'package:lastre3ayty/User/screens/SingleSection/Bloc/AddReservationCubit.dart';
+import 'package:lastre3ayty/User/screens/SingleSection/Bloc/AddReservationState.dart';
 import 'package:lastre3ayty/User/screens/Notification/Notification_Screen.dart';
+import 'package:lastre3ayty/User/screens/Sections/Sections.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
 import 'package:lastre3ayty/common/CenterLoading.dart';
 import 'package:lastre3ayty/common/CustomAppBar.dart';
@@ -14,18 +15,18 @@ import 'package:lastre3ayty/common/CustomDialog.dart';
 import 'package:lastre3ayty/theme/color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class DoctorDetails extends StatefulWidget {
+class AddReservation extends StatefulWidget {
   final Subcategory person;
   final String serviceName;
   final int catID;
 
-  const DoctorDetails({this.person, this.serviceName, this.catID,});
+  const AddReservation({this.person, this.serviceName, this.catID,});
 
   @override
-  _DoctorDetailsState createState() => _DoctorDetailsState();
+  _AddReservationState createState() => _AddReservationState();
 }
 
-class _DoctorDetailsState extends State<DoctorDetails> {
+class _AddReservationState extends State<AddReservation> {
   bool _clinicChecked = true;
   bool _homeChecked = false;
   DateTime _pickedDate;
@@ -34,10 +35,11 @@ class _DoctorDetailsState extends State<DoctorDetails> {
   int userID;
 
 
-  Future<void> shared() async {
+  void shared() async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
     _pref.setInt("cat_id", widget.catID);
   }
+
   @override
   void initState() {
     super.initState();
@@ -475,16 +477,17 @@ class _DoctorDetailsState extends State<DoctorDetails> {
       virticaloffset: 0,
       horizontalOffset: 50,
       child: BlocConsumer<AddReservationCubit, AddReservationState>(
-        listener: (_, state){
-          if(state is AddReservationErrorState){
+        listener: (_, state) async {
+          SharedPreferences _pref = await SharedPreferences.getInstance();
+          if(state is AddReservationErrorState && _pref.getInt("pro_id") == null){
             Scaffold.of(_).showSnackBar(SnackBar(
               backgroundColor: Theme.of(_).primaryColor,
-              content: Text(state.error,
+              content: Text("مقدم الخدمة غير متاح حاليا",
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white, fontSize: 12),),
             ));
           }else if(state is AddReservationSuccessState){
-            // Navigator.of(_).pop();
+            Navigator.pushAndRemoveUntil(_, MaterialPageRoute(builder: (_) => Sections()), (route) => false);
             showDialog(context: _, builder: (_){
               return CustomDialog(msg: "تم الحجز بنجاح", navRoute: ()=> Navigator.pop(_));
             });

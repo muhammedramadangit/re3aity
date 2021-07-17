@@ -10,10 +10,12 @@ class ProviderProfileCubit extends Cubit<ProviderProfileState> {
 
   static ProviderProfileCubit get(context) => BlocProvider.of(context);
   Dio dio = Dio();
-  ProviderProfileModel providerProfileModel = ProviderProfileModel();
+  ProviderProfileModel providerProfileModel;
+  bool isLoading;
 
   Future<void> providerProfile() async {
     emit(ProviderProfileLoadingState());
+    isLoading = true;
 
     try {
       final url = "https://mycare.pro/api/profile";
@@ -27,6 +29,7 @@ class ProviderProfileCubit extends Cubit<ProviderProfileState> {
       if (response.statusCode == 200 && response.data["msg"] == "success") {
         print(response.data);
         providerProfileModel = ProviderProfileModel.fromJson(response.data);
+        isLoading = false;
         emit(ProviderProfileSuccessState());
 
       } else if (response.statusCode == 200 && response.data["msg"] != "success") {

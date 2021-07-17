@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lastre3ayty/User/screens/Doctors/Bloc/AddReservationState.dart';
+import 'package:lastre3ayty/User/screens/SingleSection/Bloc/AddReservationState.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AddReservationCubit extends Cubit<AddReservationState>{

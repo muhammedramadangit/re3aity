@@ -32,6 +32,7 @@ class LoginCubit extends Cubit<LoginState> {
       if(response.statusCode == 200 && response.data["msg"] == "success"){
         SharedPreferences _prefs = await SharedPreferences.getInstance();
         _prefs.setString("api_token", response.data["api_token"]);
+        _prefs.setString("admin", response.data["data"]["admin"]);
         _prefs.setInt("user_id", response.data["data"]["id"]);
         print(response.data);
         emit(LoginSuccessState());

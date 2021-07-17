@@ -19,17 +19,10 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-
-  // @override
-  // void initState() {
-  //   ProfileCubit().isLoading = false;
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
-    final profileCubit = ProfileCubit.get(context);
     return BlocConsumer<ProfileCubit, ProfileState>(
+        listener: (_, state) {},
         builder: (context, state) {
           return Directionality(
                   textDirection: TextDirection.rtl,
@@ -51,7 +44,7 @@ class _ProfileState extends State<Profile> {
                   ),
                 );
         },
-        listener: (_, state) {});
+    );
   }
 
   //================================= profile information card =======================================

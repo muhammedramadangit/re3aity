@@ -161,7 +161,16 @@ class _ProviderLoginState extends State<ProviderLogin> {
                                       if(state is ProviderLoginErrorState){
                                         customSnackBar(_, state.error);
                                       }else if(state is ProviderLoginSuccessState){
-                                        Navigator.push(context, MaterialPageRoute(builder: (_) => ProviderMainDrawer(appBarTitle: "حجوزاتي", index: 0)));
+                                        Navigator.pushAndRemoveUntil(
+                                            _,
+                                            MaterialPageRoute(
+                                              builder: (_) =>
+                                                  ProviderMainDrawer(
+                                                appBarTitle: "حجوزاتي",
+                                                index: 0,
+                                              ),
+                                            ),
+                                            (route) => false);
                                         print("============ تم تسجيل الدخول بنجاح ===============");
                                       }
                                     },

@@ -43,7 +43,7 @@ class _ProviderNotificationState extends State<ProviderNotification> {
         ),
         body: _isLoading
             ? CenterLoading()
-            : _notificationModel.data == null
+            : _notificationModel.data.length == 0
                 ? CenterMessage(msg: "ليس لديك اشعارات")
                 : Container(
                     height: MediaQuery.of(context).size.height,

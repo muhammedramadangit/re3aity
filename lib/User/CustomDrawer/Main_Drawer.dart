@@ -4,18 +4,20 @@ import 'package:lastre3ayty/User/CustomDrawer/Drawer_Items.dart';
 import 'package:lastre3ayty/User/CustomDrawer/Drawer_widget.dart';
 import 'package:lastre3ayty/User/CustomDrawer/SectionPage.dart';
 import 'package:lastre3ayty/User/models/Category_model/All_category.dart';
+import 'package:lastre3ayty/User/models/Category_model/Category_data.dart';
 import 'package:lastre3ayty/User/screens/Privacy_Policy/PrivacyPolicy.dart';
 import 'package:lastre3ayty/User/screens/Profile/Profile/Bloc/ProfileCubit.dart';
 import 'package:lastre3ayty/User/screens/Sections/Sections.dart';
 import 'package:lastre3ayty/User/screens/Terms_and_Conditions/Terms_and_Conditions.dart';
 import 'package:lastre3ayty/User/screens/User_Reservation/User_Reservation.dart';
 import 'package:lastre3ayty/User_or_Provider/UserOrProvider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MainDrawer extends StatefulWidget {
   final int index, id;
   final String appBarTitle, sectionServiceName;
   final bool showSearchIcon;
-  final AllCategories categoryData;
+  final CategoryData categoryData;
   final ProfileCubit profileCubit;
 
   const MainDrawer(
@@ -37,6 +39,7 @@ class _MainDrawerState extends State<MainDrawer> {
   bool isDrawerOpen;
   bool isDragging = false;
   DrawerItem item;
+
 
 
   DrawerItems _items = DrawerItems();
@@ -85,8 +88,10 @@ class _MainDrawerState extends State<MainDrawer> {
         child: Container(
           //width: -xOffset,
           child: DrawerWidget(
-            onSelectedItem: (item) {
+            onSelectedItem: (item) async {
+              SharedPreferences _pref = await SharedPreferences.getInstance();
               if (item == DrawerItems.logout) {
+                _pref.clear();
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (_) => UserOrProvider()),

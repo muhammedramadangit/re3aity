@@ -30,6 +30,7 @@ class ProviderLoginCubit extends Cubit<ProviderLoginState>{
       if(response.statusCode == 200 && response.data["msg"] == "success"){
         _pref.setString("api_token", response.data["api_token"]);
         _pref.setInt("pro_id", response.data["data"]["id"]);
+        _pref.setString("admin", response.data["data"]["admin"]);
         print(response.data);
         emit(ProviderLoginSuccessState());
       }else if(response.statusCode == 200 && response.data["msg"] != "success"){

@@ -21,7 +21,6 @@ class ProviderProfile extends StatefulWidget {
 class _ProviderProfileState extends State<ProviderProfile> {
   @override
   Widget build(BuildContext context) {
-    final editCubit = EditProviderCubit.get(context);
     return BlocConsumer<ProviderProfileCubit, ProviderProfileState>(
       listener: (_, state){},
       builder: (context, state){
@@ -36,38 +35,8 @@ class _ProviderProfileState extends State<ProviderProfile> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    //============== profile information card ====================
                     profileInformation(context),
-
-                    //=============== Location Card =================
-                    AnimatedWidgets(
-                      duration: 1.5,
-                      virticaloffset: 0,
-                      horizontalOffset: 50,
-                      child: CustomCard(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "الموقع",
-                              style: TextStyle(
-                                color: ThemeColor.greyText,
-                                fontSize: 14,
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              editCubit.address == null ? "${widget.providerProfileCubit.providerProfileModel.data.address}" : "${editCubit.address}",
-                              style: TextStyle(
-                                color: Theme.of(context).accentColor,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    locationCard(context),
                   ],
                 ),
               ),
@@ -78,6 +47,7 @@ class _ProviderProfileState extends State<ProviderProfile> {
     );
   }
 
+  //======================== profile information card ==========================
   Widget profileInformation(BuildContext context){
     final editCubit = EditProviderCubit.get(context);
     return AnimatedWidgets(
@@ -114,14 +84,18 @@ class _ProviderProfileState extends State<ProviderProfile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    editCubit.name == null ? "${widget.providerProfileCubit.providerProfileModel.data.name}" : "${editCubit.name}",
+                    editCubit.name == null
+                        ? "${widget.providerProfileCubit.providerProfileModel.data.name}"
+                        : "${editCubit.name}",
                     style: TextStyle(
                         color: Theme.of(context).accentColor,
                         fontSize: 14,
                         fontFamily: "Cairo-Bold"),
                   ),
                   Text(
-                    editCubit.phone == null ? "${widget.providerProfileCubit.providerProfileModel.data.phone}" : "+966${editCubit.phone}",
+                    editCubit.phone == null
+                        ? "${widget.providerProfileCubit.providerProfileModel.data.phone}"
+                        : "+966${editCubit.phone}",
                     textDirection: TextDirection.ltr,
                     style: TextStyle(
                         color: Theme.of(context).accentColor,
@@ -143,6 +117,41 @@ class _ProviderProfileState extends State<ProviderProfile> {
                         color: Theme.of(context).accentColor),
                   ],
                 ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  //============================= Location Card ================================
+  Widget locationCard(BuildContext context){
+    final editCubit = EditProviderCubit.get(context);
+    return  AnimatedWidgets(
+      duration: 1.5,
+      virticaloffset: 0,
+      horizontalOffset: 50,
+      child: CustomCard(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "الموقع",
+              style: TextStyle(
+                color: ThemeColor.greyText,
+                fontSize: 14,
+              ),
+            ),
+            SizedBox(height: 5),
+            Text(
+              editCubit.address == null
+                  ? "${widget.providerProfileCubit.providerProfileModel.data.address}"
+                  : "${editCubit.address}",
+              style: TextStyle(
+                color: Theme.of(context).accentColor,
+                fontSize: 14,
               ),
             ),
           ],

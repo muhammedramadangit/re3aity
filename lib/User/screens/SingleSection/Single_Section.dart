@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:lastre3ayty/User/models/Category_model/All_category.dart';
+import 'package:lastre3ayty/User/models/Category_model/Category_data.dart';
 import 'package:lastre3ayty/User/models/Category_model/user.dart';
-import 'package:lastre3ayty/User/screens/Doctors/Doctors_Item.dart';
 import 'package:lastre3ayty/User/screens/Sections/Controller/SectionController.dart';
+import 'package:lastre3ayty/User/screens/SingleSection/Single_Section_Item.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
 import 'package:lastre3ayty/common/CenterLoading.dart';
 import 'package:lastre3ayty/common/CenterMessage.dart';
 
-class Doctors extends StatefulWidget {
-  final AllCategories allCategories;
+class SingleSection extends StatefulWidget {
+  final CategoryData categoryData;
   final String serviceName;
   final int id;
-  const Doctors({this.allCategories, this.serviceName, this.id});
+  const SingleSection({this.serviceName, this.id, this.categoryData});
 
   @override
-  _DoctorsState createState() => _DoctorsState();
+  _SingleSectionState createState() => _SingleSectionState();
 }
 
-class _DoctorsState extends State<Doctors> {
+class _SingleSectionState extends State<SingleSection> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   SectionController sectionController = SectionController();
   AllCategories allCategories = AllCategories();
-  String _searchName;
   List<User> users = [];
 
   void getDoctor() async {
@@ -35,53 +35,40 @@ class _DoctorsState extends State<Doctors> {
   void initState() {
     getDoctor();
     super.initState();
-    for(int i = 0; i < widget.allCategories.data[widget.id].subcategories.length; i++){
-      users.add(widget.allCategories.data[widget.id].subcategories[i].user);
-    }
+
   }
 
 
   @override
   Widget build(BuildContext context) {
-    print("Cat ID ========>> ${widget.id}");
-    print("subcategories length ................. ${widget.allCategories.data[widget.id].subcategories.length}");
-    print("name>>>>>>>>>>>>>>> ${widget.serviceName}");
-    print("data>>>>>>>>>>>>>>> ${widget.allCategories.data[3].subcategories}");
-    var filteredList = users.where((User item) {
-      if(_searchName == null){
-        return true;
-      }else{
-        return item.name.contains(_searchName);
-      }
-    }).toList();
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
         key: _scaffoldKey,
         body: sectionController.isLoading
             ? CenterLoading()
-            : (users.length == 0 || users.isEmpty)
+            : (widget.categoryData.subcategories.length == 0)
                 ? CenterMessage(msg: "القائمة فارغة")
                 : Container(
                     height: MediaQuery.of(context).size.height,
                     margin: EdgeInsets.only(right: 15, left: 15, top: 10),
                     child: ListView.builder(
                       physics: BouncingScrollPhysics(),
-                      itemCount: widget.allCategories.data[widget.id].subcategories.length,
+                      itemCount: widget.categoryData.subcategories.length,
                       itemBuilder: (_, index) {
-                        var item = filteredList[index];
+                        var item = widget.categoryData.subcategories[index].user;
                         return AnimatedWidgets(
                           duration: 1.5,
                           virticaloffset: 50,
                           horizontalOffset: 0,
-                          child: DoctorsItem(
-                            subcategories: widget.allCategories.data[widget.id].subcategories[index],
-                            name: item.name,
-                            imgSrc: item.image,
-                            rate: item.rate,
-                            description:item.desc,
-                            catID: widget.id,
-                            serviceName: widget.serviceName,
+                          child: SingleSectionItem(
+                            subcategories: widget.categoryData.subcategories[index],
+                            name: item.name??"",
+                            imgSrc: item.image??"",
+                            rate: item.rate??"",
+                            description:item.desc??"",
+                            catID: widget.id??"",
+                            serviceName: widget.serviceName??"",
                           ),
                         );
                       },

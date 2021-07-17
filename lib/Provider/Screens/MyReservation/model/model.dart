@@ -35,6 +35,7 @@ class Data {
   String place;
   String date;
   String time;
+  int reservationId;
 
   Data(
       {this.userName,
@@ -46,7 +47,8 @@ class Data {
         this.image,
         this.place,
         this.date,
-        this.time});
+        this.time,
+        this.reservationId});
 
   Data.fromJson(Map<String, dynamic> json) {
     userName = json['user_name'];
@@ -59,6 +61,7 @@ class Data {
     place = json['place'];
     date = json['date'];
     time = json['time'];
+    reservationId = json['reservation_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -73,6 +76,7 @@ class Data {
     data['place'] = this.place;
     data['date'] = this.date;
     data['time'] = this.time;
+    data['reservation_id'] = this.reservationId;
     return data;
   }
 }

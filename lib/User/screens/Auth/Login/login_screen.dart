@@ -181,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       if(state is LoginErrorState){
                                         customSnackBar(_, state.error);
                                       }else if(state is LoginSuccessState){
-                                        Navigator.push(context, MaterialPageRoute(builder: (_) => Sections()));
+                                        Navigator.pushAndRemoveUntil(_, MaterialPageRoute(builder: (_) => Sections()), (route) => false);
                                         print("=============================تم تسجيل الدخول بنجاح=========================");
                                       }
                                     },

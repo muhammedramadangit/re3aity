@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
+import 'package:lastre3ayty/Provider/Provider_Drawer/Provider_Main_Drawer.dart';
+import 'package:lastre3ayty/User/screens/Sections/Sections.dart';
 import 'package:lastre3ayty/User_or_Provider/UserOrProvider.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -10,13 +13,29 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  Widget screen;
+
+  void checkLogin() async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    String login = _pref.getString("api_token");
+    String admin = _pref.getString("admin");
+    if(login == null){
+      screen = UserOrProvider();
+    }else if(login != null && admin == "user"){
+      screen = Sections();
+    }else if(login != null && admin == "advertiser"){
+      screen = ProviderMainDrawer(appBarTitle: "حجوزاتي", index: 0);
+    }
+  }
+
   @override
   void initState() {
+    checkLogin();
     Timer(
         Duration(seconds: 5),
         () => Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (_) => UserOrProvider()),
+            MaterialPageRoute(builder: (_) => screen),
             (route) => false));
     super.initState();
   }

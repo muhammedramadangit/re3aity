@@ -14,6 +14,7 @@ class RemoveCubit extends Cubit<RemoveState>{
   RemoveCubit() : super(RemoveInitState());
 
   static RemoveCubit get(context) => BlocProvider.of(context);
+  bool isLoading = true;
   Dio dio = Dio();
   RemoveModel _removeModel;
   Future<void> removeReservation(BuildContext context) async {
@@ -24,7 +25,7 @@ class RemoveCubit extends Cubit<RemoveState>{
       SharedPreferences _pref = await SharedPreferences.getInstance();
 
       FormData formData = FormData.fromMap({
-        "reservation_id" : "${_pref.getInt("res_id")}",
+        "reservation_id" : "${_pref.getInt("reservation_id")}",
       });
 
       Map<String, dynamic> header = {
@@ -37,7 +38,7 @@ class RemoveCubit extends Cubit<RemoveState>{
 
 
       if(response.statusCode == 200 && response.data["msg"] == "success"){
-
+        isLoading = false;
         _removeModel = RemoveModel.fromJson(response.data);
         showDialog(context: context, builder: (_){
           return CustomDialog(msg: "تم الحذف بنجاح", navRoute: ()=> Navigator.pop(_));
@@ -60,7 +61,7 @@ class RemoveCubit extends Cubit<RemoveState>{
   }
 
 
-  bool isLoading = true;
+  // bool isLoading = true;
   ReversationsModel reversationsModel =ReversationsModel();
   NetworkUtil util = NetworkUtil();
   Future<void> getReservation() async {

@@ -20,9 +20,9 @@ class ProfileCubit extends Cubit<ProfileState> {
     try {
       final url = "https://mycare.pro/api/profile";
       SharedPreferences _prefs = await SharedPreferences.getInstance();
-      Map formData = {
+      FormData formData = FormData.fromMap({
         "user_id": _prefs.getInt("user_id"),
-      };
+      });
 
       final Response response = await dio.post(url, data: formData);
 

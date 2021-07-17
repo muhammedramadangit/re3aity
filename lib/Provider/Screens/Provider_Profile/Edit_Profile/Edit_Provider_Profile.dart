@@ -5,9 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_map_location_picker/google_map_location_picker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lastre3ayty/Provider/Provider_Drawer/Provider_Main_Drawer.dart';
 import 'package:lastre3ayty/Provider/Screens/Provider_Profile/Edit_Profile/Bloc/Edit_Cubit.dart';
 import 'package:lastre3ayty/Provider/Screens/Provider_Profile/Edit_Profile/Bloc/Edit_State.dart';
 import 'package:lastre3ayty/Provider/Screens/Provider_Profile/Profile/Bloc/Profile_Cubit.dart';
+import 'package:lastre3ayty/Provider/Screens/Provider_Profile/Profile/Bloc/Profile_State.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
 import 'package:lastre3ayty/common/CenterLoading.dart';
 import 'package:lastre3ayty/common/CustomAppBar.dart';
@@ -34,6 +36,9 @@ class _EditProviderProfileState extends State<EditProviderProfile> {
   double lat = 31.1975844, lng = 29.9598339;
   String locationLabel = "العنوان الجديد";
   final picker = ImagePicker();
+  var nameController=TextEditingController();
+  var phoneController=TextEditingController();
+  var addressController=TextEditingController();
 
   Future pickImage() async {
     final cubit = EditProviderCubit.get(context);
@@ -87,6 +92,9 @@ class _EditProviderProfileState extends State<EditProviderProfile> {
   @override
   Widget build(BuildContext context) {
     final cubit = EditProviderCubit.get(context);
+    nameController.text = widget.profileCubit.providerProfileModel.data.name;
+    phoneController.text = widget.profileCubit.providerProfileModel.data.phone;
+    addressController.text = widget.profileCubit.providerProfileModel.data.address;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -96,62 +104,65 @@ class _EditProviderProfileState extends State<EditProviderProfile> {
           appBarTilte: "تعديل الصفحة الشخصية",
         ),
 
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15),
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: Form(
+        body: BlocConsumer<ProviderProfileCubit, ProviderProfileState>(
+          listener: (_, state){},
+          builder: (context, state){
+            return Form(
               key: _formKey,
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    //================ تعديل الصورة الشخصية ==================
-                    AnimatedWidgets(
-                      duration: 1.5,
-                      virticaloffset: -50,
-                      horizontalOffset: 0,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 40),
-                        child: Stack(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(60),
-                              child: Container(
-                                height: 120,
-                                width: 120,
-                                color: Colors.grey[50],
-                                child: cubit.image == null
-                                    ? Container(
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: NetworkImage("https://mycare.pro/public/dash/assets/img/${widget.profileCubit.providerProfileModel.data.image}"),
-                                        fit: BoxFit.cover
-                                    ),
-                                  ),
-                                ) : Image.file(cubit.image, fit: BoxFit.cover),
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      //================ تعديل الصورة الشخصية ==================
+                      AnimatedWidgets(
+                        duration: 1.5,
+                        virticaloffset: -50,
+                        horizontalOffset: 0,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 40),
+                          child: Stack(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(60),
+                                child: Container(
+                                  height: 120,
+                                  width: 120,
+                                  color: Colors.grey[50],
+                                  child: cubit.image == null
+                                      ? Container(
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                                image: NetworkImage(
+                                                    "https://mycare.pro/public/dash/assets/img/${widget.profileCubit.providerProfileModel.data.image}"),
+                                                fit: BoxFit.cover),
+                                          ),
+                                        )
+                                      : Image.file(cubit.image, fit: BoxFit.cover),
+                                ),
                               ),
-                            ),
-                            Positioned(
-                              bottom: 0,
-                              right: 0,
-                              child: IconButton(
-                                onPressed: imageBottomSheet,
-                                icon: Icon(CupertinoIcons.photo_camera_solid, color: Theme.of(context).primaryColor, size: 30),
+                              Positioned(
+                                bottom: 0,
+                                right: 0,
+                                child: IconButton(
+                                  onPressed: imageBottomSheet,
+                                  icon: Icon(CupertinoIcons.photo_camera_solid, color: Theme.of(context).primaryColor, size: 30),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
 
-                    //================ اسم المستخدم الجديد ==================
-                    AnimatedWidgets(
-                      duration: 1.5,
-                      virticaloffset: 0,
-                      horizontalOffset: 50,
-                      child: CustomTextField(
+                      //================ اسم المستخدم الجديد ==================
+                      AnimatedWidgets(
+                        duration: 1.5,
+                        virticaloffset: 0,
+                        horizontalOffset: 50,
+                        child: CustomTextField(
                           horizontalPadding: 0,
                           labelSize: 12,
                           leftPadding: 0,
@@ -176,127 +187,130 @@ class _EditProviderProfileState extends State<EditProviderProfile> {
                           onChanged: (value){
                             cubit.name = value;
                           },
-                      ),
-                    ),
-
-                    //================ رقم الجوال الجديد ==================
-                    AnimatedWidgets(
-                      duration: 1.5,
-                      virticaloffset: 0,
-                      horizontalOffset: 50,
-                      child: CustomTextField(
-                        horizontalPadding: 0,
-                        labelSize: 12,
-                        leftPadding: 0,
-                        rightPadding: 0,
-                        verticalPadding: 4,
-                        secureText: false,
-                        label: "رقم الجوال الجديد",
-                        inputType: TextInputType.phone,
-                        prefixIcon: Icon(Icons.phone, size: 18, color: Theme.of(context).primaryColor),
-                        suffixIcon: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Divider(),
-                            Text("+966", textDirection: TextDirection.ltr, style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 12),),
-                          ],
                         ),
-                        validate: (val) {
-                          if(val.isEmpty){
-                            return "برجاء إدخال رقم الجوال الجديد";
-                          }else if(val.length < 9 || val.length > 9){
-                            return "يشترط رقم الجوال 9 أرفام";
-                          }
-                        },
-                        onChanged: (value){
-                          cubit.phone = value;
-                        },
                       ),
-                    ),
 
-                    //================ العنوان الجديد ==================
-                    AnimatedWidgets(
-                      duration: 1.5,
-                      virticaloffset: 0,
-                      horizontalOffset: 50,
-                      child: CustomTextFieldTap(
-                        lable: locationLabel,
-                        horizontalPadding: 0,
-                        verticalPadding: 8,
-                        height: 45,
-                        prefixIcon: customRegisterIcon(imgSrc: "assets/icons/location.png"),
-                        onTap: () async {
-                          LocationResult result = await showLocationPicker(
-                            context,
-                            "AIzaSyBU6YNVxesC2-qRF2yDgCk7be8QaQz56kQ",
-                            initialCenter: LatLng(lat, lng),
-                            myLocationButtonEnabled: true,
-                            layersButtonEnabled: true,
-                            desiredAccuracy: LocationAccuracy.best,
-                          );
-                          print("result = $result");
-                          setState(() {
-                            cubit.address = result.address;
-                            cubit.lat = result.latLng.latitude.toString();
-                            cubit.lng = result.latLng.longitude.toString();
-                            locationLabel = result.address.toString();
-                          });
-                        },
+                      //================ رقم الجوال الجديد ==================
+                      AnimatedWidgets(
+                        duration: 1.5,
+                        virticaloffset: 0,
+                        horizontalOffset: 50,
+                        child: CustomTextField(
+                          horizontalPadding: 0,
+                          labelSize: 12,
+                          leftPadding: 0,
+                          rightPadding: 0,
+                          verticalPadding: 4,
+                          secureText: false,
+                          label: "رقم الجوال الجديد",
+                          inputType: TextInputType.phone,
+                          prefixIcon: Icon(Icons.phone, size: 18, color: Theme.of(context).primaryColor),
+                          suffixIcon: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Divider(),
+                              Text("+966", textDirection: TextDirection.ltr, style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 12),),
+                            ],
+                          ),
+                          validate: (val) {
+                            if(val.isEmpty){
+                              return "برجاء إدخال رقم الجوال الجديد";
+                            }else if(val.length < 9 || val.length > 9){
+                              return "يشترط رقم الجوال 9 أرفام";
+                            }
+                          },
+                          onChanged: (value){
+                            cubit.phone = value;
+                          },
+                        ),
                       ),
-                    ),
 
-                    // Expanded(child: Container()),
-                    SizedBox(height: MediaQuery.of(context).size.height / 5),
-
-                    //======================= حفظ ======================
-                    AnimatedWidgets(
-                      duration: 1.5,
-                      virticaloffset: 50,
-                      horizontalOffset: 0,
-                      child: BlocConsumer<EditProviderCubit, EditProviderState>(
-                        listener: (_, state){
-                          if(state is EditProviderErrorState){
-                            customSnackBar(_, state.error);
-                          }else if(state is EditProviderSuccessState){
-                            print("SUCCESS");
-                            Navigator.of(_).pop(cubit);
-                            showDialog(context: _, builder: (_){
-                              return CustomDialog(msg: "تم تعديل البيانات بنجاح", navRoute: () => Navigator.pop(_));
+                      //================ العنوان الجديد ==================
+                      AnimatedWidgets(
+                        duration: 1.5,
+                        virticaloffset: 0,
+                        horizontalOffset: 50,
+                        child: CustomTextFieldTap(
+                          lable: locationLabel,
+                          horizontalPadding: 0,
+                          verticalPadding: 8,
+                          height: 45,
+                          prefixIcon: customRegisterIcon(imgSrc: "assets/icons/location.png"),
+                          onTap: () async {
+                            LocationResult result = await showLocationPicker(
+                              context,
+                              "AIzaSyBU6YNVxesC2-qRF2yDgCk7be8QaQz56kQ",
+                              initialCenter: LatLng(lat, lng),
+                              myLocationButtonEnabled: true,
+                              layersButtonEnabled: true,
+                              desiredAccuracy: LocationAccuracy.best,
+                            );
+                            print("result = $result");
+                            setState(() {
+                              cubit.address = result.address;
+                              cubit.lat = result.latLng.latitude.toString();
+                              cubit.lng = result.latLng.longitude.toString();
+                              locationLabel = result.address.toString();
                             });
-                          }
-                        },
-                        builder: (context, state){
-                          return state is EditProviderLoadingState
-                              ? CenterLoading()
-                              : Container(
-                                  alignment: Alignment.bottomCenter,
-                                  child: CustomButton(
-                                    height: 45,
-                                    width: MediaQuery.of(context).size.width,
-                                    text: "حفظ",
-                                    bottomPadding: 10,
-                                    topPadding: 10,
-                                    rightPadding: 0,
-                                    leftPadding: 0,
-                                    onTap: () {
-                                      if (_formKey.currentState.validate()) {
-                                        cubit.editProvider();
-                                      }
-                                    },
-                                  ),
-                                );
-                        },
+                          },
+                        ),
                       ),
-                    ),
 
-                  ],
+                      // Expanded(child: Container()),
+                      SizedBox(height: MediaQuery.of(context).size.height / 5),
+
+                      //======================= حفظ ======================
+                      AnimatedWidgets(
+                        duration: 1.5,
+                        virticaloffset: 50,
+                        horizontalOffset: 0,
+                        child: BlocConsumer<EditProviderCubit, EditProviderState>(
+                          listener: (_, state){
+                            if(state is EditProviderErrorState){
+                              customSnackBar(_, state.error);
+                            }else if(state is EditProviderSuccessState){
+                              print("SUCCESS");
+                              Navigator.pushAndRemoveUntil(_, MaterialPageRoute(builder: (_) => ProviderMainDrawer(appBarTitle: "حجوزاتي", index: 0)), (route) => false);
+                              showDialog(context: _, builder: (_){
+                                return CustomDialog(msg: "تم تعديل البيانات بنجاح", navRoute: () => Navigator.pop(_));
+                              });
+                            }
+                          },
+                          builder: (context, state){
+                            return state is EditProviderLoadingState
+                                ? CenterLoading()
+                                : Container(
+                                    alignment: Alignment.bottomCenter,
+                                    child: CustomButton(
+                                      height: 45,
+                                      width: MediaQuery.of(context).size.width,
+                                      text: "حفظ",
+                                      bottomPadding: 10,
+                                      topPadding: 10,
+                                      rightPadding: 0,
+                                      leftPadding: 0,
+                                      onTap: () {
+                                        if (_formKey.currentState.validate()) {
+                                          cubit.editProvider();
+                                        }
+                                      },
+                                    ),
+                                  );
+                          },
+                        ),
+                      ),
+
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ),
+            );
+          },
         ),
       ),
     );
   }
+
+
 }

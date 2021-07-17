@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lastre3ayty/common/CustomCard.dart';
 import 'package:lastre3ayty/common/CustomRichText.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class ProviderReservationItem extends StatelessWidget {
+class ProviderReservationItem extends StatefulWidget {
   final String name, imgSrc, gender, date, time, location,phone;
+  final int resID;
 
   ProviderReservationItem({
     this.name,
@@ -12,9 +14,25 @@ class ProviderReservationItem extends StatelessWidget {
     this.date,
     this.time,
     this.location,
-    this.phone,
+    this.phone, this.resID,
   });
 
+  @override
+  _ProviderReservationItemState createState() => _ProviderReservationItemState();
+}
+
+class _ProviderReservationItemState extends State<ProviderReservationItem> {
+
+  void sharedResID() async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    _pref.setInt("reservation_id", widget.resID);
+  }
+
+  @override
+  void initState() {
+    sharedResID();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return CustomCard(
@@ -30,7 +48,7 @@ class ProviderReservationItem extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
-                    image: NetworkImage("https://mycare.pro/public/dash/assets/img/${imgSrc}"),
+                    image: NetworkImage("https://mycare.pro/public/dash/assets/img/${widget.imgSrc}"),
                     fit: BoxFit.cover,
                   )),
             ),
@@ -46,9 +64,9 @@ class ProviderReservationItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      CustomRichText(title: "الأسم", subTitle: name, fontSize: 9),
-                      CustomRichText(title: "الجنس", subTitle: gender, fontSize: 9),
-                      CustomRichText(title: "رقم الجوال", subTitle: phone, fontSize: 9),
+                      CustomRichText(title: "الأسم", subTitle: widget.name, fontSize: 9),
+                      CustomRichText(title: "الجنس", subTitle: widget.gender, fontSize: 9),
+                      CustomRichText(title: "رقم الجوال", subTitle: widget.phone, fontSize: 9),
                     ],
                   ),
 
@@ -56,9 +74,9 @@ class ProviderReservationItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      CustomRichText(title: "التاريخ", subTitle: date, fontSize: 9),
-                      CustomRichText(title: "الوقت", subTitle: time, fontSize: 9),
-                      CustomRichText(title: "المكان", subTitle: location, fontSize: 9),
+                      CustomRichText(title: "التاريخ", subTitle: widget.date, fontSize: 9),
+                      CustomRichText(title: "الوقت", subTitle: widget.time, fontSize: 9),
+                      CustomRichText(title: "المكان", subTitle: widget.location, fontSize: 9),
                     ],
                   ),
                 ],

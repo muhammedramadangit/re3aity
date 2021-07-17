@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
+import 'package:lastre3ayty/Provider/Provider_Drawer/Provider_Main_Drawer.dart';
 import 'package:lastre3ayty/Provider/Screens/MyReservation/Bloc/FinishedCubit/FinishedCubit.dart';
 import 'package:lastre3ayty/Provider/Screens/MyReservation/Bloc/RemoveCubit/RemoveCubit.dart';
 import 'package:lastre3ayty/Provider/Screens/Provider_Profile/Edit_Profile/Bloc/Edit_Cubit.dart';
@@ -10,6 +11,7 @@ import 'package:lastre3ayty/Provider/Screens/Provider_Profile/Profile/Bloc/Profi
 import 'package:lastre3ayty/Splash/splash_screen.dart';
 import 'package:lastre3ayty/User/screens/Profile/Edit_Profile/bloc/Edit_Cubit.dart';
 import 'package:lastre3ayty/User/screens/Profile/Profile/Bloc/ProfileCubit.dart';
+import 'package:lastre3ayty/User/screens/Sections/Sections.dart';
 import 'package:lastre3ayty/User_or_Provider/UserOrProvider.dart';
 import 'package:lastre3ayty/theme/color.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,20 +24,11 @@ import 'package:lastre3ayty/User/screens/Auth/Confirm_Forget_Password/Bloc/Confi
 import 'package:lastre3ayty/User/screens/Auth/Forget_Password/Bloc/Forget_Pass_Cubit.dart';
 import 'package:lastre3ayty/User/screens/Auth/NewPassword/Bloc/NewPass_Cubit.dart';
 import 'package:lastre3ayty/User/screens/Auth/SignUp/Bloc/Cubit.dart';
-import 'package:lastre3ayty/User/screens/Doctors/Bloc/AddReservationCubit.dart';
+import 'package:lastre3ayty/User/screens/SingleSection/Bloc/AddReservationCubit.dart';
 import 'User/screens/Auth/Login/Bloc/Cubit.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // SharedPreferences _pref = await SharedPreferences.getInstance();
-  // String login = _pref.getString("api_token");
-  // Widget screen;
-  // if(login == null){
-  //   screen = UserOrProvider()
-  // }else{
-  //   screen = Sections(openDrawer: openDrawer),
-  // }
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyCare());
 }
 

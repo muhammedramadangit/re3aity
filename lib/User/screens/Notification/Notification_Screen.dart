@@ -41,7 +41,7 @@ class _NotificationPagesState extends State<NotificationPage> {
         ),
         body: _isLoading
             ? CenterLoading()
-            : _notificationModel.data == null
+            : _notificationModel.data.length == 0
               ? CenterMessage(msg: "لا يوجد اشعارات")
               : Container(
                 height: MediaQuery.of(context).size.height,

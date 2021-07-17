@@ -34,6 +34,7 @@ class SignUpCubit extends Cubit<SignUpState> {
       if(response.statusCode == 200 && response.data["msg"] == "success"){
         SharedPreferences _prefs = await SharedPreferences.getInstance();
         _prefs.setString("api_token", response.data["api_token"]);
+        _prefs.setString("admin", response.data["data"]["admin"]);
         _prefs.setInt("user_id", response.data["data"]["id"]);
         code = response.data["sms_code"];
         print(response.data);

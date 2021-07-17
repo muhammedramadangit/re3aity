@@ -30,12 +30,6 @@ class _SectionsState extends State<Sections> {
     'assets/icons/spa.png', //كهرباء
     'assets/icons/asasahospital.png', //سباكة
   ];
-  List<String> _catName = [
-    "خدمات منزلية",
-    "تنظيف",
-    "كهرباء",
-    "سباكة",
-  ];
   final cubit = ProfileCubit();
 
   void getCat() async {
@@ -123,6 +117,8 @@ class _SectionsState extends State<Sections> {
             fit: BoxFit.fill,
             imgSize: 70,
             onTap: () {
+              print("indexxxxxxxxxxxxxxxx ${index}");
+              print("ID++++++++++++++++++ ${_allCategories.data[index].categories.id}");
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -130,7 +126,7 @@ class _SectionsState extends State<Sections> {
                     appBarTitle: _allCategories.data[index].categories.name,
                     index: 0,
                     id: _allCategories.data[index].categories.id,
-                    categoryData: _allCategories,
+                    categoryData: _allCategories.data[index],
                     sectionServiceName: _allCategories.data[index].categories.name,
                   ),
                 ),

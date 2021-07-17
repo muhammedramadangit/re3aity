@@ -79,6 +79,7 @@ class _ProviderReservationState extends State<ProviderReservation> {
                               date: cubit.reversationsModel.data[index].date,
                               time: cubit.reversationsModel.data[index].time,
                               location: cubit.reversationsModel.data[index].place,
+                              resID: cubit.reversationsModel.data[index].reservationId,
                             ),
                           ),
                         );
