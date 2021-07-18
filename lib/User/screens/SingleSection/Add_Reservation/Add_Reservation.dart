@@ -12,6 +12,7 @@ import 'package:lastre3ayty/common/CustomAppBar.dart';
 import 'package:lastre3ayty/common/CustomButton.dart';
 import 'package:lastre3ayty/common/CustomCard.dart';
 import 'package:lastre3ayty/common/CustomDialog.dart';
+import 'package:lastre3ayty/common/LoginAlert.dart';
 import 'package:lastre3ayty/theme/color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,19 +20,20 @@ class AddReservation extends StatefulWidget {
   final Subcategory person;
   final String serviceName;
   final int catID;
+  final bool skip;
 
-  const AddReservation({this.person, this.serviceName, this.catID,});
+  const AddReservation({this.person, this.serviceName, this.catID, this.skip,});
 
   @override
   _AddReservationState createState() => _AddReservationState();
 }
 
 class _AddReservationState extends State<AddReservation> {
-  bool _clinicChecked = true;
+  bool _clinicChecked = false;
   bool _homeChecked = false;
   DateTime _pickedDate;
   TimeOfDay _time;
-  List place = ["العيادة", "المنزل"];
+  List place = ["مكان مقدم الخدمة", "المنزل"];
   int userID;
 
 
@@ -88,7 +90,7 @@ class _AddReservationState extends State<AddReservation> {
           context: context,
           appBarTilte: widget.person.user.name,
           showNotificationIcon: true,
-          onTapNotification: () => Navigator.push(context, MaterialPageRoute(builder: (_) => NotificationPage())),
+          onTapNotification: () => Navigator.push(context, MaterialPageRoute(builder: (_) => NotificationPage(skip: widget.skip))),
         ),
 
         body: Padding(
@@ -110,7 +112,22 @@ class _AddReservationState extends State<AddReservation> {
                 //   child: Container()
                 // ),
 
-                reservationButton(context),
+                widget.skip == true
+                    ? CustomButton(
+                        height: 45,
+                        width: MediaQuery.of(context).size.width,
+                        text: "حجز",
+                        bottomPadding: 10,
+                        topPadding: 10,
+                        rightPadding: 0,
+                        leftPadding: 0,
+                        onTap: () {
+                          showDialog(context: context, builder: (_){
+                            return LoginAlertDialog();
+                          });
+                        },
+                      )
+                    : reservationButton(context),
               ],
             ),
           ),
@@ -189,6 +206,126 @@ class _AddReservationState extends State<AddReservation> {
     );
   }
 
+  //=================================== Doctor Description =========================================
+  Widget doctorDescription(BuildContext context){
+    return AnimatedWidgets(
+      duration: 1.5,
+      virticaloffset: 0,
+      horizontalOffset: 50,
+      child: CustomCard(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "نبذة عن الطبيب",
+              style: TextStyle(
+                fontSize: 12,
+                fontFamily: "Cairo-Bold",
+                color: Theme
+                    .of(context)
+                    .accentColor,
+              ),
+            ),
+            SizedBox(height: 5),
+            Text(
+              widget.person.user.desc,
+              style: TextStyle(
+                fontSize: 10,
+                color: ThemeColor.darkerGreyText,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  //===================================== doctor Service ===========================================
+  Widget doctorService(BuildContext context){
+    return AnimatedWidgets(
+      duration: 1.5,
+      virticaloffset: 0,
+      horizontalOffset: 50,
+      child: CustomCard(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "الخدمات",
+              style: TextStyle(
+                fontSize: 12,
+                fontFamily: "Cairo-Bold",
+                color: Theme.of(context).accentColor,
+              ),
+            ),
+            SizedBox(height: 5),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      "نوع الخدمة المقدمة : ",
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                    Text(
+                      widget.serviceName,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Theme.of(context).accentColor,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "سعر الخدمة فى المنزل : ",
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                    Text(
+                      "${widget.person.homeprice.toString()} ريال",
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Theme.of(context).accentColor,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "سعر الخدمة فى مكان مقدم الخدمة : ",
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                    Text(
+                      "${widget.person.clincprice.toString()} ريال",
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Theme.of(context).accentColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   //==================================== Service Location ==========================================
   Widget serviceLocation(BuildContext context){
     final cubit = AddReservationCubit.get(context);
@@ -219,7 +356,8 @@ class _AddReservationState extends State<AddReservation> {
                   CustomButton(
                     height: 40,
                     width: MediaQuery.of(context).size.width / 2.5,
-                    text: place[0],
+                    text: "مكان مقدم الخدمة",
+                    fontsize: 13,
                     bottomPadding: 0,
                     topPadding: 0,
                     rightPadding: 0,
@@ -246,6 +384,7 @@ class _AddReservationState extends State<AddReservation> {
                     width: MediaQuery.of(context).size.width / 2.5,
                     text: place[1],
                     bottomPadding: 0,
+                    fontsize: 14,
                     topPadding: 0,
                     rightPadding: 2,
                     leftPadding: 0,
@@ -367,108 +506,6 @@ class _AddReservationState extends State<AddReservation> {
     );
   }
 
-  //=================================== Doctor Description =========================================
-  Widget doctorDescription(BuildContext context){
-    return AnimatedWidgets(
-      duration: 1.5,
-      virticaloffset: 0,
-      horizontalOffset: 50,
-      child: CustomCard(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "نبذة عن الطبيب",
-              style: TextStyle(
-                fontSize: 12,
-                fontFamily: "Cairo-Bold",
-                color: Theme
-                    .of(context)
-                    .accentColor,
-              ),
-            ),
-            SizedBox(height: 5),
-            Text(
-              widget.person.user.desc,
-              style: TextStyle(
-                fontSize: 10,
-                color: ThemeColor.darkerGreyText,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  //===================================== doctor Service ===========================================
-  Widget doctorService(BuildContext context){
-    return AnimatedWidgets(
-      duration: 1.5,
-      virticaloffset: 0,
-      horizontalOffset: 50,
-      child: CustomCard(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "الخدمات : ${widget.serviceName}",
-              style: TextStyle(
-                fontSize: 12,
-                fontFamily: "Cairo-Bold",
-                color: Theme.of(context).accentColor,
-              ),
-            ),
-            SizedBox(height: 5),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      "سعر الخدمة فى المنزل : ",
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    Text(
-                      "${widget.person.homeprice.toString()} ريال",
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Theme.of(context).accentColor,
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text(
-                      "سعر الخدمة فى العيادة : ",
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    Text(
-                      "${widget.person.clincprice.toString()} ريال",
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Theme.of(context).accentColor,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   //=================================== Reservation Button ==========================================
   Widget reservationButton(BuildContext context){
     final cubit = AddReservationCubit.get(context);
@@ -497,17 +534,17 @@ class _AddReservationState extends State<AddReservation> {
           return state is AddReservationLoadingState
               ? CenterLoading()
               : CustomButton(
-            height: 45,
-            width: MediaQuery.of(context).size.width,
-            text: "حجز",
-            bottomPadding: 10,
-            topPadding: 10,
-            rightPadding: 0,
-            leftPadding: 0,
-            onTap: (){
-              cubit.postAddReservation();
-            },
-          );
+                  height: 45,
+                  width: MediaQuery.of(context).size.width,
+                  text: "حجز",
+                  bottomPadding: 10,
+                  topPadding: 10,
+                  rightPadding: 0,
+                  leftPadding: 0,
+                  onTap: () {
+                    cubit.postAddReservation();
+                  },
+                );
         },
       ),
     );

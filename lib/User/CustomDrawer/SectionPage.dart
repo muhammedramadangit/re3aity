@@ -11,7 +11,7 @@ class SectionPage extends StatefulWidget {
   final VoidCallback openDrawer;
   final int index, id;
   final String appBarTitle, serviceName;
-  final bool showSearchIcon;
+  final bool showSearchIcon, skip;
   final CategoryData categoryData;
   final ProfileCubit profileCubit;
 
@@ -22,7 +22,7 @@ class SectionPage extends StatefulWidget {
       this.appBarTitle,
       this.showSearchIcon = true,
       this.categoryData,
-      this.serviceName, this.id, this.profileCubit})
+      this.serviceName, this.id, this.profileCubit, this.skip})
       : super(key: key);
 
   @override
@@ -48,7 +48,7 @@ class _SectionPageState extends State<SectionPage> {
   @override
   void initState() {
     pages = [
-      SingleSection(categoryData: widget.categoryData, serviceName: widget.serviceName, id: widget.id,),
+      SingleSection(categoryData: widget.categoryData, serviceName: widget.serviceName, id: widget.id,skip: widget.skip),
       Profile(profileCubit: widget.profileCubit),
     ];
     whichPage();
@@ -64,7 +64,7 @@ class _SectionPageState extends State<SectionPage> {
           // showSearchIcon: widget.showSearchIcon,
           // onTapSearchIcon: () {},
           showNotificationIcon: true,
-          onTapNotification: () => Navigator.push(context, MaterialPageRoute(builder: (_) => NotificationPage())),
+          onTapNotification: () => Navigator.push(context, MaterialPageRoute(builder: (_) => NotificationPage(skip: widget.skip))),
           showDrawerIcon: true,
           onPressedDrawer: () {
             widget.openDrawer();

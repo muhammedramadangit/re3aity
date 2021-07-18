@@ -12,7 +12,8 @@ class SingleSection extends StatefulWidget {
   final CategoryData categoryData;
   final String serviceName;
   final int id;
-  const SingleSection({this.serviceName, this.id, this.categoryData});
+  final bool skip;
+  const SingleSection({this.serviceName, this.id, this.categoryData, this.skip});
 
   @override
   _SingleSectionState createState() => _SingleSectionState();
@@ -69,6 +70,7 @@ class _SingleSectionState extends State<SingleSection> {
                             description:item.desc??"",
                             catID: widget.id??"",
                             serviceName: widget.serviceName??"",
+                            skip: widget.skip,
                           ),
                         );
                       },

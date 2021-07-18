@@ -10,7 +10,7 @@ class EditProfileCubit extends Cubit<EditProfileState>{
 
   static EditProfileCubit get(context) => BlocProvider.of(context);
   Dio dio = Dio();
-  String userID, name, address, lat, lng, phone;
+  String userID, name, address, lat, lng, phone, token;
   File image;
 
   Future<void> editProfile() async {
@@ -41,6 +41,7 @@ class EditProfileCubit extends Cubit<EditProfileState>{
       final Response response = await dio.post(url, data: formData);
 
       if(response.statusCode == 200 && response.data["msg"] == "success"){
+        token = _pref.getString("api_token");
         print(response.data);
         emit(EditProfileSuccessState());
       }else if(response.statusCode == 200 && response.data["msg"] != "success"){

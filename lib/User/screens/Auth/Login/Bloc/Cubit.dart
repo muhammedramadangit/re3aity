@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lastre3ayty/User/screens/Auth/Login/Bloc/state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,6 +13,7 @@ class LoginCubit extends Cubit<LoginState> {
    String phone;
    String token;
    String password;
+   String apiToken;
 
   Future<void> login() async {
     emit(LoginLoadingState());
@@ -34,6 +36,7 @@ class LoginCubit extends Cubit<LoginState> {
         _prefs.setString("api_token", response.data["api_token"]);
         _prefs.setString("admin", response.data["data"]["admin"]);
         _prefs.setInt("user_id", response.data["data"]["id"]);
+        apiToken = _prefs.getString("api_token");
         print(response.data);
         emit(LoginSuccessState());
       } else if(response.statusCode == 200 && response.data["msg"] != "success"){

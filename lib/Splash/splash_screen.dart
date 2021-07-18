@@ -8,34 +8,24 @@ import 'package:lastre3ayty/common/AnimatedWidget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
+  final Widget screen;
+
+  SplashScreen({this.screen});
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  Widget screen;
 
-  void checkLogin() async {
-    SharedPreferences _pref = await SharedPreferences.getInstance();
-    String login = _pref.getString("api_token");
-    String admin = _pref.getString("admin");
-    if(login == null){
-      screen = UserOrProvider();
-    }else if(login != null && admin == "user"){
-      screen = Sections();
-    }else if(login != null && admin == "advertiser"){
-      screen = ProviderMainDrawer(appBarTitle: "حجوزاتي", index: 0);
-    }
-  }
 
   @override
   void initState() {
-    checkLogin();
     Timer(
         Duration(seconds: 5),
         () => Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (_) => screen),
+            MaterialPageRoute(builder: (_) => widget.screen),
             (route) => false));
     super.initState();
   }

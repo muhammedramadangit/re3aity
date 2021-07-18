@@ -1,24 +1,29 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lastre3ayty/User/CustomDrawer/Drawer_Item.dart';
 import 'package:lastre3ayty/User/CustomDrawer/Drawer_Items.dart';
 import 'package:lastre3ayty/User/CustomDrawer/Drawer_widget.dart';
 import 'package:lastre3ayty/User/CustomDrawer/SectionPage.dart';
-import 'package:lastre3ayty/User/models/Category_model/All_category.dart';
 import 'package:lastre3ayty/User/models/Category_model/Category_data.dart';
+import 'package:lastre3ayty/User/screens/Auth/Login/Bloc/Cubit.dart';
 import 'package:lastre3ayty/User/screens/Privacy_Policy/PrivacyPolicy.dart';
+import 'package:lastre3ayty/User/screens/Profile/Edit_Profile/bloc/Edit_Cubit.dart';
 import 'package:lastre3ayty/User/screens/Profile/Profile/Bloc/ProfileCubit.dart';
 import 'package:lastre3ayty/User/screens/Sections/Sections.dart';
 import 'package:lastre3ayty/User/screens/Terms_and_Conditions/Terms_and_Conditions.dart';
 import 'package:lastre3ayty/User/screens/User_Reservation/User_Reservation.dart';
+import 'package:lastre3ayty/User/screens/User_Reservation/Visitor_Reservation.dart';
 import 'package:lastre3ayty/User_or_Provider/UserOrProvider.dart';
+import 'package:lastre3ayty/common/CustomDialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MainDrawer extends StatefulWidget {
   final int index, id;
   final String appBarTitle, sectionServiceName;
-  final bool showSearchIcon;
+  final bool showSearchIcon, skip;
   final CategoryData categoryData;
   final ProfileCubit profileCubit;
+
 
   const MainDrawer(
       {this.index,
@@ -26,23 +31,20 @@ class MainDrawer extends StatefulWidget {
       this.showSearchIcon = true,
       this.categoryData,
       this.sectionServiceName,
-      this.id, this.profileCubit});
+      this.id, this.profileCubit, this.skip});
 
   @override
   _MainDrawerState createState() => _MainDrawerState();
 }
 
 class _MainDrawerState extends State<MainDrawer> {
+
   double xOffset;
   double yOffset;
   double scaleFactor;
   bool isDrawerOpen;
   bool isDragging = false;
   DrawerItem item;
-
-
-
-  DrawerItems _items = DrawerItems();
 
   @override
   void initState() {
@@ -88,6 +90,7 @@ class _MainDrawerState extends State<MainDrawer> {
         child: Container(
           //width: -xOffset,
           child: DrawerWidget(
+            skip: widget.skip,
             onSelectedItem: (item) async {
               SharedPreferences _pref = await SharedPreferences.getInstance();
               if (item == DrawerItems.logout) {
@@ -153,16 +156,20 @@ class _MainDrawerState extends State<MainDrawer> {
 
   // ignore: missing_return
   Widget getDrawerPage() {
+    final loginCubit = LoginCubit.get(context);
     if (item == DrawerItems.sections) {
       return Sections(openDrawer: isDrawerOpen== true ? closeDrawer : openDrawer);
     } else if (item == DrawerItems.myReservation) {
-      return UserReservation(openDrawer: openDrawer);
+      return widget.skip == true
+          ? VisitorReservation(openDrawer: openDrawer,)
+          : UserReservation(openDrawer: openDrawer);
     } else if (item == DrawerItems.terms) {
       return TermsAndConditions(openDrawer: openDrawer);
     } else if (item == DrawerItems.privacyPolicy) {
       return PrivacyPolicy(openDrawer: openDrawer);
     } else {
       return SectionPage(
+        skip: widget.skip,
         openDrawer: openDrawer,
         appBarTitle: widget.appBarTitle,
         index: widget.index,

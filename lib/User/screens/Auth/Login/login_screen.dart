@@ -14,6 +14,7 @@ import 'package:lastre3ayty/common/CustomRegisterIcon.dart';
 import 'package:lastre3ayty/common/CustomTextField.dart';
 import 'package:lastre3ayty/common/CustonSnackBar.dart';
 import 'package:lastre3ayty/theme/color.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -24,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+    bool skip;
 
   @override
   void initState() {
@@ -244,26 +246,55 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
 
-                      //=========== تخطي =============
-                      // InkWell(
-                      //   onTap: () {
-                      //     Navigator.push(
-                      //         context,
-                      //         MaterialPageRoute(
-                      //             builder: (_) => Sections()));
-                      //   },
-                      //   child: Text(
-                      //     'تخطي',
-                      //     style: TextStyle(
-                      //       fontSize: 14,
-                      //       fontFamily: 'Cairo-Bold',
-                      //       color: Theme.of(context).primaryColor,
-                      //     ),
-                      //   ),
-                      // ),
+
                     ],
                   ),
                 ),
+              ),
+            ),
+
+            Align(
+              alignment: Alignment.bottomRight,
+              child: skipButton(context),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  //=============================== SKIP BUTTON ==================================
+  Widget skipButton(BuildContext context){
+    return AnimatedWidgets(
+      duration: 2,
+      horizontalOffset: 0.0,
+      virticaloffset: 50.0,
+      child: InkWell(
+        onTap: () async {
+          SharedPreferences pref = await SharedPreferences.getInstance();
+          pref.setBool("skip", true);
+          skip=pref.getBool("skip");
+          print("=============================================$skip");
+          Navigator.push(context, MaterialPageRoute(builder: (_)=> Sections(skip: skip)));
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              height: 25,
+              width: 25,
+              margin: EdgeInsets.all(15),
+              color: Colors.transparent,
+              child: Center(
+                child: Image.asset("assets/icons/skip.png", color: Theme.of(context).primaryColor),
+              ),
+            ),
+            Text(
+              'تخطي',
+              style: TextStyle(
+                fontSize: 14,
+                fontFamily: 'Cairo-Bold',
+                color: Theme.of(context).primaryColor,
               ),
             ),
           ],

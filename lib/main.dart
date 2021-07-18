@@ -25,14 +25,33 @@ import 'package:lastre3ayty/User/screens/Auth/Forget_Password/Bloc/Forget_Pass_C
 import 'package:lastre3ayty/User/screens/Auth/NewPassword/Bloc/NewPass_Cubit.dart';
 import 'package:lastre3ayty/User/screens/Auth/SignUp/Bloc/Cubit.dart';
 import 'package:lastre3ayty/User/screens/SingleSection/Bloc/AddReservationCubit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'User/screens/Auth/Login/Bloc/Cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyCare());
+  SharedPreferences _pref = await SharedPreferences.getInstance();
+  String login = _pref.getString("api_token");
+  String admin = _pref.getString("admin");
+  Widget screen;
+  if(login == null){
+    screen = UserOrProvider();
+  }else if(login != null && admin == "user"){
+    screen = Sections();
+  }else if(login != null && admin == "advertiser"){
+    screen = ProviderMainDrawer(appBarTitle: "حجوزاتي", index: 0);
+  }else{
+    screen = UserOrProvider();
+    print("login api Token : ............ $login");
+    print("type of User : ............ $admin");
+  }
+  runApp(MyCare(screen: screen));
 }
 
 class MyCare extends StatefulWidget {
+  final Widget screen;
+  MyCare({this.screen});
+
   @override
   _MyCareState createState() => _MyCareState();
 }
@@ -165,7 +184,7 @@ class _MyCareState extends State<MyCare> {
           accentColor: ThemeColor.lighterGreyText,
           fontFamily: "Cairo-Regular",
         ),
-        home: SplashScreen(),
+        home: SplashScreen(screen: widget.screen),
       ),
     );
   }

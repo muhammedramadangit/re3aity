@@ -1,18 +1,23 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lastre3ayty/User/CustomDrawer/Drawer_Item.dart';
 import 'package:lastre3ayty/User/CustomDrawer/Drawer_Items.dart';
 import 'package:lastre3ayty/User/CustomDrawer/Main_Drawer.dart';
+import 'package:lastre3ayty/User/screens/Auth/Login/Bloc/Cubit.dart';
 import 'package:lastre3ayty/User/screens/Profile/Edit_Profile/bloc/Edit_Cubit.dart';
 import 'package:lastre3ayty/User/screens/Profile/Profile/Bloc/ProfileCubit.dart';
 import 'package:lastre3ayty/User/screens/Profile/Profile/Bloc/ProfileState.dart';
+import 'package:lastre3ayty/User_or_Provider/UserOrProvider.dart';
 import 'package:lastre3ayty/common/CenterLoading.dart';
 import 'package:lastre3ayty/common/CustomSection.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DrawerWidget extends StatefulWidget {
   final ValueChanged<DrawerItem> onSelectedItem;
+  final bool skip;
 
-  DrawerWidget({Key key, @required this.onSelectedItem}) : super(key: key);
+  DrawerWidget({Key key, @required this.onSelectedItem, this.skip}) : super(key: key);
 
   @override
   _DrawerWidgetState createState() => _DrawerWidgetState();
@@ -39,10 +44,26 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             padding: EdgeInsets.only(top: 0, left: 15, right: 20),
             child: SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  //============== user information =================
-                  userInformation(context),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    //============== user information =================
+                    widget.skip == true
+                       ? Padding(
+                            padding: EdgeInsets.symmetric(vertical: 20),
+                                child: ListTile(
+                                  title: Text("تسجيل الدخول", style: TextStyle(
+                                      color: Colors.white, fontWeight: FontWeight.w700)),
+                                  leading: Icon(Icons.login, color: Colors.white),
+                                  onTap: () async {
+                                    SharedPreferences pref = await SharedPreferences.getInstance();
+                                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => UserOrProvider()), (route) => false);
+                                    pref.setBool("skip", false);
+                                  },
+                                ),
+                          )
+                    //SizedBox(height: MediaQuery.of(context).size.width/5)
+
+                    : userInformation(context),
 
                   //============== drawer cat ==================
                   Padding(
@@ -76,16 +97,21 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
   Widget userInformation(BuildContext context) {
     final editedCubit = EditProfileCubit.get(context);
+    final loginCubit = LoginCubit.get(context);
     return InkWell(
-      onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (_) => MainDrawer(
-                    showSearchIcon: false,
-                    appBarTitle: "الصفحة الشخصية",
-                    index: 1,
-                    profileCubit: cubit,
-                  ))),
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) =>
+                    MainDrawer(
+                      showSearchIcon: false,
+                      appBarTitle: "الصفحة الشخصية",
+                      index: 1,
+                      profileCubit: cubit,
+                    )));
+      },
+
       child: Container(
         height: MediaQuery.of(context).size.height / 7,
         width: MediaQuery.of(context).size.width,
@@ -138,3 +164,13 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   }
 }
 
+// Padding(
+// padding: EdgeInsets.symmetric(vertical: 20),
+// child: ListTile(
+// title: Text("تسجيل الدخول", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
+// leading: Icon(Icons.login, color: Colors.white),
+// onTap: (){
+// Navigator.push(context, MaterialPageRoute(builder: (_) => UserOrProvider()));
+// },
+// ),
+// );

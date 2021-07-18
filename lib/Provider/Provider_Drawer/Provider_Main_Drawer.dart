@@ -78,7 +78,7 @@ class _ProviderMainDrawerState extends State<ProviderMainDrawer> {
             onSelectedItem: (item) async {
               SharedPreferences _pref = await SharedPreferences.getInstance();
               if (item == ProviderDrawerItems.logout) {
-                // _pref.clear();
+                _pref.clear();
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (_) => UserOrProvider()),

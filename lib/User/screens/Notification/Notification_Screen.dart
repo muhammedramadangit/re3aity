@@ -6,8 +6,13 @@ import 'package:lastre3ayty/common/AnimatedWidget.dart';
 import 'package:lastre3ayty/common/CenterLoading.dart';
 import 'package:lastre3ayty/common/CenterMessage.dart';
 import 'package:lastre3ayty/common/CustomAppBar.dart';
+import 'package:lastre3ayty/common/LoginAlert.dart';
 
 class NotificationPage extends StatefulWidget {
+  final bool skip;
+
+  NotificationPage({this.skip});
+
   @override
   _NotificationPagesState createState() => _NotificationPagesState();
 }
@@ -39,7 +44,9 @@ class _NotificationPagesState extends State<NotificationPage> {
           context: context,
           appBarTilte: "الاشعارات",
         ),
-        body: _isLoading
+        body: widget.skip == true
+            ? CenterMessage(msg: "لا يوجد اشعارات برجاء تسجيل الدخول أولا")
+            : _isLoading
             ? CenterLoading()
             : _notificationModel.data.length == 0
               ? CenterMessage(msg: "لا يوجد اشعارات")

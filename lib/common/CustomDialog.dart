@@ -2,13 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lastre3ayty/User_or_Provider/UserOrProvider.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
+import 'package:lastre3ayty/common/CustomCard.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomDialog extends StatefulWidget {
-  final String msg;
+  final String msg, imgSrc;
   final Function navRoute;
 
-  const CustomDialog({Key key, this.msg, this.navRoute}) : super(key: key);
+  const CustomDialog({Key key, this.msg, this.navRoute, this.imgSrc}) : super(key: key);
 
   @override
   _CustomDialogState createState() => _CustomDialogState();
@@ -50,8 +53,9 @@ class _CustomDialogState extends State<CustomDialog> {
                   end: Alignment.centerLeft,
                 ),
                 ),
-                child: Icon(CupertinoIcons.checkmark_alt,
-                    size: 60, color: Colors.white),
+                child: widget.imgSrc == ""
+                    ? Image.asset("assets/icons/desc.png", color: Colors.white)
+                    : Icon(CupertinoIcons.checkmark_alt, size: 60, color: Colors.white),
               ),
               SizedBox(height: 25),
               Text(
@@ -64,6 +68,77 @@ class _CustomDialogState extends State<CustomDialog> {
                     fontFamily: "Cairo-Regular",
                 ),
               ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class LoginAlertDialog extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: AnimatedWidgets(
+        duration: 1,
+        horizontalOffset: 0.0,
+        virticaloffset: 150.0,
+        child: CupertinoAlertDialog(
+          content: Column(
+            children: [
+              Text(
+                "برجاء تسجيل الدخول اولا",
+                style: TextStyle(
+                  color: Theme.of(context).accentColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.width / 10),
+              Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  FlatButton(
+                    onPressed: () async {
+                      SharedPreferences pref =
+                          await SharedPreferences.getInstance();
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (_) => UserOrProvider()),
+                          (route) => false);
+                      pref.setBool("skip", false);
+                    },
+                    child: Text(
+                      "تسجيل دخول",
+                      style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 14,
+                          fontFamily: "Cairo-Bold"),
+                    ),
+                  ),
+                  // VerticalDivider(),
+                  Container(
+                    width: 1,
+                    height: MediaQuery.of(context).size.width / 8,
+                    color: Theme.of(context).dividerColor,
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      "إلغاء",
+                      style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 14,
+                          fontFamily: "Cairo-Bold"),
+                    ),
+                  )
+                ],
+              )
             ],
           ),
         ),

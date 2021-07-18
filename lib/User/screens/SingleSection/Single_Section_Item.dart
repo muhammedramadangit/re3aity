@@ -8,6 +8,7 @@ class SingleSectionItem extends StatelessWidget {
   final String name, imgSrc, description, serviceName;
   final int rate, catID;
   final Subcategory subcategories;
+  final bool skip;
 
   SingleSectionItem({
     this.name,
@@ -17,6 +18,7 @@ class SingleSectionItem extends StatelessWidget {
     this.subcategories,
     this.catID,
     this.serviceName,
+    this.skip,
   });
 
   @override
@@ -27,10 +29,11 @@ class SingleSectionItem extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (_) => AddReservation(
-                  person: subcategories,
-                  catID: catID,
-                  serviceName: serviceName,
-                )));
+                      person: subcategories,
+                      catID: catID,
+                      serviceName: serviceName,
+                      skip: skip,
+                    )));
       },
       child: Row(
         children: [

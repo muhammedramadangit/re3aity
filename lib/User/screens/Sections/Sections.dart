@@ -12,8 +12,9 @@ import 'package:lastre3ayty/common/CustomSection.dart';
 
 class Sections extends StatefulWidget {
   final Function openDrawer;
+  final bool skip;
 
-  const Sections({Key key, @required this.openDrawer}) : super(key: key);
+  const Sections({Key key, @required this.openDrawer, this.skip}) : super(key: key);
 
   @override
   _SectionsState createState() => _SectionsState();
@@ -123,6 +124,7 @@ class _SectionsState extends State<Sections> {
                 context,
                 MaterialPageRoute(
                   builder: (_) => MainDrawer(
+                    skip: widget.skip,
                     appBarTitle: _allCategories.data[index].categories.name,
                     index: 0,
                     id: _allCategories.data[index].categories.id,
