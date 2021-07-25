@@ -12,7 +12,6 @@ import 'package:lastre3ayty/common/CustomAppBar.dart';
 import 'package:lastre3ayty/common/CustomButton.dart';
 import 'package:lastre3ayty/common/CustomCard.dart';
 import 'package:lastre3ayty/common/CustomDialog.dart';
-import 'package:lastre3ayty/common/LoginAlert.dart';
 import 'package:lastre3ayty/theme/color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -49,36 +48,6 @@ class _AddReservationState extends State<AddReservation> {
     _pickedDate = DateTime.now();
     _time = TimeOfDay.now();
   }
-
-  // _pickDate() async {
-  //   final cubit = AddReservationCubit.get(context);
-  //   DateTime date = await showDatePicker(
-  //     context: context,
-  //     initialDate: _pickedDate,
-  //     firstDate: DateTime(DateTime.now().year),
-  //     lastDate: DateTime(DateTime.now().year + 1),
-  //   );
-  //   if (date != null) {
-  //     cubit.date = date.toString();
-  //     setState(() {
-  //       _pickedDate = date;
-  //     });
-  //   }
-  // }
-
-  // _pickTime() async {
-  //   final cubit = AddReservationCubit.get(context);
-  //   TimeOfDay time = await showTimePicker(
-  //     context: context,
-  //     initialTime: _time,
-  //   );
-  //   if (time != null) {
-  //     cubit.time = time.toString();
-  //     setState(() {
-  //       _time = time;
-  //     });
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -292,7 +261,7 @@ class _AddReservationState extends State<AddReservation> {
                       ),
                     ),
                     Text(
-                      "${widget.person.homeprice.toString()} ريال",
+                      "${widget.person.homeprice} ريال",
                       style: TextStyle(
                         fontSize: 12,
                         color: Theme.of(context).accentColor,
@@ -310,7 +279,7 @@ class _AddReservationState extends State<AddReservation> {
                       ),
                     ),
                     Text(
-                      "${widget.person.clincprice.toString()} ريال",
+                      "${widget.person.clincprice} ريال",
                       style: TextStyle(
                         fontSize: 12,
                         color: Theme.of(context).accentColor,
@@ -451,10 +420,14 @@ class _AddReservationState extends State<AddReservation> {
                 DateTime date = await showDatePicker(
                   context: context,
                   initialDate: _pickedDate,
-                  firstDate: DateTime(DateTime.now().year),
+                  firstDate: DateTime(DateTime.now().day),
                   lastDate: DateTime(DateTime.now().year + 1),
                 );
-                if (date != null) {
+                if (date == null) {
+                  setState(() {
+                    cubit.date = _pickedDate.toString();
+                  });
+                } else {
                   cubit.date = date.toString();
                   setState(() {
                     _pickedDate = date;
@@ -492,7 +465,9 @@ class _AddReservationState extends State<AddReservation> {
                   context: context,
                   initialTime: _time,
                 );
-                if (time != null) {
+                if (time == null) {
+                  cubit.time = _time.format(context);
+                } else {
                   cubit.time = time.format(context);
                   setState(() {
                     _time = time;
@@ -516,10 +491,18 @@ class _AddReservationState extends State<AddReservation> {
       child: BlocConsumer<AddReservationCubit, AddReservationState>(
         listener: (_, state) async {
           SharedPreferences _pref = await SharedPreferences.getInstance();
+          // if(_pref.getInt("pro_id") == null){
+          //   Scaffold.of(_).showSnackBar(SnackBar(
+          //     backgroundColor: Theme.of(_).primaryColor,
+          //     content: Text("مقدم الخدمة غير متاح حاليا",
+          //       textAlign: TextAlign.center,
+          //       style: TextStyle(color: Colors.white, fontSize: 12, fontFamily: "Cairo-Regular")),
+          //   ));
+        // }else
           if(state is AddReservationErrorState && _pref.getInt("pro_id") == null){
             Scaffold.of(_).showSnackBar(SnackBar(
               backgroundColor: Theme.of(_).primaryColor,
-              content: Text("مقدم الخدمة غير متاح حاليا",
+              content: Text(state.error,
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white, fontSize: 12),),
             ));

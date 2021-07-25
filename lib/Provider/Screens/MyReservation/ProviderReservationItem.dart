@@ -33,10 +33,11 @@ class _ProviderReservationItemState extends State<ProviderReservationItem> {
     sharedResID();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return CustomCard(
-      horizontalPadding: 10,
+      horizontalPadding: 5,
       onTap: () {},
       child: Row(
         children: [
@@ -56,7 +57,7 @@ class _ProviderReservationItemState extends State<ProviderReservationItem> {
           Expanded(
             child: Container(
               height: MediaQuery.of(context).size.width / 5,
-              padding: EdgeInsets.only(right: 8),
+              padding: EdgeInsets.only(right: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

@@ -58,6 +58,7 @@ class _ProviderCompleteRegisterState extends State<ProviderCompleteRegister> {
 
   @override
   Widget build(BuildContext context) {
+
     final cubit = CompleteRegisterCubit.get(context);
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -240,18 +241,18 @@ class _ProviderCompleteRegisterState extends State<ProviderCompleteRegister> {
                                                   width: MediaQuery.of(context).size.width /2,
                                                   height: 40,
                                                   onTap: () {
-                                                      for (int i = 0; i < cubit.catIds.length; i++) {
-                                                      print(cubit.homePrices[i]);
-                                                      cubit.categories.add({
-                                                        "cat_id": cubit.catIds[i],
-                                                        "home_price": cubit.homePrices[i],
-                                                        "clinic_price": cubit.clinicPrices[i],
-                                                      });
+                                                    List uu=[];
+                                                        cubit.catIds.map((item)=>uu.add({
+                                                        "cat_id": item.catId,
+                                                        "home_price":  item.price,
+                                                        "clinic_price": item.priceHome,
+                                                        })).toList();
+                                                      cubit.categories=uu;
 
                                                       if (formKey.currentState.validate()) {
                                                         cubit.postCompleteRegister();
                                                       }
-                                                    }
+
                                                   },
                                                 );
                                         },
@@ -302,7 +303,7 @@ class _ProviderCompleteRegisterState extends State<ProviderCompleteRegister> {
           return
             {
               "display" : e.categories.name,
-              "value" : e.categories.id.toString(),
+              "value" :  e.categories.id,
             };
         }).toList(),
 
@@ -310,9 +311,10 @@ class _ProviderCompleteRegisterState extends State<ProviderCompleteRegister> {
         valueField: 'value',
         okButtonLabel: 'تاكيد',
         cancelButtonLabel: 'الغاء',
-        initialValue: cubit.catIds,
+        initialValue: cubit.catIds.map((e) => e.catId).toList(),
         // ignore: missing_return
         validator: (value) {
+
           if (value == null || value.length == 0) {
             return "من فضلك اختر خدمه او اكثر";
           }
@@ -320,8 +322,12 @@ class _ProviderCompleteRegisterState extends State<ProviderCompleteRegister> {
         onSaved: (value) {
           if (value == null) return;
           setState(() {
-            print(value);
-            cubit.catIds = value;
+            cubit.catIds=[];
+             value.map((item)=> cubit.catIds.add(CatyPrice(catId: item))).toList();
+           // cubit.catIds = value;
+            print(cubit.catIds);
+            // cubit.homePrice=[];
+
           });
         },
       ),
@@ -331,76 +337,77 @@ class _ProviderCompleteRegisterState extends State<ProviderCompleteRegister> {
 
   Widget _drawSelectedServicesPrice(BuildContext context) {
     final cubit = CompleteRegisterCubit.get(context);
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.25,
-      child: ListView.builder(
-        itemCount: cubit.catIds.length,
-        itemBuilder: (context, position) {
-          return Padding(
-            padding: EdgeInsets.symmetric(vertical: 10),
-            child: Column(
-              children: <Widget>[
-                Text("سعر الخدمة", style: TextStyle(fontSize: 14, color: Theme.of(context).primaryColor),),
-                SizedBox(height: 2),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    CustomTextField(
-                      horizontalPadding: 0,
-                      labelSize: 12,
-                      leftPadding: 5,
-                      rightPadding: 5,
-                      verticalPadding: 0,
-                      width: MediaQuery.of(context).size.width * .32,
-                      label: "المنزل",
-                      suffixIcon: Padding(
-                        padding: EdgeInsets.only(left: 8.0),
-                        child: Text("ريال", style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 12),),
-                      ),
-                      inputType: TextInputType.number,
-                      validate: (val){
-                        if(val.isEmpty){
-                          return "من فضلك ادخل سعر الخدمة فى المنزل";
-                        }
-                      },
-                      onChanged: (String val){
-                        setState(() {
-                          cubit.homePrices.add(val);
-                        });
-                      },
+    return ListView.builder(
+      primary: false,
+      //physics: ,
+      shrinkWrap: true,
+      itemCount: cubit.catIds.length,
+      itemBuilder: (context, position) {
+        return Padding(
+          padding: EdgeInsets.symmetric(vertical: 10),
+          child: Column(
+            children: <Widget>[
+              Text("سعر الخدمة", style: TextStyle(fontSize: 14, color: Theme.of(context).primaryColor),),
+              SizedBox(height: 2),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  CustomTextField(
+                    horizontalPadding: 0,
+                    labelSize: 12,
+                    leftPadding: 5,
+                    rightPadding: 5,
+                    verticalPadding: 0,
+                    width: MediaQuery.of(context).size.width * .32,
+                    label: "المنزل",
+                    suffixIcon: Padding(
+                      padding: EdgeInsets.only(left: 8.0),
+                      child: Text("ريال", style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 12),),
                     ),
-                    CustomTextField(
-                      horizontalPadding: 0,
-                      labelSize: 12,
-                      leftPadding: 5,
-                      rightPadding: 5,
-                      verticalPadding: 0,
-                      width: MediaQuery.of(context).size.width * .32,
-                      label: "مكان الخدمة",
-                      suffixIcon: Padding(
-                        padding: EdgeInsets.only(left: 8.0),
-                        child: Text("ريال", style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 12),),
-                      ),
-                      inputType: TextInputType.number,
-                      validate: (val){
-                        if(val.isEmpty){
-                          return "من فضلك ادخل سعر الخدمة فى مكان مقدم الخدمة";
-                        }
-                      },
-                      onChanged: (val){
-                        setState(() {
-                          cubit.clinicPrices.add(val.toString());
-                        });
-                      },
+                    inputType: TextInputType.number,
+                    validate: (val){
+                      if(val.isEmpty){
+                        return "من فضلك ادخل سعر الخدمة فى المنزل";
+                      }
+                    },
+                    onChanged: (val){
+                      var cat =cubit.catIds;
+                      cat[position]=cat[position].copyWith(priceHome:val);
+                      cubit.catIds=cat;
+                    },
+                  ),
+                  CustomTextField(
+                    horizontalPadding: 0,
+                    labelSize: 12,
+                    leftPadding: 5,
+                    rightPadding: 5,
+                    verticalPadding: 0,
+                    width: MediaQuery.of(context).size.width * .32,
+                    label: "مكان الخدمة",
+                    suffixIcon: Padding(
+                      padding: EdgeInsets.only(left: 8.0),
+                      child: Text("ريال", style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 12),),
                     ),
+                    inputType: TextInputType.phone,
+                    validate: (val){
+                      if(val.isEmpty){
+                        return "من فضلك ادخل سعر الخدمة فى مكان مقدم الخدمة";
+                      }
+                    },
+                    onChanged: (val){
+                      var cat =cubit.catIds;
+                      cat[position]=cat[position].copyWith(price:val);
+                      cubit.catIds=cat;
 
-                  ],
-                ),
-              ],
-            ),
-          );
-        },
-      ),
+                    },
+                  ),
+
+                ],
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

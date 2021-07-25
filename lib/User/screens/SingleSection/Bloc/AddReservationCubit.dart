@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lastre3ayty/Provider/Screens/Auth/Login/Bloc/ProviderLoginCubit.dart';
 import 'package:lastre3ayty/User/screens/SingleSection/Bloc/AddReservationState.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,6 +12,8 @@ class AddReservationCubit extends Cubit<AddReservationState>{
   Dio dio = Dio();
   String date, time, place;
   int user_id, owner_id, cat_id;
+
+  ProviderLoginCubit providerLoginCubit = ProviderLoginCubit();
 
   Future<void> postAddReservation() async {
     emit(AddReservationLoadingState());

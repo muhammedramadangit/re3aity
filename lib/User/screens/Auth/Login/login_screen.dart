@@ -246,6 +246,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
 
+                      skipButton(context),
+
 
                     ],
                   ),
@@ -253,10 +255,11 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
 
-            Align(
-              alignment: Alignment.bottomRight,
-              child: skipButton(context),
-            )
+            // Positioned(
+            //   bottom: 0,
+            //   right: 0,
+            //   child: skipButton(context),
+            // )
           ],
         ),
       ),
@@ -267,8 +270,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget skipButton(BuildContext context){
     return AnimatedWidgets(
       duration: 2,
-      horizontalOffset: 0.0,
-      virticaloffset: 50.0,
+      horizontalOffset: 50.0,
+      virticaloffset: 0.0,
       child: InkWell(
         onTap: () async {
           SharedPreferences pref = await SharedPreferences.getInstance();
