@@ -3,8 +3,6 @@ import 'package:lastre3ayty/Provider/Provider_Drawer/Provider_Drawer_Item.dart';
 import 'package:lastre3ayty/Provider/Provider_Drawer/Provider_Drawer_Items.dart';
 import 'package:lastre3ayty/Provider/Provider_Drawer/Provider_Drawer_widget.dart';
 import 'package:lastre3ayty/Provider/Provider_Drawer/Provider_Main_Page.dart';
-import 'package:lastre3ayty/Provider/Screens/Auth/CompleteRegister/Complete_Register.dart';
-import 'package:lastre3ayty/Provider/Screens/Auth/Login/ProviderLogin.dart';
 import 'package:lastre3ayty/Provider/Screens/Privacy_Policy/PrivacyPolicy.dart';
 import 'package:lastre3ayty/Provider/Screens/Provider_Profile/Profile/Bloc/Profile_Cubit.dart';
 import 'package:lastre3ayty/Provider/Screens/Terms_and_Conditions/Terms_and_Conditions.dart';
@@ -79,13 +77,7 @@ class _ProviderMainDrawerState extends State<ProviderMainDrawer> {
             onSelectedItem: (item) async {
               SharedPreferences _pref = await SharedPreferences.getInstance();
               if (item == ProviderDrawerItems.logout) {
-                // _pref.clear();
-
-                // Navigator.pushAndRemoveUntil(
-                //     context,
-                //     MaterialPageRoute(builder: (_) => ProviderCompleteRegister(gender: '',)),
-                //     (route) => false);
-                // return ;
+                _pref.clear();
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (_) => UserOrProvider()),

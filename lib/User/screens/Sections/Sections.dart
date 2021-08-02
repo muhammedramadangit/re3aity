@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lastre3ayty/User/CustomDrawer/Main_Drawer.dart';
 import 'package:lastre3ayty/User/models/Category_model/All_category.dart';
-import 'package:lastre3ayty/User/models/Category_model/Category_data.dart';
 import 'package:lastre3ayty/User/screens/Notification/Firebase_Notification/Firebase_notification_handler.dart';
 import 'package:lastre3ayty/User/screens/Profile/Profile/Bloc/ProfileCubit.dart';
 import 'package:lastre3ayty/User/screens/Sections/Controller/SectionController.dart';
@@ -26,10 +25,10 @@ class _SectionsState extends State<Sections> {
   SectionController _sectionController = SectionController();
   // List<CategoryData> categories;
   List<String> _catImages = [
-    'assets/icons/page.png', //خدمات منزلية
-    'assets/icons/xzxdoc.png', //تنظيف
-    'assets/icons/spa.png', //كهرباء
-    'assets/icons/asasahospital.png', //سباكة
+    'assets/icons/homeservise.png', //خدمات منزلية
+    'assets/icons/clean.png', //تنظيف
+    'assets/icons/ele.png', //كهرباء
+    'assets/icons/plumb.png', //سباكة
   ];
   final cubit = ProfileCubit();
 

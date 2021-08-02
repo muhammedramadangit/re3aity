@@ -64,6 +64,7 @@ class _SingleSectionState extends State<SingleSection> {
                           horizontalOffset: 0,
                           child: SingleSectionItem(
                             subcategories: widget.categoryData.subcategories[index],
+                            providerID: widget.categoryData.subcategories[index].user.id,
                             name: item.name??"",
                             imgSrc: item.image??"",
                             rate: item.rate??"",

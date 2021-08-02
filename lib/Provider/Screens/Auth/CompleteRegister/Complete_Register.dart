@@ -180,11 +180,9 @@ class _ProviderCompleteRegisterState extends State<ProviderCompleteRegister> {
                                       loading ? CenterLoading() : _drawSelectServicesForm(context),
 
                                       //============== عرض السعر ================
-                                      cubit.catIds==null ? Container()
-                                          : Padding(
-                                            padding: EdgeInsets.symmetric(vertical: 10),
-                                            child: _drawSelectedServicesPrice(context),
-                                          ),
+                                      cubit.catIds == null
+                                          ? Container()
+                                          : _drawSelectedServicesPrice(context),
 
                                       //============= الجنس =============
                                       CustomTextFieldTap(
@@ -229,7 +227,7 @@ class _ProviderCompleteRegisterState extends State<ProviderCompleteRegister> {
                                           if (state is CompleteRegisterErrorState) {
                                             customSnackBar(_, state.error);
                                           } else if (state is CompleteRegisterSuccessState) {
-                                            Navigator.push(context, MaterialPageRoute(builder: (_) =>ProviderMainDrawer(appBarTitle: "حجوزاتي", index: 0)));
+                                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) =>ProviderMainDrawer(appBarTitle: "حجوزاتي", index: 0)), (route) => false);
                                             print("================ تم اكمال تسجيل البيانات بنجاح ==========");
                                           }
                                         },
@@ -359,7 +357,7 @@ class _ProviderCompleteRegisterState extends State<ProviderCompleteRegister> {
                     rightPadding: 5,
                     verticalPadding: 0,
                     width: MediaQuery.of(context).size.width * .32,
-                    label: "المنزل",
+                    label: "مكان الخدمة",
                     suffixIcon: Padding(
                       padding: EdgeInsets.only(left: 8.0),
                       child: Text("ريال", style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 12),),
@@ -367,7 +365,7 @@ class _ProviderCompleteRegisterState extends State<ProviderCompleteRegister> {
                     inputType: TextInputType.number,
                     validate: (val){
                       if(val.isEmpty){
-                        return "من فضلك ادخل سعر الخدمة فى المنزل";
+                        return "من فضلك ادخل سعر الخدمة فى مكان مقدم الخدمة";
                       }
                     },
                     onChanged: (val){
@@ -383,7 +381,7 @@ class _ProviderCompleteRegisterState extends State<ProviderCompleteRegister> {
                     rightPadding: 5,
                     verticalPadding: 0,
                     width: MediaQuery.of(context).size.width * .32,
-                    label: "مكان الخدمة",
+                    label: "المنزل",
                     suffixIcon: Padding(
                       padding: EdgeInsets.only(left: 8.0),
                       child: Text("ريال", style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 12),),
@@ -391,7 +389,7 @@ class _ProviderCompleteRegisterState extends State<ProviderCompleteRegister> {
                     inputType: TextInputType.phone,
                     validate: (val){
                       if(val.isEmpty){
-                        return "من فضلك ادخل سعر الخدمة فى مكان مقدم الخدمة";
+                        return "من فضلك ادخل سعر الخدمة فى المنزل";
                       }
                     },
                     onChanged: (val){

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:lastre3ayty/User_or_Provider/UserOrProvider.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
 import 'package:lastre3ayty/common/CustomCard.dart';
+import 'package:lastre3ayty/theme/color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomDialog extends StatefulWidget {
@@ -86,63 +87,110 @@ class LoginAlertDialog extends StatelessWidget {
         horizontalOffset: 0.0,
         virticaloffset: 150.0,
         child: CupertinoAlertDialog(
-          content: Column(
-            children: [
-              Text(
-                "برجاء تسجيل الدخول اولا",
+          title: Image.asset("assets/icons/alert.png",color: Theme.of(context).accentColor, height: 80, width: 80),
+          content: Padding(
+            padding: EdgeInsets.symmetric(vertical: 10),
+            child: Text(
+              "برجاء تسجيل الدخول اولا",
+              style: TextStyle(
+                color: Theme.of(context).accentColor,
+                fontFamily: "Cairo-Bold",
+                fontSize: 14,
+              ),
+            ),
+          ),
+
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                "إلغاء",
                 style: TextStyle(
-                  color: Theme.of(context).accentColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 14,
+                    fontFamily: "Cairo-Bold",
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context).size.width / 10),
-              Divider(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  FlatButton(
-                    onPressed: () async {
-                      SharedPreferences pref =
-                          await SharedPreferences.getInstance();
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (_) => UserOrProvider()),
-                          (route) => false);
-                      pref.setBool("skip", false);
-                    },
-                    child: Text(
-                      "تسجيل دخول",
-                      style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 14,
-                          fontFamily: "Cairo-Bold"),
-                    ),
-                  ),
-                  // VerticalDivider(),
-                  Container(
-                    width: 1,
-                    height: MediaQuery.of(context).size.width / 8,
-                    color: Theme.of(context).dividerColor,
-                  ),
-                  FlatButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      "إلغاء",
-                      style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 14,
-                          fontFamily: "Cairo-Bold"),
-                    ),
-                  )
-                ],
-              )
-            ],
-          ),
+            ),
+            TextButton(
+              onPressed: () async {
+                SharedPreferences pref = await SharedPreferences.getInstance();
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (_) => UserOrProvider()),
+                    (route) => false);
+                pref.setBool("skip", false);
+              },
+              child: Text(
+                "تسجيل دخول",
+                style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 14,
+                    fontFamily: "Cairo-Bold",
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
+
+
+// content: Container(
+//   child: Column(
+//     mainAxisAlignment: MainAxisAlignment.center,
+//     children: [
+//       Padding(
+//         padding: EdgeInsets.symmetric(vertical: 12),
+//         child: Text(
+//           "برجاء تسجيل الدخول اولا",
+//           style: TextStyle(
+//             color: Theme.of(context).accentColor,
+//             fontFamily: "Cairo-Bold",
+//             fontSize: 14,
+//           ),
+//         ),
+//       ),
+//       Divider(),
+//       Row(
+//         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//         children: [
+//           TextButton(
+//             onPressed: () async {
+//               SharedPreferences pref = await SharedPreferences.getInstance();
+//               Navigator.pushAndRemoveUntil(
+//                   context,
+//                   MaterialPageRoute(builder: (_) => UserOrProvider()),
+//                   (route) => false);
+//               pref.setBool("skip", false);
+//             },
+//             child: Text(
+//               "تسجيل دخول",
+//               style: TextStyle(
+//                   color: Theme.of(context).primaryColor,
+//                   fontSize: 14,
+//                   fontFamily: "Cairo-Bold"),
+//             ),
+//           ),
+//           Container(
+//             width: 1,
+//             height: 40,
+//             color: Theme.of(context).dividerColor,
+//           ),
+//           TextButton(
+//             onPressed: () => Navigator.pop(context),
+//             child: Text(
+//               "إلغاء",
+//               style: TextStyle(
+//                   color: Theme.of(context).primaryColor,
+//                   fontSize: 14,
+//                   fontFamily: "Cairo-Bold"),
+//             ),
+//           )
+//         ],
+//       )
+//     ],
+//   ),
+// ),

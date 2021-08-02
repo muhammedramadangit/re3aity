@@ -6,7 +6,7 @@ import 'package:lastre3ayty/common/CustomCard.dart';
 
 class SingleSectionItem extends StatelessWidget {
   final String name, imgSrc, description, serviceName;
-  final int rate, catID;
+  final int rate, catID, providerID;
   final Subcategory subcategories;
   final bool skip;
 
@@ -18,7 +18,7 @@ class SingleSectionItem extends StatelessWidget {
     this.subcategories,
     this.catID,
     this.serviceName,
-    this.skip,
+    this.skip, this.providerID,
   });
 
   @override
@@ -33,6 +33,7 @@ class SingleSectionItem extends StatelessWidget {
                       catID: catID,
                       serviceName: serviceName,
                       skip: skip,
+                  providerID: providerID,
                     )));
       },
       child: Row(

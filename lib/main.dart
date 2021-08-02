@@ -197,7 +197,7 @@ class SecondRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text('AlertPage'),),
-        body: Center(child: RaisedButton(child: Text('go Back ...'),onPressed: (){
+        body: Center(child: TextButton(child: Text('go Back ...'),onPressed: (){
           Navigator.pop(context);
         },)));
   }

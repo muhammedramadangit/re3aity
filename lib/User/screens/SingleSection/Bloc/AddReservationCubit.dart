@@ -23,7 +23,7 @@ class AddReservationCubit extends Cubit<AddReservationState>{
       SharedPreferences _pref = await SharedPreferences.getInstance();
 
       print("user ID : ${_pref.getInt("user_id")}");
-      print("owner ID : ${_pref.getInt("pro_id")}");
+      print("owner ID : $owner_id");
       print("cat ID : ${_pref.getInt("cat_id")}");
       print("date : $date");
       print("time : $time");
@@ -31,7 +31,7 @@ class AddReservationCubit extends Cubit<AddReservationState>{
 
       FormData formData = FormData.fromMap({
         "user_id" : "${_pref.getInt("user_id")}",
-        "owner_id" : "${_pref.getInt("pro_id")}",
+        "owner_id" : "$owner_id",
         "cat_id" : "${_pref.getInt("cat_id")}",
         "date" : date,
         "time" : time,

@@ -18,10 +18,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AddReservation extends StatefulWidget {
   final Subcategory person;
   final String serviceName;
-  final int catID;
+  final int catID, providerID;
   final bool skip;
 
-  const AddReservation({this.person, this.serviceName, this.catID, this.skip,});
+  const AddReservation({this.person, this.serviceName, this.catID, this.skip, this.providerID,});
 
   @override
   _AddReservationState createState() => _AddReservationState();
@@ -43,10 +43,13 @@ class _AddReservationState extends State<AddReservation> {
 
   @override
   void initState() {
-    super.initState();
+    final cubit = AddReservationCubit.get(context);
+    print("owner Id ::::::::::::: ${widget.providerID}");
+    cubit.owner_id = widget.providerID;
     shared();
     _pickedDate = DateTime.now();
     _time = TimeOfDay.now();
+    super.initState();
   }
 
   @override
@@ -187,7 +190,7 @@ class _AddReservationState extends State<AddReservation> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "نبذة عن الطبيب",
+              "نبذة عن مقدم الخدمة",
               style: TextStyle(
                 fontSize: 12,
                 fontFamily: "Cairo-Bold",
@@ -196,7 +199,7 @@ class _AddReservationState extends State<AddReservation> {
                     .accentColor,
               ),
             ),
-            SizedBox(height: 5),
+            Divider(),
             Text(
               widget.person.user.desc,
               style: TextStyle(
@@ -210,7 +213,7 @@ class _AddReservationState extends State<AddReservation> {
     );
   }
 
-  //===================================== doctor Service ===========================================
+  //===================================== provider Service ===========================================
   Widget doctorService(BuildContext context){
     return AnimatedWidgets(
       duration: 1.5,
@@ -229,63 +232,64 @@ class _AddReservationState extends State<AddReservation> {
                 color: Theme.of(context).accentColor,
               ),
             ),
-            SizedBox(height: 5),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            Divider(),
+
+            Row(
               children: [
-                Row(
-                  children: [
-                    Text(
-                      "نوع الخدمة المقدمة : ",
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    Text(
-                      widget.serviceName,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Theme.of(context).accentColor,
-                      ),
-                    ),
-                  ],
+                Text(
+                  "نوع الخدمة المقدمة : ",
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontFamily: "Cairo-Bold",
+                    color: Theme.of(context).primaryColor,
+                  ),
                 ),
-                Row(
-                  children: [
-                    Text(
-                      "سعر الخدمة فى المنزل : ",
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    Text(
-                      "${widget.person.homeprice} ريال",
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Theme.of(context).accentColor,
-                      ),
-                    ),
-                  ],
+                Text(
+                  widget.serviceName,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Theme.of(context).accentColor,
+                  ),
                 ),
-                Row(
-                  children: [
-                    Text(
-                      "سعر الخدمة فى مكان مقدم الخدمة : ",
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                    Text(
-                      "${widget.person.clincprice} ريال",
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Theme.of(context).accentColor,
-                      ),
-                    ),
-                  ],
+              ],
+            ),
+
+            Row(
+              children: [
+                Text(
+                  "سعر الخدمة فى المنزل : ",
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontFamily: "Cairo-Bold",
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+                Text(
+                  "${widget.person.homeprice} ريال",
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Theme.of(context).accentColor,
+                  ),
+                ),
+              ],
+            ),
+
+            Row(
+              children: [
+                Text(
+                  "سعر الخدمة فى مكان مقدم الخدمة : ",
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontFamily: "Cairo-Bold",
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+                Text(
+                  "${widget.person.clincprice} ريال",
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Theme.of(context).accentColor,
+                  ),
                 ),
               ],
             ),
@@ -315,17 +319,19 @@ class _AddReservationState extends State<AddReservation> {
                 color: Theme.of(context).accentColor,
               ),
             ),
+            Divider(),
+
             Padding(
               padding: EdgeInsets.symmetric(vertical: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
 
-                  //============== العيادة ===============
+                  //============== مكان مقدم الخدمة ===============
                   CustomButton(
                     height: 40,
                     width: MediaQuery.of(context).size.width / 2.5,
-                    text: "مكان مقدم الخدمة",
+                    text: place[0],
                     fontsize: 13,
                     bottomPadding: 0,
                     topPadding: 0,
