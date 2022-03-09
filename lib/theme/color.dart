@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 class ThemeColor{
 
-  static const Color mainPurple = Color(0xff891097);
+  static const Color mainPurple = Color(0xff74178f);
   static const Color mainRed = Color(0xffA81611);
   static const Color greyText = Color(0xffE8EDEE);
   static const Color lighterGreyText = Color(0xffA4A0A0);

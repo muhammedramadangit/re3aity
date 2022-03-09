@@ -7,6 +7,7 @@ import 'package:lastre3ayty/User/screens/Profile/Profile/Bloc/ProfileCubit.dart'
 import 'package:lastre3ayty/User/screens/Sections/Controller/SectionController.dart';
 import 'package:lastre3ayty/common/AnimatedWidget.dart';
 import 'package:lastre3ayty/common/CenterLoading.dart';
+import 'package:lastre3ayty/common/CustomNewButtonSection.dart';
 import 'package:lastre3ayty/common/CustomSection.dart';
 
 class Sections extends StatefulWidget {
@@ -23,12 +24,11 @@ class _SectionsState extends State<Sections> {
   bool _isLoading = true;
   AllCategories _allCategories = AllCategories();
   SectionController _sectionController = SectionController();
-  // List<CategoryData> categories;
   List<String> _catImages = [
-    'assets/icons/homeservise.png', //خدمات منزلية
-    'assets/icons/clean.png', //تنظيف
-    'assets/icons/ele.png', //كهرباء
-    'assets/icons/plumb.png', //سباكة
+    'assets/icons/asasahospital.png', //'assets/icons/homeservise.png', //خدمات منزلية
+    'assets/icons/hospital.png', //'assets/icons/clean.png', //تنظيف
+    'assets/icons/page.png', //'assets/icons/ele.png', //كهرباء
+    'assets/icons/xzxdoc.png', //'assets/icons/plumb.png', //سباكة
   ];
   final cubit = ProfileCubit();
 
@@ -106,29 +106,26 @@ class _SectionsState extends State<Sections> {
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
       ),
-      itemBuilder: (context, index) {
+      itemBuilder: (context, item) {
         return AnimatedWidgets(
           duration: 1.5,
           horizontalOffset: 0,
           virticaloffset: 150,
           child: CustomSection(
-            title: _allCategories.data[index].categories.name,
-            imgSrc: _catImages[index],
+            title: _allCategories.data[item].categories.name,
+            imgSrc: _catImages[item],
             fit: BoxFit.fill,
             imgSize: 70,
             onTap: () {
-              print("indexxxxxxxxxxxxxxxx ${index}");
-              print("ID++++++++++++++++++ ${_allCategories.data[index].categories.id}");
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (_) => MainDrawer(
                     skip: widget.skip,
-                    appBarTitle: _allCategories.data[index].categories.name,
-                    index: 0,
-                    id: _allCategories.data[index].categories.id,
-                    categoryData: _allCategories.data[index],
-                    sectionServiceName: _allCategories.data[index].categories.name,
+                    appBarTitle: _allCategories.data[item].categories.name,
+                    id: _allCategories.data[item].categories.id,
+                    categoryData: _allCategories.data[item],
+                    sectionServiceName: _allCategories.data[item].categories.name,
                   ),
                 ),
               );
@@ -138,4 +135,43 @@ class _SectionsState extends State<Sections> {
       },
     );
   }
+
+  // Widget listCategory(BuildContext context){
+  //   return ListView.builder(
+  //     physics: BouncingScrollPhysics(),
+  //     itemCount: _allCategories.data.length,
+  //     itemBuilder: (context, index) {
+  //       return AnimatedWidgets(
+  //         duration: 1.5,
+  //         horizontalOffset: 0,
+  //         virticaloffset: 150,
+  //         child: CustomSectionButton(
+  //           rightside: index.isEven ? true : false,
+  //           text: _allCategories.data[index].categories.name,
+  //           imgSrc: _catImages[index],
+  //           fit: BoxFit.fill,
+  //           imgSize: 70,
+  //           onTap: () {
+  //             print("indexxxxxxxxxxxxxxxx ${index}");
+  //             print("ID++++++++++++++++++ ${_allCategories.data[index].categories.id}");
+  //             Navigator.push(
+  //               context,
+  //               MaterialPageRoute(
+  //                 builder: (_) => MainDrawer(
+  //                   skip: widget.skip,
+  //                   appBarTitle: _allCategories.data[index].categories.name,
+  //                   index: 0,
+  //                   id: _allCategories.data[index].categories.id,
+  //                   categoryData: _allCategories.data[index],
+  //                   sectionServiceName:
+  //                   _allCategories.data[index].categories.name,
+  //                 ),
+  //               ),
+  //             );
+  //           },
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 }

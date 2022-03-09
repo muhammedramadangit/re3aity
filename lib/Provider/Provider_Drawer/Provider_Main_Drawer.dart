@@ -137,7 +137,6 @@ class _ProviderMainDrawerState extends State<ProviderMainDrawer> {
     );
   }
 
-  // ignore: missing_return
   Widget getDrawerPage() {
     if (item == ProviderDrawerItems.myReservation) {
       return ProviderMainDrawer(appBarTitle: "حجوزاتي", index: 0);

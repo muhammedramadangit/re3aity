@@ -32,7 +32,7 @@ class _AddReservationState extends State<AddReservation> {
   bool _homeChecked = false;
   DateTime _pickedDate;
   TimeOfDay _time;
-  List place = ["مكان مقدم الخدمة", "المنزل"];
+  List place = ["العيادة", "المنزل"];
   int userID;
 
 
@@ -190,7 +190,7 @@ class _AddReservationState extends State<AddReservation> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "نبذة عن مقدم الخدمة",
+              "نبذة عن الطبيب",
               style: TextStyle(
                 fontSize: 12,
                 fontFamily: "Cairo-Bold",
@@ -277,7 +277,7 @@ class _AddReservationState extends State<AddReservation> {
             Row(
               children: [
                 Text(
-                  "سعر الخدمة فى مكان مقدم الخدمة : ",
+                  "سعر الخدمة فى العيادة : ",
                   style: TextStyle(
                     fontSize: 12,
                     fontFamily: "Cairo-Bold",

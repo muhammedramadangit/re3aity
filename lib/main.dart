@@ -180,7 +180,7 @@ class _MyCareState extends State<MyCare> {
         debugShowCheckedModeBanner: false,
         title: 'رعايتي',
         theme: ThemeData(
-          primaryColor: ThemeColor.mainPurple,
+          primaryColor: ThemeColor.mainPurple, //Color(0xff0092ce),
           accentColor: ThemeColor.lighterGreyText,
           fontFamily: "Cairo-Regular",
         ),

@@ -87,14 +87,14 @@ class LoginAlertDialog extends StatelessWidget {
         horizontalOffset: 0.0,
         virticaloffset: 150.0,
         child: CupertinoAlertDialog(
-          title: Image.asset("assets/icons/alert.png",color: Theme.of(context).accentColor, height: 80, width: 80),
+          title: Image.asset("assets/icons/alert.png",color: Theme.of(context).primaryColor, height: 80, width: 80),
           content: Padding(
             padding: EdgeInsets.symmetric(vertical: 10),
             child: Text(
               "برجاء تسجيل الدخول اولا",
               style: TextStyle(
                 color: Theme.of(context).accentColor,
-                fontFamily: "Cairo-Bold",
+                fontFamily: "Cairo-Regular",
                 fontSize: 14,
               ),
             ),
@@ -135,62 +135,28 @@ class LoginAlertDialog extends StatelessWidget {
       ),
     );
   }
+
+  Widget AlertImage(BuildContext context){
+    return Container(
+      height: 80,
+      width: 80,
+      child: Center(
+        child: Stack(
+          children: [
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                height: 35,
+                width: 20,
+                color: Theme.of(context).accentColor,
+              ),
+            ),
+        Align(
+          alignment: Alignment.center,
+            child: Image.asset("assets/icons/alert.png",color: Theme.of(context).primaryColor, height: 80, width: 80),),
+          ],
+        ),
+      ),
+    );
+  }
 }
-
-
-// content: Container(
-//   child: Column(
-//     mainAxisAlignment: MainAxisAlignment.center,
-//     children: [
-//       Padding(
-//         padding: EdgeInsets.symmetric(vertical: 12),
-//         child: Text(
-//           "برجاء تسجيل الدخول اولا",
-//           style: TextStyle(
-//             color: Theme.of(context).accentColor,
-//             fontFamily: "Cairo-Bold",
-//             fontSize: 14,
-//           ),
-//         ),
-//       ),
-//       Divider(),
-//       Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//         children: [
-//           TextButton(
-//             onPressed: () async {
-//               SharedPreferences pref = await SharedPreferences.getInstance();
-//               Navigator.pushAndRemoveUntil(
-//                   context,
-//                   MaterialPageRoute(builder: (_) => UserOrProvider()),
-//                   (route) => false);
-//               pref.setBool("skip", false);
-//             },
-//             child: Text(
-//               "تسجيل دخول",
-//               style: TextStyle(
-//                   color: Theme.of(context).primaryColor,
-//                   fontSize: 14,
-//                   fontFamily: "Cairo-Bold"),
-//             ),
-//           ),
-//           Container(
-//             width: 1,
-//             height: 40,
-//             color: Theme.of(context).dividerColor,
-//           ),
-//           TextButton(
-//             onPressed: () => Navigator.pop(context),
-//             child: Text(
-//               "إلغاء",
-//               style: TextStyle(
-//                   color: Theme.of(context).primaryColor,
-//                   fontSize: 14,
-//                   fontFamily: "Cairo-Bold"),
-//             ),
-//           )
-//         ],
-//       )
-//     ],
-//   ),
-// ),
