@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "233144944728",
+    "project_id": "lastre3aity",
+    "storage_bucket": "lastre3aity.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:233144944728:android:ef7ded2c5ed52675ca222d",
+        "android_client_info": {
+          "package_name": "com.khattab.mycare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "233144944728-mgdc5f1oolbdp33bm8no09jtfa89jd2r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.khattab.mycare",
+            "certificate_hash": "435c7f8d46de82a066b9fc46c9d7845529cbe501"
+          }
+        },
+        {
+          "client_id": "233144944728-s5vmenl3nfcarkq3b01rmn4si94iadi9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.khattab.mycare",
+            "certificate_hash": "72090f413d1d20c617128a2c7865d90ad624336c"
+          }
+        },
+        {
+          "client_id": "233144944728-uct0t5q3lglch5j8j70vs4u2fdj414jm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.khattab.mycare",
+            "certificate_hash": "4107722820e638aeca63e1e70fba81cd1cf91a30"
+          }
+        },
+        {
+          "client_id": "233144944728-0i6okdfgl7vl9rmsik3ichi262k5erri.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0I7W54Luzny3xOXBM0Oyo6wRu_vfTuhA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "233144944728-0i6okdfgl7vl9rmsik3ichi262k5erri.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "233144944728-o78jtl6g6knmif9fvvc2llcoarri01et.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.khattab.mycare"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
